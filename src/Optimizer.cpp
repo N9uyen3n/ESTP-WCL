@@ -159,23 +159,6 @@ double Optimizer::optimize(
             }
         }
         // SOC on arcs
-        // for (int k = 0; k < m; ++k) {
-        //     int i_idx = k;
-        //     int j_idx = k + 1;
-        //     if (!is_w_route[k]) {
-        //         model.add(ya[j_idx] <= yd[i_idx] - params.h * d_route[k]);
-        //     } else {
-        //         int l = -1;
-        //         for (int ll = 0; ll < p; ++ll) {
-        //             if (wireless_k[ll] == k) {
-        //                 l = ll;
-        //                 break;
-        //             }
-        //         }
-        //         model.add(ya[j_idx] <= yd[i_idx] - params.h * d_route[k] + beta_route[k] * w_s_z[l]);
-        //     }
-        // }
-
         for (int k = 0; k < m; ++k) {
             int i_idx = k;
             int j_idx = k + 1;
@@ -189,15 +172,32 @@ double Optimizer::optimize(
                         break;
                     }
                 }
-                if (l != -1) {
-                    model.add(ya[j_idx] <= yd[i_idx] - params.h * d_route[k] + beta_route[k] * w_s_z[l]);
-                } else {
-                    std::cerr << "Error: Wireless arc " << k << " not found in wireless_k" << std::endl;
-                    env.end();
-                    return std::numeric_limits<double>::infinity();
-                }
+                model.add(ya[j_idx] <= yd[i_idx] - params.h * d_route[k] + beta_route[k] * w_s_z[l]);
             }
         }
+        //
+        // for (int k = 0; k < m; ++k) {
+        //     int i_idx = k;
+        //     int j_idx = k + 1;
+        //     if (!is_w_route[k]) {
+        //         model.add(ya[j_idx] <= yd[i_idx] - params.h * d_route[k]);
+        //     } else {
+        //         int l = -1;
+        //         for (int ll = 0; ll < p; ++ll) {
+        //             if (wireless_k[ll] == k) {
+        //                 l = ll;
+        //                 break;
+        //             }
+        //         }
+        //         if (l != -1) {
+        //             model.add(ya[j_idx] <= yd[i_idx] - params.h * d_route[k] + beta_route[k] * w_s_z[l]);
+        //         } else {
+        //             std::cerr << "Error: Wireless arc " << k << " not found in wireless_k" << std::endl;
+        //             env.end();
+        //             return std::numeric_limits<double>::infinity();
+        //         }
+        //     }
+        // }
 
         // Linearization for w_s_z
         for (int l = 0; l < p; ++l) {
