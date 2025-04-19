@@ -81,8 +81,8 @@ std::vector<Arc> CSVReader::generateArcs(const std::vector<Node>& nodes, const s
             arc.sij = arc.dij / v;
             arc.is_wireless = false;
             arc.beta_ij = 0.0;
-            arc.U_min = v;
-            arc.U_max = v;
+            arc.U_min = v/1.5;
+            arc.U_max = v*1.5;
             arcs.push_back(arc);
         }
     }
@@ -171,20 +171,45 @@ Params CSVReader::readParams(const std::string& filename) {
         throw std::runtime_error("Không thể mở file: " + filename);
     }
     std::string line;
-    std::getline(file, line);
+    std::getline(file, line); // Bỏ qua tiêu đề
     if (std::getline(file, line)) {
         std::stringstream ss(line);
         std::string cell;
-        std::getline(ss, cell, ','); params.Q = std::stod(cell);
-        std::getline(ss, cell, ','); params.h = std::stod(cell);
-        std::getline(ss, cell, ','); params.v = std::stod(cell);
-        std::getline(ss, cell, ','); params.cw = std::stod(cell);
-        std::getline(ss, cell, ','); params.ct = std::stod(cell);
-        // std::getline(ss, cell, ','); params.minSOC = std::stod(cell);
-        params.minSOC = 0.1 * params.Q;
-        params.initial_SOC = params.Q;
-        params.M = 1e6;
+        std::getline(ss, cell, ','); params.Q = std::stod(cell);   // 1000.0
+        std::getline(ss, cell, ','); params.h = std::stod(cell);   // 0.14
+        std::getline(ss, cell, ','); params.v = std::stod(cell);   // 1.0
+        std::getline(ss, cell, ','); params.cw = std::stod(cell);  // 1.0
+        std::getline(ss, cell, ','); params.ct = std::stod(cell);  // 0.1
+        // Thiết lập các tham số mặc định
+        params.minSOC = 0.1 * params.Q;     // Ví dụ: 10% của Q (100.0)
+        params.initial_SOC = params.Q * 0.5;      // Pin đầy ban đầu (1000.0) * 0.75
+        params.M = 1e6;                     // Hằng số big-M
     }
     file.close();
     return params;
 }
+
+// Params CSVReader::readParams(const std::string& filename) {
+//     Params params;
+//     std::ifstream file(filename);
+//     if (!file.is_open()) {
+//         throw std::runtime_error("Không thể mở file: " + filename);
+//     }
+//     std::string line;
+//     std::getline(file, line);
+//     if (std::getline(file, line)) {
+//         std::stringstream ss(line);
+//         std::string cell;
+//         std::getline(ss, cell, ','); params.Q = std::stod(cell);
+//         std::getline(ss, cell, ','); params.h = std::stod(cell);
+//         std::getline(ss, cell, ','); params.v = std::stod(cell);
+//         std::getline(ss, cell, ','); params.cw = std::stod(cell);
+//         std::getline(ss, cell, ','); params.ct = std::stod(cell);
+//         // std::getline(ss, cell, ','); params.minSOC = std::stod(cell);
+//         params.minSOC = 0.1 * params.Q;
+//         params.initial_SOC = params.Q;
+//         params.M = 1e6;
+//     }
+//     file.close();
+//     return params;
+// }

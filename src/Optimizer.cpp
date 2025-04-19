@@ -160,6 +160,12 @@ double Optimizer::optimize(
         // SOC constraints
         // Initial SOC
         model.add(ya[0] == params.initial_SOC);
+
+        // SOC bounds
+        for (int i = 0; i < n; i++) {
+            model.add(ya[i] >= params.minSOC);  // SOC khi đến không dưới mức tối thiểu
+            model.add(yd[i] >= params.minSOC);  // SOC khi rời không dưới mức tối thiểu
+        }
         // SOC at nodes
         for (int i = 0; i < n; ++i) {
             if (charge_options[S_prime[i]].size() > 0) {

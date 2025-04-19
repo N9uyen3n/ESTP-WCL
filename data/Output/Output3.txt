@@ -42,7 +42,7 @@ Linearized Charging (phi_w):
 
 Travel Time (s):
 Arc (0 -> 6): 10.15
-Arc (6 -> 7): 29.22
+Arc (6 -> 7): 21.71
 Arc (7 -> 8): 22.94
 Arc (8 -> 9): 16.67
 Arc (9 -> 10): 27.49
@@ -51,74 +51,74 @@ Arc (11 -> 12): 13.74
 Arc (12 -> 13): 8.14
 Arc (13 -> 14): 32.07
 Arc (14 -> 15): 16.67
-Arc (15 -> 0): 50.99
+Arc (15 -> 0): 17.00
 
 SOC on Arrival (ya):
-Node 0: 450.00
-Node 6: 428.68
-Node 7: 394.78
-Node 8: 346.61
-Node 9: 311.61
-Node 10: 253.88
-Node 11: 239.88
-Node 12: 211.02
-Node 13: 193.93
-Node 14: 136.53
-Node 15: 101.53
+Node 0: 500.00
+Node 6: 478.68
+Node 7: 441.78
+Node 8: 393.60
+Node 9: 358.60
+Node 10: 300.88
+Node 11: 286.88
+Node 12: 258.02
+Node 13: 240.93
+Node 14: 170.69
+Node 15: 135.69
 Node 0: 100.00
 
 SOC on Departure (yd):
-Node 0: 450.00
-Node 6: 428.68
-Node 7: 394.78
-Node 8: 346.61
-Node 9: 311.61
-Node 10: 253.88
-Node 11: 239.88
-Node 12: 211.02
-Node 13: 193.93
-Node 14: 136.53
-Node 15: 101.53
+Node 0: 500.00
+Node 6: 478.68
+Node 7: 441.78
+Node 8: 393.60
+Node 9: 358.60
+Node 10: 300.88
+Node 11: 286.88
+Node 12: 258.02
+Node 13: 240.93
+Node 14: 170.69
+Node 15: 135.69
 Node 0: 100.00
 
 Arrival Time (t):
 Node 0: 0.00
 Node 6: 10.15
-Node 7: 49.37
-Node 8: 82.31
-Node 9: 108.98
-Node 10: 146.46
-Node 11: 163.13
-Node 12: 186.87
-Node 13: 205.01
-Node 14: 247.08
-Node 15: 273.75
-Node 0: 334.74
+Node 7: 41.86
+Node 8: 74.80
+Node 9: 101.47
+Node 10: 138.95
+Node 11: 155.62
+Node 12: 179.36
+Node 13: 197.50
+Node 14: 239.57
+Node 15: 266.24
+Node 0: 293.23
 
 Departure Time (depart):
 Node 0: 0.00
 Node 6: 20.15
-Node 7: 59.37
-Node 8: 92.31
-Node 9: 118.98
-Node 10: 156.46
-Node 11: 173.13
-Node 12: 196.87
-Node 13: 215.01
-Node 14: 257.08
-Node 15: 283.75
-Node 0: 334.74
+Node 7: 51.86
+Node 8: 84.80
+Node 9: 111.47
+Node 10: 148.95
+Node 11: 165.62
+Node 12: 189.36
+Node 13: 207.50
+Node 14: 249.57
+Node 15: 276.24
+Node 0: 293.23
 
 Wireless Charging Selection (z):
 Arc (6 -> 7): 1.00
-Arc (13 -> 14): 1.00
-Arc (15 -> 0): 1.00
+Arc (13 -> 14): 0.00
+Arc (15 -> 0): 0.00
 
 Linearized Wireless Charging (w_s_z):
-Arc (6 -> 7): 29.22
-Arc (13 -> 14): 32.07
-Arc (15 -> 0): 50.99
-Result: Feasible route with cost = 89.26
+Arc (6 -> 7): 21.71
+Arc (13 -> 14): 0.00
+Arc (15 -> 0): 0.00
+Result: Feasible route with cost = 38.01
 ----------------------------------------
 All test cases completed.
 
