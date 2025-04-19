@@ -180,7 +180,8 @@ Params CSVReader::readParams(const std::string& filename) {
         std::getline(ss, cell, ','); params.v = std::stod(cell);
         std::getline(ss, cell, ','); params.cw = std::stod(cell);
         std::getline(ss, cell, ','); params.ct = std::stod(cell);
-        params.minSOC = 0.1 * params.Q;
+        std::getline(ss, cell, ','); params.minSOC = std::stod(cell);
+        // params.minSOC = 0.1 * params.Q;
         params.initial_SOC = params.Q;
         params.M = 1e6;
     }

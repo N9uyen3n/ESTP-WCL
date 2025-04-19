@@ -3,10 +3,10 @@
 //
 
 #include "Optimizer.h"
-#include "Optimizer.h"
 #include <ilcplex/ilocplex.h>
 #include <iostream>
 #include <limits>
+#include <vector>
 
 ILOSTLBEGIN
 
@@ -14,7 +14,8 @@ double Optimizer::optimize(
     const std::vector<int>& S_prime,
     const std::vector<Arc>& arcs,
     const std::vector<std::vector<ChargingOption>>& charge_options,
-    const Params& params) {
+    const Params& params,
+    const std::vector<Node>& nodes) {
     try {
         IloEnv env;
         IloModel model(env);
@@ -68,6 +69,7 @@ double Optimizer::optimize(
         IloNumVarArray ya(env, n, params.minSOC, params.Q, ILOFLOAT);
         IloNumVarArray yd(env, n, params.minSOC, params.Q, ILOFLOAT);
         IloNumVarArray t(env, n, 0, IloInfinity, ILOFLOAT);
+        IloNumVarArray depart(env, n, 0, IloInfinity, ILOFLOAT); // Departure time
 
         // Linearization variables for phi[i] * w[i][k]
         std::vector<IloNumVarArray> phi_w(n);
@@ -95,7 +97,7 @@ double Optimizer::optimize(
         // Objective function
         IloExpr obj(env);
 
-        // Thành phần 1: Chi phí sạc cố định
+        // Component 1: Fixed charging costs
         for (int i = 0; i < n; ++i) {
             int node = S_prime[i];
             for (size_t kk = 0; kk < charge_options[node].size(); ++kk) {
@@ -103,13 +105,13 @@ double Optimizer::optimize(
             }
         }
 
-        // Thành phần 2: Chi phí sạc không dây
+        // Component 2: Wireless charging costs
         for (int l = 0; l < p; ++l) {
             int k = wireless_k[l];
             obj += params.cw * beta_route[k] * w_s_z[l];
         }
 
-        // Thành phần 3: Chi phí thời gian
+        // Component 3: Time costs
         obj += params.ct * t[n - 1];
 
         model.add(IloMinimize(env, obj));
@@ -134,13 +136,25 @@ double Optimizer::optimize(
             }
         }
 
+        // Constraints for departure time
+        model.add(depart[0] == t[0]); // For start depot
+        for (int i = 1; i < n; ++i) {
+            int node = S_prime[i];
+            if (charge_options[node].size() > 0) { // Charging station
+                model.add(depart[i] == t[i] + phi[i]);
+            } else if (node != 0) { // Customer
+                model.add(depart[i] == t[i] + nodes[node].service_time);
+            } else { // End depot
+                model.add(depart[i] == t[i]);
+            }
+        }
+
         // Time progression constraints
         model.add(t[0] == 0);
         for (int k = 0; k < m; ++k) {
-            int i = S_prime[k];
+            int i_idx = k;
             int j_idx = k + 1;
-            IloExpr departure = t[k] + phi[i];
-            model.add(t[j_idx] >= departure + s[k]);
+            model.add(t[j_idx] >= depart[i_idx] + s[k]);
         }
 
         // SOC constraints
@@ -162,9 +176,9 @@ double Optimizer::optimize(
         for (int k = 0; k < m; ++k) {
             int i_idx = k;
             int j_idx = k + 1;
-            if (!is_w_route[k]) {
-                model.add(ya[j_idx] <= yd[i_idx] - params.h * d_route[k]);
-            } else {
+            if (!is_w_route[k]) { // Non-wireless
+                model.add(ya[j_idx] == yd[i_idx] - params.h * d_route[k] * params.Q / 100.0); // Scale consumption
+            } else { // Wireless
                 int l = -1;
                 for (int ll = 0; ll < p; ++ll) {
                     if (wireless_k[ll] == k) {
@@ -172,32 +186,15 @@ double Optimizer::optimize(
                         break;
                     }
                 }
-                model.add(ya[j_idx] <= yd[i_idx] - params.h * d_route[k] + beta_route[k] * w_s_z[l]);
+                if (l != -1) {
+                    model.add(ya[j_idx] <= yd[i_idx] - params.h * d_route[k] * params.Q / 100.0 + beta_route[k] * w_s_z[l]);
+                } else {
+                    std::cerr << "Error: Wireless arc " << k << " not found in wireless_k" << std::endl;
+                    env.end();
+                    return std::numeric_limits<double>::infinity();
+                }
             }
         }
-        //
-        // for (int k = 0; k < m; ++k) {
-        //     int i_idx = k;
-        //     int j_idx = k + 1;
-        //     if (!is_w_route[k]) {
-        //         model.add(ya[j_idx] <= yd[i_idx] - params.h * d_route[k]);
-        //     } else {
-        //         int l = -1;
-        //         for (int ll = 0; ll < p; ++ll) {
-        //             if (wireless_k[ll] == k) {
-        //                 l = ll;
-        //                 break;
-        //             }
-        //         }
-        //         if (l != -1) {
-        //             model.add(ya[j_idx] <= yd[i_idx] - params.h * d_route[k] + beta_route[k] * w_s_z[l]);
-        //         } else {
-        //             std::cerr << "Error: Wireless arc " << k << " not found in wireless_k" << std::endl;
-        //             env.end();
-        //             return std::numeric_limits<double>::infinity();
-        //         }
-        //     }
-        // }
 
         // Linearization for w_s_z
         for (int l = 0; l < p; ++l) {
@@ -216,7 +213,7 @@ double Optimizer::optimize(
                 for (size_t kk = 0; kk < charge_options[node].size(); ++kk) {
                     sum_w += w[i][kk];
                 }
-                model.add(sum_w <= 1);
+                model.add(sum_w == 1);
             }
         }
 
@@ -228,6 +225,90 @@ double Optimizer::optimize(
         }
 
         double cost = cplex.getObjValue();
+
+        // Print model parameters (decision variables)
+        std::cout << "\n=== Model Parameters for Route ===\n";
+        std::cout << std::fixed << std::setprecision(2);
+
+        // Print phi (charging time at nodes)
+        std::cout << "Charging Time (phi):\n";
+        for (int i = 0; i < n; ++i) {
+            std::cout << "Node " << S_prime[i] << ": " << cplex.getValue(phi[i]) << "\n";
+        }
+
+        // Print w (charging option selection)
+        std::cout << "\nCharging Option Selection (w):\n";
+        for (int i = 0; i < n; ++i) {
+            int node = S_prime[i];
+            if (charge_options[node].size() > 0) {
+                std::cout << "Node " << node << ":\n";
+                for (size_t kk = 0; kk < charge_options[node].size(); ++kk) {
+                    std::cout << "  Option " << charge_options[node][kk].option << ": "
+                              << cplex.getValue(w[i][kk]) << "\n";
+                }
+            }
+        }
+
+        // Print phi_w (linearized phi * w)
+        std::cout << "\nLinearized Charging (phi_w):\n";
+        for (int i = 0; i < n; ++i) {
+            int node = S_prime[i];
+            if (charge_options[node].size() > 0) {
+                std::cout << "Node " << node << ":\n";
+                for (size_t kk = 0; kk < charge_options[node].size(); ++kk) {
+                    std::cout << "  Option " << charge_options[node][kk].option << ": "
+                              << cplex.getValue(phi_w[i][kk]) << "\n";
+                }
+            }
+        }
+
+        // Print s (travel time on arcs)
+        std::cout << "\nTravel Time (s):\n";
+        for (int k = 0; k < m; ++k) {
+            std::cout << "Arc (" << S_prime[k] << " -> " << S_prime[k + 1] << "): "
+                      << cplex.getValue(s[k]) << "\n";
+        }
+
+        // Print ya (SOC on arrival)
+        std::cout << "\nSOC on Arrival (ya):\n";
+        for (int i = 0; i < n; ++i) {
+            std::cout << "Node " << S_prime[i] << ": " << cplex.getValue(ya[i]) << "\n";
+        }
+
+        // Print yd (SOC on departure)
+        std::cout << "\nSOC on Departure (yd):\n";
+        for (int i = 0; i < n; ++i) {
+            std::cout << "Node " << S_prime[i] << ": " << cplex.getValue(yd[i]) << "\n";
+        }
+
+        // Print t (arrival time)
+        std::cout << "\nArrival Time (t):\n";
+        for (int i = 0; i < n; ++i) {
+            std::cout << "Node " << S_prime[i] << ": " << cplex.getValue(t[i]) << "\n";
+        }
+
+        // Print depart (departure time)
+        std::cout << "\nDeparture Time (depart):\n";
+        for (int i = 0; i < n; ++i) {
+            std::cout << "Node " << S_prime[i] << ": " << cplex.getValue(depart[i]) << "\n";
+        }
+
+        // Print z (wireless charging selection)
+        std::cout << "\nWireless Charging Selection (z):\n";
+        for (int l = 0; l < p; ++l) {
+            int k = wireless_k[l];
+            std::cout << "Arc (" << S_prime[k] << " -> " << S_prime[k + 1] << "): "
+                      << cplex.getValue(z[l]) << "\n";
+        }
+
+        // Print w_s_z (linearized s * z)
+        std::cout << "\nLinearized Wireless Charging (w_s_z):\n";
+        for (int l = 0; l < p; ++l) {
+            int k = wireless_k[l];
+            std::cout << "Arc (" << S_prime[k] << " -> " << S_prime[k + 1] << "): "
+                      << cplex.getValue(w_s_z[l]) << "\n";
+        }
+
         env.end();
         return cost;
 

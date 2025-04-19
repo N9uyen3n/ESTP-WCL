@@ -13,8 +13,11 @@
 
 class Optimizer {
 public:
-    double optimize(const std::vector<int>& S_prime, const std::vector<Arc>& arcs,
-                    const std::vector<std::vector<ChargingOption>>& charge_options, const Params& params);
+    double optimize(const std::vector<int>& S_prime,
+                    const std::vector<Arc>& arcs,
+                    const std::vector<std::vector<ChargingOption>>& charge_options,
+                    const Params& params,
+                    const std::vector<Node>& nodes);
 };
 
 #endif // ETSP_WCL_OPTIMIZATION_OPTIMIZER_H
