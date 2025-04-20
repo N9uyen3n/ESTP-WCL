@@ -1,0 +1,18 @@
+{
+	"bmi-installation" : null,
+	"compiler-frontend-variant" : "MSVC",
+	"compiler-id" : "MSVC",
+	"compiler-simulate-id" : "",
+	"config" : "Debug",
+	"cxx-modules" : {},
+	"dir-cur-bld" : "D:/Work/NEULab/ESTP-WCL-Test2/cmake-build-debug",
+	"dir-cur-src" : "D:/Work/NEULab/ESTP-WCL-Test2",
+	"dir-top-bld" : "D:/Work/NEULab/ESTP-WCL-Test2/cmake-build-debug",
+	"dir-top-src" : "D:/Work/NEULab/ESTP-WCL-Test2",
+	"exports" : [],
+	"forward-modules-from-target-dirs" : [],
+	"include-dirs" : [],
+	"language" : "CXX",
+	"linked-target-dirs" : [],
+	"module-dir" : "D:/Work/NEULab/ESTP-WCL-Test2/cmake-build-debug/CMakeFiles/ESTP_WCL_Test2.dir"
+}
