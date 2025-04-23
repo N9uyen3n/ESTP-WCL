@@ -1,0 +1,87 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Release-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "ETSP_WCL_Test1",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "TestOptimizer::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TestOptimizer-Release-96999a3c18db9cb2298d.json",
+					"name" : "TestOptimizer",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "TestReader::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TestReader-Release-78bd2982fa5c34cb2192.json",
+					"name" : "TestReader",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "TestReader2::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TestReader2-Release-c86813624fae26cabc88.json",
+					"name" : "TestReader2",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "TestReader3::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TestReader3-Release-23aab39ddf4317e9be93.json",
+					"name" : "TestReader3",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/Work/NEULab/ESTP-WCL-Test3/cmake-build-debug",
+		"source" : "D:/Work/NEULab/ESTP-WCL-Test3"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

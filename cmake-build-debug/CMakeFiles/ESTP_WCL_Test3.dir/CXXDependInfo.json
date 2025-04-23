@@ -1,0 +1,23 @@
+{
+	"bmi-installation" : null,
+	"compiler-frontend-variant" : "MSVC",
+	"compiler-id" : "MSVC",
+	"compiler-simulate-id" : "",
+	"config" : "Debug",
+	"cxx-modules" : {},
+	"dir-cur-bld" : "D:/Work/NEULab/ESTP-WCL-Test3/cmake-build-debug",
+	"dir-cur-src" : "D:/Work/NEULab/ESTP-WCL-Test3",
+	"dir-top-bld" : "D:/Work/NEULab/ESTP-WCL-Test3/cmake-build-debug",
+	"dir-top-src" : "D:/Work/NEULab/ESTP-WCL-Test3",
+	"exports" : [],
+	"forward-modules-from-target-dirs" : [],
+	"include-dirs" : 
+	[
+		"D:\\Program Files\\IBM\\ILOG\\CPLEX_Studio2211\\cplex\\include",
+		"D:\\Program Files\\IBM\\ILOG\\CPLEX_Studio2211\\concert\\include",
+		"D:\\Work\\NEULab\\ESTP-WCL-Test3\\Test1\\src"
+	],
+	"language" : "CXX",
+	"linked-target-dirs" : [],
+	"module-dir" : "D:/Work/NEULab/ESTP-WCL-Test3/cmake-build-debug/CMakeFiles/ESTP_WCL_Test3.dir"
+}
