@@ -1,0 +1,629 @@
+D:\Work\NEULab\ESTP-WCL-Test3\cmake-build-debug\TestReader3.exe
+Testing CSVReader for ETSP-WCL...
+
+=== Parameter Information ===
+Q: 1000.00
+h: 0.14
+v: 1.00
+cw: 1.00
+ct: 0.10
+minSOC: 100.00
+initial_SOC: 300.00
+M: 1000000.00
+
+=== Node Information ===
+ID: 0, StringID: D0, Type: d, x: 35.00, y: 35.00, Service Time: 0.00
+ID: 1, StringID: S0, Type: f, x: 35.00, y: 35.00, Service Time: 0.00
+ID: 2, StringID: S1, Type: f, x: 61.00, y: 37.00, Service Time: 0.00
+ID: 3, StringID: S2, Type: f, x: 74.00, y: 39.00, Service Time: 0.00
+ID: 4, StringID: S3, Type: f, x: 47.00, y: 57.00, Service Time: 0.00
+ID: 5, StringID: S4, Type: f, x: 57.00, y: 65.00, Service Time: 0.00
+ID: 6, StringID: C1, Type: c, x: 41.00, y: 49.00, Service Time: 10.00
+ID: 7, StringID: C2, Type: c, x: 35.00, y: 17.00, Service Time: 10.00
+ID: 8, StringID: C3, Type: c, x: 55.00, y: 45.00, Service Time: 10.00
+ID: 9, StringID: C4, Type: c, x: 55.00, y: 20.00, Service Time: 10.00
+ID: 10, StringID: C5, Type: c, x: 15.00, y: 30.00, Service Time: 10.00
+ID: 11, StringID: C6, Type: c, x: 25.00, y: 30.00, Service Time: 10.00
+ID: 12, StringID: C7, Type: c, x: 20.00, y: 50.00, Service Time: 10.00
+ID: 13, StringID: C8, Type: c, x: 10.00, y: 43.00, Service Time: 10.00
+ID: 14, StringID: C9, Type: c, x: 55.00, y: 60.00, Service Time: 10.00
+ID: 15, StringID: C10, Type: c, x: 30.00, y: 60.00, Service Time: 10.00
+ID: 16, StringID: D1, Type: d, x: 35.00, y: 35.00, Service Time: 0.00
+
+=== Arc Information ===
+Wireless Arc: From 0 to 4, d_ij: 25.06, s_ij: 25.06, Beta_ij: 0.66, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 0 to 5, d_ij: 37.20, s_ij: 37.20, Beta_ij: 0.38, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 0 to 12, d_ij: 21.21, s_ij: 21.21, Beta_ij: 0.18, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 0 to 14, d_ij: 32.02, s_ij: 32.02, Beta_ij: 0.44, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 0 to 15, d_ij: 25.50, s_ij: 25.50, Beta_ij: 0.67, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 1 to 4, d_ij: 25.06, s_ij: 25.06, Beta_ij: 0.71, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 1 to 14, d_ij: 32.02, s_ij: 32.02, Beta_ij: 0.47, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 1 to 15, d_ij: 25.50, s_ij: 25.50, Beta_ij: 0.80, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 2 to 3, d_ij: 13.15, s_ij: 13.15, Beta_ij: 0.20, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 2 to 5, d_ij: 28.28, s_ij: 28.28, Beta_ij: 0.32, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 2 to 9, d_ij: 18.03, s_ij: 18.03, Beta_ij: 0.46, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 3 to 2, d_ij: 13.15, s_ij: 13.15, Beta_ij: 0.20, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 4 to 0, d_ij: 25.06, s_ij: 25.06, Beta_ij: 0.66, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 4 to 1, d_ij: 25.06, s_ij: 25.06, Beta_ij: 0.71, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 4 to 5, d_ij: 12.81, s_ij: 12.81, Beta_ij: 0.39, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 4 to 15, d_ij: 17.26, s_ij: 17.26, Beta_ij: 0.84, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 5 to 0, d_ij: 37.20, s_ij: 37.20, Beta_ij: 0.38, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 5 to 2, d_ij: 28.28, s_ij: 28.28, Beta_ij: 0.32, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 5 to 4, d_ij: 12.81, s_ij: 12.81, Beta_ij: 0.39, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 5 to 10, d_ij: 54.67, s_ij: 54.67, Beta_ij: 0.71, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 6 to 7, d_ij: 32.56, s_ij: 32.56, Beta_ij: 0.40, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 6 to 9, d_ij: 32.20, s_ij: 32.20, Beta_ij: 0.16, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 6 to 13, d_ij: 31.58, s_ij: 31.58, Beta_ij: 0.55, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 7 to 6, d_ij: 32.56, s_ij: 32.56, Beta_ij: 0.40, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 7 to 10, d_ij: 23.85, s_ij: 23.85, Beta_ij: 0.32, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 8 to 11, d_ij: 33.54, s_ij: 33.54, Beta_ij: 0.44, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 9 to 2, d_ij: 18.03, s_ij: 18.03, Beta_ij: 0.46, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 9 to 6, d_ij: 32.20, s_ij: 32.20, Beta_ij: 0.16, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 9 to 13, d_ij: 50.54, s_ij: 50.54, Beta_ij: 0.33, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 10 to 5, d_ij: 54.67, s_ij: 54.67, Beta_ij: 0.71, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 10 to 7, d_ij: 23.85, s_ij: 23.85, Beta_ij: 0.32, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 10 to 12, d_ij: 20.62, s_ij: 20.62, Beta_ij: 0.13, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 11 to 8, d_ij: 33.54, s_ij: 33.54, Beta_ij: 0.44, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 11 to 13, d_ij: 19.85, s_ij: 19.85, Beta_ij: 0.27, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 12 to 0, d_ij: 21.21, s_ij: 21.21, Beta_ij: 0.18, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 12 to 10, d_ij: 20.62, s_ij: 20.62, Beta_ij: 0.13, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 12 to 15, d_ij: 14.14, s_ij: 14.14, Beta_ij: 0.23, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 13 to 6, d_ij: 31.58, s_ij: 31.58, Beta_ij: 0.55, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 13 to 9, d_ij: 50.54, s_ij: 50.54, Beta_ij: 0.33, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 13 to 11, d_ij: 19.85, s_ij: 19.85, Beta_ij: 0.27, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 13 to 14, d_ij: 48.10, s_ij: 48.10, Beta_ij: 0.31, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 14 to 0, d_ij: 32.02, s_ij: 32.02, Beta_ij: 0.44, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 14 to 1, d_ij: 32.02, s_ij: 32.02, Beta_ij: 0.47, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 14 to 13, d_ij: 48.10, s_ij: 48.10, Beta_ij: 0.31, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 15 to 0, d_ij: 25.50, s_ij: 25.50, Beta_ij: 0.67, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 15 to 1, d_ij: 25.50, s_ij: 25.50, Beta_ij: 0.80, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 15 to 4, d_ij: 17.26, s_ij: 17.26, Beta_ij: 0.84, U_min: 0.50, U_max: 1.50
+Wireless Arc: From 15 to 12, d_ij: 14.14, s_ij: 14.14, Beta_ij: 0.23, U_min: 0.50, U_max: 1.50
+
+=== Charging Options Information ===
+Node ID: 1 has 2 options:
+  Option: 1, Rate: 5.00, Cost: 0.50
+  Option: 2, Rate: 10.00, Cost: 1.00
+Node ID: 2 has 2 options:
+  Option: 1, Rate: 5.00, Cost: 0.50
+  Option: 2, Rate: 10.00, Cost: 1.00
+Node ID: 3 has 2 options:
+  Option: 1, Rate: 5.00, Cost: 0.50
+  Option: 2, Rate: 10.00, Cost: 1.00
+Node ID: 4 has 2 options:
+  Option: 1, Rate: 5.00, Cost: 0.50
+  Option: 2, Rate: 10.00, Cost: 1.00
+Node ID: 5 has 2 options:
+  Option: 1, Rate: 5.00, Cost: 0.50
+  Option: 2, Rate: 10.00, Cost: 1.00
+
+Route 1: 0 -> 11 -> 3 -> 13 -> 7 -> 1 -> 10 -> 8 -> 9 -> 6 -> 12 -> 14 -> 15 -> 0
+
+=== Model Parameters for Route ===
+Charging Time (phi):
+Node 0: 0.00
+Node 11: 0.00
+Node 3: 10.17
+Node 13: 0.00
+Node 7: 0.00
+Node 1: 63.97
+Node 10: 0.00
+Node 8: 0.00
+Node 9: 0.00
+Node 6: 0.00
+Node 12: 0.00
+Node 14: 0.00
+Node 15: 0.00
+Node 0: 0.00
+
+Charging Option Selection (w):
+Node 3:
+  Option 1: 1.00
+  Option 2: 0.00
+Node 1:
+  Option 1: 1.00
+  Option 2: 0.00
+
+Linearized Charging (phi_w):
+Node 3:
+  Option 1: 10.17
+  Option 2: 0.00
+Node 1:
+  Option 1: 63.97
+  Option 2: 0.00
+
+Travel Time (s):
+Arc (0 -> 11): 7.45
+Arc (11 -> 3): 33.21
+Arc (3 -> 13): 42.75
+Arc (13 -> 7): 24.05
+Arc (7 -> 1): 12.00
+Arc (1 -> 10): 13.74
+Arc (10 -> 8): 28.48
+Arc (8 -> 9): 16.67
+Arc (9 -> 6): 21.47
+Arc (6 -> 12): 14.02
+Arc (12 -> 14): 24.27
+Arc (14 -> 15): 16.67
+Arc (15 -> 0): 17.00
+
+SOC on Arrival (ya):
+Node 0: 300.00
+Node 11: 284.35
+Node 3: 214.60
+Node 13: 175.70
+Node 7: 125.20
+Node 1: 100.00
+Node 10: 390.98
+Node 8: 331.17
+Node 9: 296.17
+Node 6: 251.09
+Node 12: 221.65
+Node 14: 170.69
+Node 15: 135.69
+Node 0: 100.00
+
+SOC on Departure (yd):
+Node 0: 300.00
+Node 11: 284.35
+Node 3: 265.47
+Node 13: 175.70
+Node 7: 125.20
+Node 1: 419.84
+Node 10: 390.98
+Node 8: 331.17
+Node 9: 296.17
+Node 6: 251.09
+Node 12: 221.65
+Node 14: 170.69
+Node 15: 135.69
+Node 0: 100.00
+
+Arrival Time (t):
+Node 0: 0.00
+Node 11: 7.45
+Node 3: 50.67
+Node 13: 103.59
+Node 7: 137.64
+Node 1: 159.64
+Node 10: 237.35
+Node 8: 275.83
+Node 9: 302.50
+Node 6: 333.96
+Node 12: 357.98
+Node 14: 392.25
+Node 15: 418.91
+Node 0: 445.91
+
+Departure Time (depart):
+Node 0: 0.00
+Node 11: 17.45
+Node 3: 60.84
+Node 13: 113.59
+Node 7: 147.64
+Node 1: 223.61
+Node 10: 247.35
+Node 8: 285.83
+Node 9: 312.50
+Node 6: 343.96
+Node 12: 367.98
+Node 14: 402.25
+Node 15: 428.91
+Node 0: 445.91
+
+Wireless Charging Selection (z):
+Arc (9 -> 6): 0.00
+Arc (15 -> 0): 0.00
+
+Linearized Wireless Charging (w_s_z):
+Arc (9 -> 6): 0.00
+Arc (15 -> 0): 0.00
+Optimized Cost: 229.95
+Route: 0 -> 11 -> 3 -> 13 -> 7 -> 1 -> 10 -> 8 -> 9 -> 6 -> 12 -> 14 -> 15 -> 0
+ Cost: 229.95, feasible: Yes
+
+Route 2: 0 -> 3 -> 6 -> 7 -> 13 -> 10 -> 1 -> 14 -> 15 -> 9 -> 11 -> 12 -> 8 -> 0
+
+=== Model Parameters for Route ===
+Charging Time (phi):
+Node 0: 0.00
+Node 3: 9.52
+Node 6: 0.00
+Node 7: 0.00
+Node 13: 0.00
+Node 10: 0.00
+Node 1: 59.96
+Node 14: 0.00
+Node 15: 0.00
+Node 9: 0.00
+Node 11: 0.00
+Node 12: 0.00
+Node 8: 0.00
+Node 0: 0.00
+
+Charging Option Selection (w):
+Node 3:
+  Option 1: 1.00
+  Option 2: 0.00
+Node 1:
+  Option 1: 1.00
+  Option 2: 0.00
+
+Linearized Charging (phi_w):
+Node 3:
+  Option 1: 9.52
+  Option 2: 0.00
+Node 1:
+  Option 1: 59.96
+  Option 2: 0.00
+
+Travel Time (s):
+Arc (0 -> 3): 26.14
+Arc (3 -> 6): 22.99
+Arc (6 -> 7): 21.71
+Arc (7 -> 13): 24.05
+Arc (13 -> 10): 9.29
+Arc (10 -> 1): 13.74
+Arc (1 -> 14): 21.34
+Arc (14 -> 15): 16.67
+Arc (15 -> 9): 31.45
+Arc (9 -> 11): 21.08
+Arc (11 -> 12): 13.74
+Arc (12 -> 8): 23.57
+Arc (8 -> 0): 14.91
+
+SOC on Arrival (ya):
+Node 0: 300.00
+Node 3: 245.11
+Node 6: 244.44
+Node 7: 198.86
+Node 13: 148.36
+Node 10: 128.86
+Node 1: 100.00
+Node 14: 354.97
+Node 15: 319.97
+Node 9: 253.94
+Node 11: 209.66
+Node 12: 180.80
+Node 8: 131.30
+Node 0: 100.00
+
+SOC on Departure (yd):
+Node 0: 300.00
+Node 3: 292.71
+Node 6: 244.44
+Node 7: 198.86
+Node 13: 148.36
+Node 10: 128.86
+Node 1: 399.80
+Node 14: 354.97
+Node 15: 319.97
+Node 9: 253.94
+Node 11: 209.66
+Node 12: 180.80
+Node 8: 131.30
+Node 0: 100.00
+
+Arrival Time (t):
+Node 0: 0.00
+Node 3: 26.14
+Node 6: 58.64
+Node 7: 90.35
+Node 13: 124.40
+Node 10: 143.68
+Node 1: 167.43
+Node 14: 248.73
+Node 15: 275.39
+Node 9: 316.84
+Node 11: 347.92
+Node 12: 371.67
+Node 8: 405.24
+Node 0: 430.14
+
+Departure Time (depart):
+Node 0: 0.00
+Node 3: 35.66
+Node 6: 68.64
+Node 7: 100.35
+Node 13: 134.40
+Node 10: 153.68
+Node 1: 227.38
+Node 14: 258.73
+Node 15: 285.39
+Node 9: 326.84
+Node 11: 357.92
+Node 12: 381.67
+Node 8: 415.24
+Node 0: 430.14
+
+Wireless Charging Selection (z):
+Arc (6 -> 7): 0.00
+Arc (1 -> 14): 0.00
+
+Linearized Wireless Charging (w_s_z):
+Arc (6 -> 7): 0.00
+Arc (1 -> 14): 0.00
+Optimized Cost: 216.71
+Route: 0 -> 3 -> 6 -> 7 -> 13 -> 10 -> 1 -> 14 -> 15 -> 9 -> 11 -> 12 -> 8 -> 0
+ Cost: 216.71, feasible: Yes
+
+Route 3: 0 -> 5 -> 11 -> 8 -> 10 -> 14 -> 15 -> 12 -> 6 -> 2 -> 13 -> 9 -> 2 -> 7 -> 0
+
+=== Model Parameters for Route ===
+Charging Time (phi):
+Node 0: 0.00
+Node 5: 42.43
+Node 11: 0.00
+Node 8: 0.00
+Node 10: 0.00
+Node 14: 0.00
+Node 15: 0.00
+Node 12: 0.00
+Node 6: 0.00
+Node 2: 33.58
+Node 13: 0.00
+Node 9: 0.00
+Node 2: 14.22
+Node 7: 0.00
+Node 0: 0.00
+
+Charging Option Selection (w):
+Node 5:
+  Option 1: 1.00
+  Option 2: 0.00
+Node 2:
+  Option 1: 1.00
+  Option 2: 0.00
+Node 2:
+  Option 1: 1.00
+  Option 2: 0.00
+
+Linearized Charging (phi_w):
+Node 5:
+  Option 1: 42.43
+  Option 2: 0.00
+Node 2:
+  Option 1: 33.58
+  Option 2: 0.00
+Node 2:
+  Option 1: 14.22
+  Option 2: 0.00
+
+Travel Time (s):
+Arc (0 -> 5): 24.80
+Arc (5 -> 11): 31.62
+Arc (11 -> 8): 22.36
+Arc (8 -> 10): 28.48
+Arc (10 -> 14): 33.33
+Arc (14 -> 15): 16.67
+Arc (15 -> 12): 9.43
+Arc (12 -> 6): 14.02
+Arc (6 -> 2): 15.55
+Arc (2 -> 13): 34.23
+Arc (13 -> 9): 33.69
+Arc (9 -> 2): 12.02
+Arc (2 -> 7): 21.87
+Arc (7 -> 0): 12.00
+
+SOC on Arrival (ya):
+Node 0: 300.00
+Node 5: 247.92
+Node 11: 393.65
+Node 8: 346.69
+Node 10: 286.89
+Node 14: 216.89
+Node 15: 181.89
+Node 12: 162.09
+Node 6: 132.65
+Node 2: 100.00
+Node 13: 195.99
+Node 9: 125.24
+Node 2: 100.00
+Node 7: 125.20
+Node 0: 100.00
+
+SOC on Departure (yd):
+Node 0: 300.00
+Node 5: 460.04
+Node 11: 393.65
+Node 8: 346.69
+Node 10: 286.89
+Node 14: 216.89
+Node 15: 181.89
+Node 12: 162.09
+Node 6: 132.65
+Node 2: 267.88
+Node 13: 195.99
+Node 9: 125.24
+Node 2: 171.12
+Node 7: 125.20
+Node 0: 100.00
+
+Arrival Time (t):
+Node 0: 0.00
+Node 5: 24.80
+Node 11: 98.84
+Node 8: 131.20
+Node 10: 169.68
+Node 14: 213.02
+Node 15: 239.68
+Node 12: 259.11
+Node 6: 283.13
+Node 2: 308.68
+Node 13: 376.49
+Node 9: 420.18
+Node 2: 442.20
+Node 7: 478.29
+Node 0: 500.29
+
+Departure Time (depart):
+Node 0: 0.00
+Node 5: 67.23
+Node 11: 108.84
+Node 8: 141.20
+Node 10: 179.68
+Node 14: 223.02
+Node 15: 249.68
+Node 12: 269.11
+Node 6: 293.13
+Node 2: 342.25
+Node 13: 386.49
+Node 9: 430.18
+Node 2: 456.42
+Node 7: 488.29
+Node 0: 500.29
+
+Wireless Charging Selection (z):
+Arc (0 -> 5): 0.00
+Arc (11 -> 8): 0.00
+Arc (15 -> 12): 0.00
+Arc (13 -> 9): 0.00
+Arc (9 -> 2): 0.00
+
+Linearized Wireless Charging (w_s_z):
+Arc (0 -> 5): 0.00
+Arc (11 -> 8): 0.00
+Arc (15 -> 12): 0.00
+Arc (13 -> 9): 0.00
+Arc (9 -> 2): 0.00
+Optimized Cost: 275.60
+Route: 0 -> 5 -> 11 -> 8 -> 10 -> 14 -> 15 -> 12 -> 6 -> 2 -> 13 -> 9 -> 2 -> 7 -> 0
+ Cost: 275.60, feasible: Yes
+
+Route 4: 0 -> 14 -> 15 -> 2 -> 6 -> 9 -> 12 -> 8 -> 3 -> 13 -> 11 -> 7 -> 10 -> 0
+
+=== Model Parameters for Route ===
+Charging Time (phi):
+Node 0: 0.00
+Node 14: 0.00
+Node 15: 0.00
+Node 2: 30.71
+Node 6: 0.00
+Node 9: 0.00
+Node 12: 0.00
+Node 8: 0.00
+Node 3: 40.56
+Node 13: 0.00
+Node 11: 0.00
+Node 7: 0.00
+Node 10: 0.00
+Node 0: 0.00
+
+Charging Option Selection (w):
+Node 2:
+  Option 1: 1.00
+  Option 2: 0.00
+Node 3:
+  Option 1: 1.00
+  Option 2: 0.00
+
+Linearized Charging (phi_w):
+Node 2:
+  Option 1: 30.71
+  Option 2: 0.00
+Node 3:
+  Option 1: 40.56
+  Option 2: 0.00
+
+Travel Time (s):
+Arc (0 -> 14): 21.34
+Arc (14 -> 15): 16.67
+Arc (15 -> 2): 25.73
+Arc (2 -> 6): 15.55
+Arc (6 -> 9): 21.47
+Arc (9 -> 12): 30.73
+Arc (12 -> 8): 23.57
+Arc (8 -> 3): 13.28
+Arc (3 -> 13): 42.75
+Arc (13 -> 11): 13.23
+Arc (11 -> 7): 10.93
+Arc (7 -> 10): 15.90
+Arc (10 -> 0): 13.74
+
+SOC on Arrival (ya):
+Node 0: 300.00
+Node 14: 255.18
+Node 15: 220.18
+Node 2: 166.14
+Node 6: 287.01
+Node 9: 241.93
+Node 12: 177.39
+Node 8: 127.89
+Node 3: 100.00
+Node 13: 213.01
+Node 11: 185.22
+Node 7: 162.26
+Node 10: 128.86
+Node 0: 100.00
+
+SOC on Departure (yd):
+Node 0: 300.00
+Node 14: 255.18
+Node 15: 220.18
+Node 2: 319.67
+Node 6: 287.01
+Node 9: 241.93
+Node 12: 177.39
+Node 8: 127.89
+Node 3: 302.78
+Node 13: 213.01
+Node 11: 185.22
+Node 7: 162.26
+Node 10: 128.86
+Node 0: 100.00
+
+Arrival Time (t):
+Node 0: 0.00
+Node 14: 21.34
+Node 15: 48.01
+Node 2: 83.74
+Node 6: 130.00
+Node 9: 161.47
+Node 12: 202.20
+Node 8: 235.77
+Node 3: 259.05
+Node 13: 342.36
+Node 11: 365.59
+Node 7: 386.53
+Node 10: 412.43
+Node 0: 436.17
+
+Departure Time (depart):
+Node 0: 0.00
+Node 14: 31.34
+Node 15: 58.01
+Node 2: 114.45
+Node 6: 140.00
+Node 9: 171.47
+Node 12: 212.20
+Node 8: 245.77
+Node 3: 299.61
+Node 13: 352.36
+Node 11: 375.59
+Node 7: 396.53
+Node 10: 422.43
+Node 0: 436.17
+
+Wireless Charging Selection (z):
+Arc (0 -> 14): 0.00
+Arc (6 -> 9): 0.00
+Arc (13 -> 11): 0.00
+Arc (7 -> 10): 0.00
+
+Linearized Wireless Charging (w_s_z):
+Arc (0 -> 14): 0.00
+Arc (6 -> 9): 0.00
+Arc (13 -> 11): 0.00
+Arc (7 -> 10): 0.00
+Optimized Cost: 221.77
+Route: 0 -> 14 -> 15 -> 2 -> 6 -> 9 -> 12 -> 8 -> 3 -> 13 -> 11 -> 7 -> 10 -> 0
+ Cost: 221.77, feasible: Yes
+
+Route 5: 0 -> 15 -> 12 -> 14 -> 13 -> 6 -> 7 -> 9 -> 8 -> 11 -> 3 -> 10 -> 0
+Optimized Cost: inf
+Route: 0 -> 15 -> 12 -> 14 -> 13 -> 6 -> 7 -> 9 -> 8 -> 11 -> 3 -> 10 -> 0
+ Cost: inf, feasible: No
+
+Test completed. Please verify the results.
+
+Process finished with exit code 0
