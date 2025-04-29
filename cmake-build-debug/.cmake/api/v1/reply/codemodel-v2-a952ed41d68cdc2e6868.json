@@ -1,0 +1,96 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Release-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "ETSP_WCL_Test1",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "TestOptimizer::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TestOptimizer-Release-e48755958af8a8fd921b.json",
+					"name" : "TestOptimizer",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "TestOptimizer2::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TestOptimizer2-Release-b0a39076bad0b8599edb.json",
+					"name" : "TestOptimizer2",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "TestReader::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TestReader-Release-ca64488b1dd883c933b6.json",
+					"name" : "TestReader",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "TestReader2::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TestReader2-Release-5d5fe6cb875cbbfe5b29.json",
+					"name" : "TestReader2",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "TestVNS::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TestVNS-Release-68128e17e04f6f5a996c.json",
+					"name" : "TestVNS",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/Work/NEULab/ESTP-WCL-Test5/cmake-build-debug",
+		"source" : "D:/Work/NEULab/ESTP-WCL-Test5"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}
