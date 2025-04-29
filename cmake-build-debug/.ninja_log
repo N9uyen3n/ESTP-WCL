@@ -1,12 +1,13 @@
 # ninja log v6
 30	172	7676421193026373	CMakeFiles/TestOptimizer2.dir/src/Model/ChargingOption.cpp.obj	6cc0d37ef60b931b
+166	410	7676467420242799	CMakeFiles/TestOptimizer.dir/src/VNS.cpp.obj	2850720c43e2385f
 16	177	7676421192888533	CMakeFiles/TestOptimizer2.dir/src/Model/Arc.cpp.obj	2da86be146ad451a
 50	2408	7676421193233623	CMakeFiles/TestOptimizer2.dir/src/Control/Utils.cpp.obj	edfb8627815df797
 178	828	7676421194503910	CMakeFiles/TestOptimizer2.dir/src/Model/Node.cpp.obj	392086f2a0475b50
 7	1871	7676421192808434	CMakeFiles/TestOptimizer2.dir/src/View/TestOptimizer2.cpp.obj	8436acd81a5f2fe0
 829	971	7676421201017371	CMakeFiles/TestOptimizer2.dir/src/Model/Params.cpp.obj	6a3bac4e97a32bea
-15	110	7676421354769949	CMakeFiles/TestReader2.dir/src/Model/Arc.cpp.obj	f0454c2556fd41a5
 23	1272	7676421192958669	CMakeFiles/TestOptimizer2.dir/src/Control/Route.cpp.obj	a062cf7915aba5c8
+15	110	7676421354769949	CMakeFiles/TestReader2.dir/src/Model/Arc.cpp.obj	f0454c2556fd41a5
 173	2039	7676421194458795	CMakeFiles/TestOptimizer2.dir/src/Control/CSVReader.cpp.obj	9d3b560b7da058d
 39	3473	7676421193119013	CMakeFiles/TestOptimizer2.dir/src/Control/Optimizer.cpp.obj	757d9cfb50282d38
 3473	3934	7676421227459745	TestOptimizer2.exe	5bb1f085a9e2291c
@@ -16,6 +17,7 @@
 20	1033	7676421354825214	CMakeFiles/TestReader2.dir/src/Control/Route.cpp.obj	b60e2d4bb2cc4b3f
 42	2048	7676421355034731	CMakeFiles/TestReader2.dir/src/Control/CSVReader.cpp.obj	918300efd6fb7d6
 111	2543	7676421355725489	CMakeFiles/TestReader2.dir/src/Control/Utils.cpp.obj	1be2d11101bfc5fc
+11	115	7676467418688135	CMakeFiles/TestOptimizer.dir/src/Model/Arc.cpp.obj	569280599e7043d7
 8	1011	7676424781238653	CMakeFiles/TestReader2.dir/src/View/TestReader2.cpp.obj	91d8a723bf623862
 1012	1458	7676424791273107	TestReader2.exe	e2a97bcc320e82b3
 34	3818	7676421354967341	CMakeFiles/TestReader2.dir/src/Control/Optimizer.cpp.obj	5055148148839d76
@@ -23,12 +25,19 @@
 23	225	7676425745734760	CMakeFiles/TestVNS.dir/src/Model/Arc.cpp.obj	a3189ed94a44548f
 42	676	7676425745918644	CMakeFiles/TestVNS.dir/src/Model/Node.cpp.obj	c59caae8333b9d97
 8	1477	7676425745576539	CMakeFiles/TestVNS.dir/src/View/TestVNS.cpp.obj	26d61375b9011e8e
+39	3330	7676467418968660	CMakeFiles/TestOptimizer.dir/src/Control/Optimizer.cpp.obj	fe4bb0cef055545
 167	787	7676425747175667	CMakeFiles/TestVNS.dir/src/Model/Params.cpp.obj	36517d3d9b14a849
-787	1550	7676425753368465	CMakeFiles/TestVNS.dir/src/Control/Neighborhood.cpp.obj	fad0fc11c8d7c816
+5	883	7676427462532927	CMakeFiles/TestVNS.dir/src/Control/Neighborhood.cpp.obj	fad0fc11c8d7c816
 17	2119	7676425745676623	CMakeFiles/TestVNS.dir/src/Control/VNSOptimizer.cpp.obj	d8e355c69771c60e
 225	2204	7676425747744659	CMakeFiles/TestVNS.dir/src/Control/Route.cpp.obj	deb86341e42b7b14
 35	2742	7676425745853499	CMakeFiles/TestVNS.dir/src/Control/CSVReader.cpp.obj	5990242daaeb0be2
 1477	3409	7676425760272629	CMakeFiles/TestVNS.dir/src/Control/Utils.cpp.obj	78c7ff7c0782828e
 676	4103	7676425752264925	CMakeFiles/TestVNS.dir/src/Control/Optimizer.cpp.obj	f2a00637ea5bc508
-5	883	7676427462532927	CMakeFiles/TestVNS.dir/src/Control/Neighborhood.cpp.obj	fad0fc11c8d7c816
 884	1338	7676427471323329	TestVNS.exe	e6dd3553e15f15f
+18	166	7676467418758130	CMakeFiles/TestOptimizer.dir/src/Model/ChargingOption.cpp.obj	db0427a5b3ce583a
+116	325	7676467419741099	CMakeFiles/TestOptimizer.dir/src/Model/Params.cpp.obj	c057d4211d0712d7
+23	1948	7676467418818144	CMakeFiles/TestOptimizer.dir/src/Control/CSVReader.cpp.obj	4d18e57641697f7c
+30	527	7676467418888702	CMakeFiles/TestOptimizer.dir/src/Model/Node.cpp.obj	ae9beb7ddf4429ec
+4	1983	7676467418618148	CMakeFiles/TestOptimizer.dir/src/View/TestOptimizer.cpp.obj	69488331ad39195e
+4	1397	7676467859682808	CMakeFiles/TestOptimizer.dir/src/Control/Utils.cpp.obj	e16d178bd2550621
+1397	1729	7676467873615164	TestOptimizer.exe	9dd0c3548fd76d1e

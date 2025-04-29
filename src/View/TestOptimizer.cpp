@@ -1,25 +1,12 @@
 #include <iomanip>
-
 #include "../../include/CSVReader.h"
 #include "../../include/Optimizer.h"
+#include "../../include/Utils.h" // Để sử dụng các hàm tiện ích
 #include <iostream>
 #include <vector>
 #include <stdexcept>
 #include <set>
-
-// Function to print node information for verification
-void printNodesInfo(const std::vector<Node>& nodes) {
-    std::cout << "\n=== Node Information ===\n";
-    std::cout << std::fixed << std::setprecision(2);
-    for (const auto& node : nodes) {
-        std::cout << "Node ID: " << node.id
-                  << ", StringID: " << node.string_id
-                  << ", Type: " << node.type
-                  << ", x: " << node.x
-                  << ", y: " << node.y
-                  << ", ServiceTime: " << node.service_time << "\n";
-    }
-}
+#include <random>
 
 // Function to validate a route
 bool isValidRoute(const std::vector<int>& route, const std::vector<Node>& nodes) {
@@ -55,10 +42,14 @@ void runTestCase(const std::string& testName, const std::vector<int>& route,
     }
 
     try {
-        double cost = optimizer.optimize(route, arcs, charge_options, params, nodes);
+        ModelParameters modelParams; // Tạo đối tượng để lưu tham số
+        double cost = optimizer.optimize(route, arcs, charge_options, params, nodes, modelParams);
 
         if (cost < 1e9) {
-            std::cout << "Result: Feasible route with cost = " << cost << std::endl;
+            std::cout << "Result: Feasible route with cost = " << std::fixed << std::setprecision(2) << cost << std::endl;
+            // In tham số bằng hàm trong Utils.h
+            std::cout << "\nModel Parameters for Test Case " << testName << ":\n";
+            printModelParameters(modelParams, route);
         } else {
             std::cout << "Result: Infeasible route" << std::endl;
         }
@@ -79,41 +70,53 @@ int main() {
         // Read nodes from CSV
         std::vector<Node> nodes = CSVReader::readNodes(data_dir + "nodes.csv");
 
-        // Print node information for verification
-        printNodesInfo(nodes);
-
         // Generate arcs using nodes and parameters
         std::vector<Arc> arcs = CSVReader::generateArcs(nodes, data_dir + "wireless_arcs.csv", params);
 
         // Read charging options
         std::vector<std::vector<ChargingOption>> charge_options = CSVReader::readChargingOptions(nodes, data_dir + "charging_options.csv");
 
-        // Initialize optimizer
+        // In thông tin đầu vào bằng các hàm trong Utils.h
+        printParamsInfo(params);
+        printNodesInfo(nodes);
+        printArcsInfo(arcs);
+        printChargingOptionsInfo(charge_options);
+
+        // Create an Optimizer instance
         Optimizer optimizer;
 
-        // Test case 1: Full route visiting all customers
-        // Assumes node IDs: 0 (depot), 6-15 (customers C1-C10)
-        // 0 -> 6 -> 8 -> 14 -> 0 -> 15 -> 12 -> 13 -> 10 -> 11 -> 7 -> 9
-        std::vector<int> route1 = {0,11,10,13,12,15,6,8,14,9,7,0};
-        runTestCase("Full route (all customers)", route1, arcs, charge_options, params, nodes, optimizer);
+        // Generate multiple initial routes using generateInitialRoute from Utils.h
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::vector<std::vector<int>> test_routes;
+        int num_routes = 5; // Số lượng tuyến đường cần tạo
 
-        // Test case 2: Short route with charging station
-        // Assumes node IDs: 0 (depot), 1 (charging station S0), 6 (customer C1)
-        // std::vector<int> route2 = {0,11,10,13,12,15,6,8,14,9,7,0};
-        // runTestCase("Short route with charging station", route2, arcs, charge_options, params, nodes, optimizer);
-        //
-        // // Test case 3: Potentially infeasible route (short route, may lack energy)
-        // // Assumes node IDs: 0 (depot), 6 (customer C1)
-        // std::vector<int> route3 = {0, 6, 0};
-        // runTestCase("Potentially infeasible route", route3, arcs, charge_options, params, nodes, optimizer);
-        //
-        // // Test case 4: Minimal route (depot to customer and back)
-        // // Assumes node IDs: 0 (depot), 6 (customer C1)
-        // std::vector<int> route4 = {0, 6, 0};
-        // runTestCase("Minimal route", route4, arcs, charge_options, params, nodes, optimizer);
+        for (int i = 0; i < num_routes; ++i) {
+            std::vector<int> route = generateInitialRoute(nodes, arcs, params, gen);
+            if (!route.empty()) {
+                test_routes.push_back(route);
+            } else {
+                std::cout << "Could not generate route for Test Case " << (i + 1) << std::endl;
+            }
+        }
+
+        // Kiểm tra nếu không tạo được tuyến nào
+        if (test_routes.empty()) {
+            std::cerr << "No feasible routes could be generated.\n";
+            return 1;
+        }
+
+        // Run test cases
+        for (size_t i = 0; i < test_routes.size(); ++i) {
+            std::string test_name = "Test Case " + std::to_string(i + 1);
+            runTestCase(test_name, test_routes[i], arcs, charge_options, params, nodes, optimizer);
+        }
 
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
+        return 1;
+    } catch (...) {
+        std::cerr << "Unknown error occurred.\n";
         return 1;
     }
 

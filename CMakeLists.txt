@@ -50,12 +50,12 @@ file(COPY "${CMAKE_SOURCE_DIR}/data/Input/" DESTINATION "${CMAKE_BINARY_DIR}/dat
 add_executable(TestOptimizer
         src/View/TestOptimizer.cpp
         src/Model/Arc.cpp
+        src/Control/Utils.cpp
         src/Model/ChargingOption.cpp
         src/Control/CSVReader.cpp
         src/Model/Node.cpp
         src/Control/Optimizer.cpp
         src/Model/Params.cpp
-        src/VNS.cpp
 )
 
 # Link libraries for TestOptimizer
