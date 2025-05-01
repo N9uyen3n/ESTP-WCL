@@ -5,7 +5,6 @@
 #include "Arc.h"
 #include "Node.h"
 #include "Params.h"
-#include "ChargingOption.h"
 #include <random>
 #include <vector>
 
@@ -15,28 +14,18 @@
 
 
 struct ModelParameters {
-    std::vector<double> phi;
-    std::vector<std::vector<int>> w;
-    std::vector<double> s;
-    std::vector<double> ya;
-    std::vector<double> yd;
-    std::vector<double> t;
-    std::vector<double> depart;
-    std::vector<int> z;
-    std::vector<double> w_s_z;
+    std::vector<std::vector<bool>> x; // x_ij: Arc (i,j) is used
+    std::vector<double> phi; // phi_i: Charging time at node i
+    std::vector<std::vector<bool>> w; // w_ik: Charging option k selected at node i
+    std::vector<std::vector<bool>> z; // z_ij: Wireless charging on arc (i,j)
+    std::vector<std::vector<double>> s; // s_ij: Travel time on arc (i,j)
+    std::vector<double> ya; // ya_i: State of charge (SOC) upon arrival at node i
+    std::vector<double> yd; // yd_i: State of charge (SOC) upon departure from node i
+    std::vector<double> t; // t_i: Arrival time at node i
 };
 
-void printModelParameters(const ModelParameters& params);
-void clearModelParameters(ModelParameters& params);
-void printNodesInfo(const std::vector<Node>& nodes);
-// printArcsInfo function
-void printArcsInfo(const std::vector<Arc>& arcs);
-// printChargingOptionsInfo function
-void printChargingOptionsInfo(const std::vector<std::vector<ChargingOption>>& options);
-// printParamsInfo function
-void printParamsInfo(const Params& params);
-// printModelParameters function prints the model parameters
-void printModelParameters(const ModelParameters& params, const std::vector<int>& route);
+
+
 bool isCustomer(int id, const std::vector<Node>& nodes);
 bool can_reach(int i, int j, double SOC, const std::vector<std::vector<Arc>>& arc_matrix, const Params& params);
 double update_SOC(int i, int j, double SOC, const std::vector<std::vector<Arc>>& arc_matrix, const Params& params);

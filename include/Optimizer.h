@@ -19,8 +19,7 @@ public:
         const std::vector<Arc>& arcs,
         const std::vector<std::vector<ChargingOption>>& charge_options,
         const Params& params,
-        const std::vector<Node>& nodes,
-        ModelParameters& modelParams // Thêm tham số
+        const std::vector<Node>& nodes
     );
 };
 

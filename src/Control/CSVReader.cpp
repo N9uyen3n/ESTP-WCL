@@ -184,7 +184,7 @@ Params CSVReader::readParams(const std::string& filename) {
         std::getline(ss, cell, ','); params.ct = std::stod(cell);  // 0.1
         // Thiết lập các tham số mặc định
         params.minSOC = 0.1 * params.Q;     // Ví dụ: 10% của Q (100.0)
-        params.initial_SOC = params.Q * 0.3;
+        params.initial_SOC = params.Q * 1;
         params.M = 1e6;                     // Hằng số big-M
     }
     file.close();

@@ -6,17 +6,18 @@
 #include "../../include/Utils.h"
 #include <random>
 
-VNSOptimizer::VNSOptimizer(const std::vector<Node>& nds,
-                           const std::vector<Arc>& ars,
-                           const std::vector<std::vector<ChargingOption>>& chg_opts,
-                           const Params& prms)
-    : nodes(nds), arcs(ars), charge_options(chg_opts), params(prms) {}
+VNSOptimizer::VNSOptimizer( const std::vector<int>& S_prime,
+                            const std::vector<Node>& nodes,
+                            const std::vector<Arc>& ars,
+                            const std::vector<std::vector<ChargingOption>>& chg_opts,
+                            const Params& params)
+    : S_prime(S_prime),nodes(nodes), arcs(ars), charge_options(chg_opts), params(params) {}
 
 Route VNSOptimizer::run(int max_iterations) {
     // Khởi tạo tuyến đường ban đầu
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::vector<int> initial_nodes = generateInitialRoute(nodes, arcs, params, gen);
+    std::vector<int> initial_nodes = S_prime;
     Route best_route(initial_nodes);
     best_route.optimize(arcs, charge_options, params, nodes, optimizer);
     Route current_route = best_route;
@@ -67,3 +68,4 @@ Route VNSOptimizer::run(int max_iterations) {
     }
     return best_route;
 }
+

@@ -11,31 +11,43 @@
 #include <random>
 
 
-
 int main() {
-    std::cout << "Testing VNSOptimizer for ETSP-WCL...\n";
-
     try {
-        Params params = CSVReader::readParams("D:\\Work\\NEULab\\ESTP-WCL-Test5\\data\\Input\\params.csv");
-        std::vector<Node> nodes = CSVReader::readNodes("D:\\Work\\NEULab\\ESTP-WCL-Test5\\data\\Input\\nodes.csv");
-        std::vector<Arc> arcs = CSVReader::generateArcs(nodes,
-            "D:\\Work\\NEULab\\ESTP-WCL-Test5\\data\\Input\\wireless_arcs.csv", params);
-        std::vector<std::vector<ChargingOption>> charge_options = CSVReader::readChargingOptions(nodes,
-            "D:\\Work\\NEULab\\ESTP-WCL-Test5\\data\\Input\\charging_options.csv");
+        // Đọc dữ liệu từ file CSV
+        std::string data_dir = "D:\\Work\\NEULab\\ESTP-WCL-Test5\\data\\Input\\c10-s5\\";
+        Params params = CSVReader::readParams(data_dir + "params.csv");
+        std::vector<Node> nodes = CSVReader::readNodes(data_dir + "nodes.csv");
+        std::vector<Arc> arcs = CSVReader::generateArcs(nodes, data_dir + "wireless_arcs.csv", params);
+        std::vector<std::vector<ChargingOption>> charge_options = CSVReader::readChargingOptions(nodes, data_dir + "charging_options.csv");
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::vector<int> initial_route = generateInitialRoute(nodes, arcs, params, gen, 0.2);
+        // Test MILP
+        std::cout << "Route: ";
+        for (int node : initial_route) {
+            std::cout << node << " ";
+        }
+        std::cout << "Testing MILP...\n";
+        std::vector<int> test_route = initial_route; // Tuyến đường đơn giản để test
+        Optimizer optimizer;
+        double milp_cost = optimizer.optimize(test_route, arcs, charge_options, params, nodes);
+        std::cout << "MILP Cost: " << milp_cost << "\n";
 
-        std::cout << "\n";
+        // Test VNS + MILP
+        std::cout << "Testing VNS + MILP...\n";
 
-        VNSOptimizer vns_optimizer(nodes, arcs, charge_options, params);
-        Route best_route = vns_optimizer.run(100);
-
-        std::cout << "Best route after VNS optimization:\n";
-        best_route.print();
+        VNSOptimizer vns(initial_route, nodes, arcs, charge_options, params);
+        Route best_route = vns.run(20);
+        std::cout << "Best Route: ";
+        for (int node : best_route.getNodeIds()) {
+            std::cout << node << " ";
+        }
+        std::cout << "\nVNS + MILP Cost: " << best_route.getTotalCost() << "\n";
 
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << "\n";
         return 1;
     }
 
-    std::cout << "\nTesting completed. Please verify the results.\n";
     return 0;
 }

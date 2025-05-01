@@ -14,9 +14,9 @@
 
 class Route {
 private:
-    std::vector<int> node_ids; // Danh sách ID của các nút trong tuyến đường
-    double total_cost;         // Tổng chi phí của tuyến đường
-    bool is_feasible;          // Tính khả thi của tuyến đường
+    std::vector<int> node_ids;
+    double total_cost;
+    bool is_feasible;
 
 public:
     // Constructor

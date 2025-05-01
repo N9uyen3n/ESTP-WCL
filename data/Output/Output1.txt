@@ -1,0 +1,55 @@
+
+Test case: c5-s5-80
+Route: 0 9 6 10 8 7 0
+Testing MILP...
+Cost: 5.24605
+MILP Cost: 5.24605
+Best Route: 0 7 9 8 6 0 10
+VNS + MILP Cost: 4.15151
+
+
+Test case: c5-s5-90
+Route: 0 8 10 4 7 6 1 9 0
+Testing MILP...
+Cost: 5.32867
+MILP Cost: 5.32867
+Testing VNS + MILP...
+Best Route: 0 1 0 10 7 9 8 4 6
+VNS + MILP Cost: 4.15215
+
+Test case: c5-s5-100
+Route: 0 8 7 10 6 9 0
+Testing MILP...
+Cost: 5.2267
+MILP Cost: 5.2267
+Testing VNS + MILP...
+Best Route: 0 6 8 9 7 0 10
+VNS + MILP Cost: 4.15151
+
+Test case: c10-s5-80
+Route: 0 14 12 9 10 11 13 15 7 3 8 6 0
+Testing MILP...
+Cost: 33.3085
+MILP Cost: 33.3085
+Testing VNS + MILP...
+Best Route: 0 7 9 3 14 8 6 15 12 0 11 10 13
+VNS + MILP Cost: 22.9329
+
+Test case: c10-s5-90
+Route: 0 12 10 3 14 8 6 11 5 13 15 7 9 0
+Testing MILP...
+Cost: 36.554
+MILP Cost: 36.554
+Testing VNS + MILP...
+Best Route: 0 7 0 11 10 13 12 15 6 14 5 8 3 9
+VNS + MILP Cost: 22.5399
+
+Test case: c10-s5-100
+Route: 0 1 7 3 13 11 8 9 12 2 10 14 6 3 15 0
+Testing MILP...
+Cost: 44.4978
+MILP Cost: 44.4978
+Testing VNS + MILP...
+Best Route: 0 1 0 15 12 13 10 11 7 3 14 6 8 2 3 9
+VNS + MILP Cost: 25.5105
+

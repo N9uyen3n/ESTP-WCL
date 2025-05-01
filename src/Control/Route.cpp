@@ -12,17 +12,17 @@ Route::Route(const std::vector<int>& initial_nodes)
     : node_ids(initial_nodes), total_cost(0.0), is_feasible(true) {
 }
 
-// Tối ưu hóa tuyến đường bằng MILP
+// Optimize the route using MILP
 double Route::optimize(const std::vector<Arc>& arcs,
                        const std::vector<std::vector<ChargingOption>>& charge_options,
                        const Params& params,
                        const std::vector<Node>& nodes,
                        Optimizer& optimizer) {
-    // Gọi hàm optimize của Optimizer để tối ưu hóa tuyến đường
+    // Call the optimize function of Optimizer to optimize the route
     total_cost = optimizer.optimize(node_ids, arcs, charge_options, params, nodes);
 
-    // Cập nhật tính khả thi dựa trên chi phí
-    if (total_cost >= 1e9) { // Giả định chi phí lớn biểu thị không khả thi
+    // Update feasibility based on cost
+    if (total_cost >= 1e9) { // Assuming large cost indicates infeasibility
         is_feasible = false;
     } else {
         is_feasible = true;
@@ -31,7 +31,7 @@ double Route::optimize(const std::vector<Arc>& arcs,
     return total_cost;
 }
 
-// In tuyến đường
+// Print the route
 void Route::print() const {
     std::cout << "Route: ";
     for (size_t i = 0; i < node_ids.size(); ++i) {

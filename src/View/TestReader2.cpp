@@ -108,7 +108,7 @@ int main() {
         std::cout << "cost: " << optimized_cost << "\n";
 
     } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << "\n";
+        std::cerr << "Error 1: " << e.what() << "\n";
         return 1;
     }
 

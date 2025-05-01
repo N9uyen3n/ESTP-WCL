@@ -42,14 +42,10 @@ void runTestCase(const std::string& testName, const std::vector<int>& route,
     }
 
     try {
-        ModelParameters modelParams; // Tạo đối tượng để lưu tham số
-        double cost = optimizer.optimize(route, arcs, charge_options, params, nodes, modelParams);
+        double cost = optimizer.optimize(route, arcs, charge_options, params, nodes);
 
         if (cost < 1e9) {
             std::cout << "Result: Feasible route with cost = " << std::fixed << std::setprecision(2) << cost << std::endl;
-            // In tham số bằng hàm trong Utils.h
-            std::cout << "\nModel Parameters for Test Case " << testName << ":\n";
-            printModelParameters(modelParams, route);
         } else {
             std::cout << "Result: Infeasible route" << std::endl;
         }
@@ -75,12 +71,6 @@ int main() {
 
         // Read charging options
         std::vector<std::vector<ChargingOption>> charge_options = CSVReader::readChargingOptions(nodes, data_dir + "charging_options.csv");
-
-        // In thông tin đầu vào bằng các hàm trong Utils.h
-        printParamsInfo(params);
-        printNodesInfo(nodes);
-        printArcsInfo(arcs);
-        printChargingOptionsInfo(charge_options);
 
         // Create an Optimizer instance
         Optimizer optimizer;
@@ -113,7 +103,7 @@ int main() {
         }
 
     } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+        std::cerr << "Error 1: " << e.what() << std::endl;
         return 1;
     } catch (...) {
         std::cerr << "Unknown error occurred.\n";

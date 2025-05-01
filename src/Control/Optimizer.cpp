@@ -3,20 +3,29 @@
 //
 
 #include "../../include/Optimizer.h"
-#include "../../include/Utils.h"
 #include <ilcplex/ilocplex.h>
 #include <limits>
 #include <vector>
-
 ILOSTLBEGIN
+
+/*
+ * SETS AND INDICES
+ * - V': Set of all nodes (depot 0, customers N, charging stations F', depot n+1).
+ * - N: Set of customer nodes.
+ * - F: Set of physical charging stations.
+ * - F': Set of duplicated charging station nodes (f_k for f in F, k=1,...,m, m=|N|).
+ * - A': Set of arcs connecting nodes in V'.
+ * - A'^w: Subset of arcs with wireless charging capability.
+ * - K: Set of charging options (0: no charging, 1: slow, 2: fast).
+ */
+
 
 double Optimizer::optimize(
     const std::vector<int>& S_prime,
-    const std::vector<Arc>& arcs,
+    const std::vector<Arc>& arcs, // V'
     const std::vector<std::vector<ChargingOption>>& charge_options,
     const Params& params,
-    const std::vector<Node>& nodes,
-    ModelParameters& modelParams) {
+    const std::vector<Node>& nodes) {
     try {
         IloEnv env;
         IloModel model(env);
@@ -44,6 +53,7 @@ double Optimizer::optimize(
                     is_wireless_route[k] = arc.is_wireless;
                     U_min_route[k] = arc.U_min;
                     U_max_route[k] = arc.U_max;
+                    // (dij/Umax,ij) * xij ≤ sij ≤ (dij/Umin,ij) * xij, ∀(i, j) ∈ A'
                     min_s[k] = arc.dij / arc.U_max; // Minimum time
                     max_s[k] = arc.dij / arc.U_min; // Maximum time
                     found = true;
@@ -70,7 +80,7 @@ double Optimizer::optimize(
         IloNumVarArray ya(env, n, params.minSOC, params.Q, ILOFLOAT);
         IloNumVarArray yd(env, n, params.minSOC, params.Q, ILOFLOAT);
         IloNumVarArray t(env, n, 0, IloInfinity, ILOFLOAT);
-        IloNumVarArray depart(env, n, 0, IloInfinity, ILOFLOAT);
+        IloNumVarArray depart(env, n, 0, IloInfinity, ILOFLOAT); // Departure time
 
         // Linearization variables for phi[i] * w[i][k]
         std::vector<IloNumVarArray> phi_w(n);
@@ -96,6 +106,7 @@ double Optimizer::optimize(
         }
 
         // Objective function
+        // min ∑(i∈F') ∑(k∈K) cik * rik * ϕi * wik + cw * ∑((i,j)∈A'w) βij * sij * zij + ct * tn+1
         IloExpr obj(env);
 
         // Component 1: Fixed charging costs
@@ -137,15 +148,19 @@ double Optimizer::optimize(
             }
         }
 
+        // tj ≥ ti + τi + sij - M(1 - xij), ∀(i, j) ∈ A' và i ∈ N
+        // tj ≥ ti + ϕi + sij - M(1 - xij), ∀(i, j) ∈ A' và i ∈ F'
+        // tj ≥ ti + sij - M(1 - xij), i = 0, ∀(i, j) ∈ A'
+
         // Constraints for departure time
-        model.add(depart[0] == t[0]);
+        model.add(depart[0] == t[0]); // For start depot
         for (int i = 1; i < n; ++i) {
             int node = S_prime[i];
-            if (charge_options[node].size() > 0) {
+            if (charge_options[node].size() > 0) { // Charging station
                 model.add(depart[i] == t[i] + phi[i]);
-            } else if (node != 0) {
+            } else if (node != 0) { // Customer
                 model.add(depart[i] == t[i] + nodes[node].service_time);
-            } else {
+            } else { // End depot
                 model.add(depart[i] == t[i]);
             }
         }
@@ -159,28 +174,39 @@ double Optimizer::optimize(
         }
 
         // SOC constraints
+        // Initial SOC
         model.add(ya[0] == params.initial_SOC);
+
+        // SOC bounds
         for (int i = 0; i < n; i++) {
-            model.add(ya[i] >= params.minSOC);
-            model.add(yd[i] >= params.minSOC);
+            model.add(ya[i] >= params.minSOC);  // SOC khi đến không dưới mức tối thiểu
+            model.add(yd[i] >= params.minSOC);  // SOC khi rời không dưới mức tối thiểu
         }
+        // SOC at nodes
+        // yid = yia + ∑(k∈K) rik * ϕi * wik, ∀i ∈ F'
         for (int i = 0; i < n; ++i) {
             if (charge_options[S_prime[i]].size() > 0) {
                 IloExpr charge_amount(env);
+
                 for (size_t kk = 0; kk < charge_options[S_prime[i]].size(); ++kk) {
                     charge_amount += charge_options[S_prime[i]][kk].rate * phi_w[i][kk];
                 }
+                // yid = yia, ∀i ∈ N
                 model.add(yd[i] == ya[i] + charge_amount);
             } else {
+                // yid = yia, ∀i ∈ N
                 model.add(yd[i] == ya[i]);
             }
         }
+        // SOC on arcs
         for (int k = 0; k < m; ++k) {
             int i_idx = k;
             int j_idx = k + 1;
-            if (!is_wireless_route[k]) {
-                model.add(ya[j_idx] <= yd[i_idx] - params.h * d_ij[k] * params.Q / 100.0);
-            } else {
+            if (!is_wireless_route[k]) { // Non-wireless
+                // yja ≤ yid - hdij + Q(1 - xij), ∀(i, j) ∈ A'\A'w
+                model.add(ya[j_idx] <= yd[i_idx] - params.h * d_ij[k] * params.Q / 100.0); // Scale consumption
+            } else { // Wireless
+                // yja ≤ yid - hdij + βijsijzij + Q(1 - xij), ∀(i, j) ∈ A'w
                 int l = -1;
                 for (int ll = 0; ll < p; ++ll) {
                     if (wireless_k[ll] == k) {
@@ -191,6 +217,7 @@ double Optimizer::optimize(
                 if (l != -1) {
                     model.add(ya[j_idx] <= yd[i_idx] - params.h * d_ij[k] * params.Q / 100.0 + beta_ij[k] * w_s_z[l]);
                 } else {
+                    std::cerr << "Error: Wireless arc " << k << " not found in wireless_k" << std::endl;
                     env.end();
                     return std::numeric_limits<double>::infinity();
                 }
@@ -227,58 +254,90 @@ double Optimizer::optimize(
 
         double cost = cplex.getObjValue();
 
-        // Lưu các tham số vào ModelParameters
-        // Xóa các vector hiện tại trong modelParams để tránh dữ liệu cũ
-        clearModelParameters(modelParams);
+        // // Print model parameters (decision variables)
+        // std::cout << "\n=== Model Parameters for Route ===\n";
+        // std::cout << std::fixed << std::setprecision(2);
+        //
+        // // Print phi (charging time at nodes)
+        // std::cout << "Charging Time (phi):\n";
+        // for (int i = 0; i < n; ++i) {
+        //     std::cout << "Node " << S_prime[i] << ": " << cplex.getValue(phi[i]) << "\n";
+        // }
+        //
+        // // Print w (charging option selection)
+        // std::cout << "\nCharging Option Selection (w):\n";
+        // for (int i = 0; i < n; ++i) {
+        //     int node = S_prime[i];
+        //     if (charge_options[node].size() > 0) {
+        //         std::cout << "Node " << node << ":\n";
+        //         for (size_t kk = 0; kk < charge_options[node].size(); ++kk) {
+        //             std::cout << "  Option " << charge_options[node][kk].option << ": "
+        //                       << cplex.getValue(w[i][kk]) << "\n";
+        //         }
+        //     }
+        // }
+        //
+        // // Print phi_w (linearized phi * w)
+        // std::cout << "\nLinearized Charging (phi_w):\n";
+        // for (int i = 0; i < n; ++i) {
+        //     int node = S_prime[i];
+        //     if (charge_options[node].size() > 0) {
+        //         std::cout << "Node " << node << ":\n";
+        //         for (size_t kk = 0; kk < charge_options[node].size(); ++kk) {
+        //             std::cout << "  Option " << charge_options[node][kk].option << ": "
+        //                       << cplex.getValue(phi_w[i][kk]) << "\n";
+        //         }
+        //     }
+        // }
+        //
+        // // Print s (travel time on arcs)
+        // std::cout << "\nTravel Time (s):\n";
+        // for (int k = 0; k < m; ++k) {
+        //     std::cout << "Arc (" << S_prime[k] << " -> " << S_prime[k + 1] << "): "
+        //               << cplex.getValue(s[k]) << "\n";
+        // }
+        //
+        // // Print ya (SOC on arrival)
+        // std::cout << "\nSOC on Arrival (ya):\n";
+        // for (int i = 0; i < n; ++i) {
+        //     std::cout << "Node " << S_prime[i] << ": " << cplex.getValue(ya[i]) << "\n";
+        // }
+        //
+        // // Print yd (SOC on departure)
+        // std::cout << "\nSOC on Departure (yd):\n";
+        // for (int i = 0; i < n; ++i) {
+        //     std::cout << "Node " << S_prime[i] << ": " << cplex.getValue(yd[i]) << "\n";
+        // }
+        //
+        // // Print t (arrival time)
+        // std::cout << "\nArrival Time (t):\n";
+        // for (int i = 0; i < n; ++i) {
+        //     std::cout << "Node " << S_prime[i] << ": " << cplex.getValue(t[i]) << "\n";
+        // }
+        //
+        // // Print depart (departure time)
+        // std::cout << "\nDeparture Time (depart):\n";
+        // for (int i = 0; i < n; ++i) {
+        //     std::cout << "Node " << S_prime[i] << ": " << cplex.getValue(depart[i]) << "\n";
+        // }
+        //
+        // // Print z (wireless charging selection)
+        // std::cout << "\nWireless Charging Selection (z):\n";
+        // for (int l = 0; l < p; ++l) {
+        //     int k = wireless_k[l];
+        //     std::cout << "Arc (" << S_prime[k] << " -> " << S_prime[k + 1] << "): "
+        //               << cplex.getValue(z[l]) << "\n";
+        // }
+        //
+        // // Print w_s_z (linearized s * z)
+        // std::cout << "\nLinearized Wireless Charging (w_s_z):\n";
+        // for (int l = 0; l < p; ++l) {
+        //     int k = wireless_k[l];
+        //     std::cout << "Arc (" << S_prime[k] << " -> " << S_prime[k + 1] << "): "
+        //               << cplex.getValue(w_s_z[l]) << "\n";
+        // }
 
-        // Lưu phi (thời gian sạc tại các nút)
-        for (int i = 0; i < n; ++i) {
-            modelParams.phi.push_back(cplex.getValue(phi[i]));
-        }
-
-        // Lưu w (lựa chọn tùy chọn sạc)
-        modelParams.w.resize(n);
-        for (int i = 0; i < n; ++i) {
-            int node = S_prime[i];
-            for (size_t kk = 0; kk < charge_options[node].size(); ++kk) {
-                modelParams.w[i].push_back(static_cast<int>(cplex.getValue(w[i][kk])));
-            }
-        }
-
-        // Lưu s (thời gian di chuyển trên các cung)
-        for (int k = 0; k < m; ++k) {
-            modelParams.s.push_back(cplex.getValue(s[k]));
-        }
-
-        // Lưu ya (SOC khi đến)
-        for (int i = 0; i < n; ++i) {
-            modelParams.ya.push_back(cplex.getValue(ya[i]));
-        }
-
-        // Lưu yd (SOC khi rời)
-        for (int i = 0; i < n; ++i) {
-            modelParams.yd.push_back(cplex.getValue(yd[i]));
-        }
-
-        // Lưu t (thời gian đến)
-        for (int i = 0; i < n; ++i) {
-            modelParams.t.push_back(cplex.getValue(t[i]));
-        }
-
-        // Lưu depart (thời gian rời)
-        for (int i = 0; i < n; ++i) {
-            modelParams.depart.push_back(cplex.getValue(depart[i]));
-        }
-
-        // Lưu z (lựa chọn sạc không dây)
-        for (int l = 0; l < p; ++l) {
-            modelParams.z.push_back(static_cast<int>(cplex.getValue(z[l])));
-        }
-
-        // Lưu w_s_z (giá trị tuyến tính hóa sạc không dây)
-        for (int l = 0; l < p; ++l) {
-            modelParams.w_s_z.push_back(cplex.getValue(w_s_z[l]));
-        }
+        std::cout << "Cost: " << cost << std::endl;
 
         env.end();
         return cost;
@@ -287,4 +346,7 @@ double Optimizer::optimize(
         std::cerr << "CPLEX Exception: " << e.getMessage() << std::endl;
         return std::numeric_limits<double>::infinity();
     }
+
+
+
 }
