@@ -1,0 +1,97 @@
+Các node từ 1->5 là trạm sạc, > 5 là khách hàng áp dụng cho 2 trờng hợp là 5 và 10 khách hàng với 5 trạm sạc
+Test c10-s5-100% Pin
+D:\Work\NEULab\ETSP-WCL-Test8\cmake-build-debug\TestVNS.exe
+
+Route: 0 11 7 13 6 15 10 12 9 14 8 0 Testing MILP...
+MILP Cost: 29.2265
+Testing VNS + MILP...
+Iteration 10:
+Best Route:
+Route: 0 -> 7 -> 9 -> 8 -> 14 -> 6 -> 15 -> 12 -> 13 -> 11 -> 10 -> 0
+ Cost: 22.56, feasible: Yes
+Total Cost: 22.56
+Feasible: Yes
+------------------------
+Iteration 20:
+Best Route:
+Route: 0 -> 7 -> 9 -> 8 -> 14 -> 6 -> 15 -> 12 -> 13 -> 10 -> 11 -> 0
+ Cost: 21.54, feasible: Yes
+Total Cost: 21.54
+Feasible: Yes
+------------------------
+Best Route: 0 7 9 8 14 6 15 12 13 10 11 0
+VNS + MILP Cost: 21.54
+
+Process finished with exit code 0
+
+Test c10-s5-60% Pin
+D:\Work\NEULab\ETSP-WCL-Test8\cmake-build-debug\TestVNS.exe
+Route: 0 11 6 14 8 13 9 7 10 15 12 0 Testing MILP...
+MILP Cost: 26.6629
+Testing VNS + MILP...
+Iteration 10:
+Best Route:
+Route: 0 -> 6 -> 14 -> 8 -> 2 -> 9 -> 7 -> 11 -> 10 -> 13 -> 12 -> 15 -> 0
+ Cost: 21.60, feasible: Yes
+Total Cost: 21.60
+Feasible: Yes
+------------------------
+Iteration 20:
+Best Route:
+Route: 0 -> 6 -> 14 -> 8 -> 2 -> 9 -> 7 -> 11 -> 10 -> 13 -> 12 -> 15 -> 0
+ Cost: 21.60, feasible: Yes
+Total Cost: 21.60
+Feasible: Yes
+------------------------
+Best Route: 0 6 14 8 2 9 7 11 10 13 12 15 0
+VNS + MILP Cost: 21.60
+
+Process finished with exit code 0
+
+Test c5-s5-100% Pin
+D:\Work\NEULab\ETSP-WCL-Test8\cmake-build-debug\TestVNS.exe
+Route: 0 6 10 9 8 7 0 Testing MILP...
+MILP Cost: 5.21543
+Testing VNS + MILP...
+Iteration 10:
+Best Route:
+Route: 0 -> 6 -> 8 -> 9 -> 7 -> 10 -> 0
+ Cost: 5.16, feasible: Yes
+Total Cost: 5.16
+Feasible: Yes
+------------------------
+Iteration 20:
+Best Route:
+Route: 0 -> 6 -> 8 -> 9 -> 7 -> 10 -> 0
+ Cost: 5.16, feasible: Yes
+Total Cost: 5.16
+Feasible: Yes
+------------------------
+Best Route: 0 6 8 9 7 10 0
+VNS + MILP Cost: 5.16
+
+Process finished with exit code 0
+
+Test c5-s5-60% Pin
+D:\Work\NEULab\ETSP-WCL-Test8\cmake-build-debug\TestVNS.exe
+Route: 0 7 9 10 6 8 0 Testing MILP...
+MILP Cost: 5.18465
+Testing VNS + MILP...
+Iteration 10:
+Best Route:
+Route: 0 -> 10 -> 7 -> 9 -> 8 -> 6 -> 1 -> 0
+ Cost: 5.15, feasible: Yes
+Total Cost: 5.15
+Feasible: Yes
+------------------------
+Iteration 20:
+Best Route:
+Route: 0 -> 10 -> 7 -> 9 -> 8 -> 6 -> 1 -> 0
+ Cost: 5.15, feasible: Yes
+Total Cost: 5.15
+Feasible: Yes
+------------------------
+Best Route: 0 10 7 9 8 6 1 0
+VNS + MILP Cost: 5.15
+
+Process finished with exit code 0

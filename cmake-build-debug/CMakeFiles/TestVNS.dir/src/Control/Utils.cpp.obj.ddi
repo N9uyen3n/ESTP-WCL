@@ -1,0 +1,13 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "CMakeFiles\\TestVNS.dir\\src\\Control\\Utils.cpp.obj",
+            "outputs": [
+                "CMakeFiles\\TestVNS.dir\\src\\Control\\Utils.cpp.obj.ddi"
+            ],
+            "requires": []
+        }
+    ]
+}

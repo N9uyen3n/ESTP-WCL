@@ -1,0 +1,13 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "CMakeFiles\\TestVNS.dir\\src\\Model\\ChargingOption.cpp.obj",
+            "outputs": [
+                "CMakeFiles\\TestVNS.dir\\src\\Model\\ChargingOption.cpp.obj.ddi"
+            ],
+            "requires": []
+        }
+    ]
+}

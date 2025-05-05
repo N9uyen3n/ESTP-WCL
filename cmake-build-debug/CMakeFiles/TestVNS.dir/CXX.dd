@@ -1,0 +1,23 @@
+ninja_dyndep_version = 1.0
+build CMakeFiles\TestVNS.dir\src\View\TestVNS.cpp.obj: dyndep
+
+build CMakeFiles\TestVNS.dir\src\Control\VNSOptimizer.cpp.obj: dyndep
+
+build CMakeFiles\TestVNS.dir\src\Control\CSVReader.cpp.obj: dyndep
+
+build CMakeFiles\TestVNS.dir\src\Control\Route.cpp.obj: dyndep
+
+build CMakeFiles\TestVNS.dir\src\Control\Optimizer.cpp.obj: dyndep
+
+build CMakeFiles\TestVNS.dir\src\Control\Neighborhood.cpp.obj: dyndep
+
+build CMakeFiles\TestVNS.dir\src\Control\Utils.cpp.obj: dyndep
+
+build CMakeFiles\TestVNS.dir\src\Model\Arc.cpp.obj: dyndep
+
+build CMakeFiles\TestVNS.dir\src\Model\ChargingOption.cpp.obj: dyndep
+
+build CMakeFiles\TestVNS.dir\src\Model\Node.cpp.obj: dyndep
+
+build CMakeFiles\TestVNS.dir\src\Model\Params.cpp.obj: dyndep
+
