@@ -14,7 +14,7 @@
 int main() {
     try {
         // Đọc dữ liệu từ file CSV
-        std::string data_dir = "D:\\Work\\NEULab\\ESTP-WCL-Test5\\data\\Input\\c10-s5\\";
+        std::string data_dir = "D:\\Work\\NEULab\\ESTP-WCL-Test5\\data\\Input\\";
         Params params = CSVReader::readParams(data_dir + "params.csv");
         std::vector<Node> nodes = CSVReader::readNodes(data_dir + "nodes.csv");
         std::vector<Arc> arcs = CSVReader::generateArcs(nodes, data_dir + "wireless_arcs.csv", params);

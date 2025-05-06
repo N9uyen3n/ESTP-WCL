@@ -44,3 +44,15 @@ void Route::print() const {
               << ", feasible: " << (is_feasible ? "Yes" : "No") << "\n";
 }
 
+int countChargingStations(const std::vector<int>& route, const std::vector<Node>& nodes) {
+    int count = 0;
+    for (size_t i = 1; i < route.size() - 1; ++i) { // Bỏ qua depot đầu và cuối
+        for (const auto& node : nodes) {
+            if (node.id == route[i] && node.type == "f") {
+                count++;
+                break;
+            }
+        }
+    }
+    return count;
+}

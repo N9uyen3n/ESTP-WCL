@@ -7,6 +7,7 @@
 #include <random>
 #include <iostream>
 #include <set>
+#include <iomanip>
 
 VNSOptimizer::VNSOptimizer(const std::vector<int>& S_prime,
                            const std::vector<Node>& nodes,
@@ -37,6 +38,19 @@ bool isValidRoute(const std::vector<int>& route, const std::vector<Node>& nodes,
     return visited_customers == required_customers; // Phải ghé thăm tất cả khách hàng
 }
 
+// Hàm chọn lân cận ngẫu nhiên dựa trên trọng số
+int selectWeightedNeighborhood(std::mt19937& gen, const std::vector<double>& weights) {
+    std::discrete_distribution<> dist(weights.begin(), weights.end());
+    return dist(gen);
+}
+
+// Hàm kiểm tra cải thiện đáng kể (≥ 0.01%)
+bool checkSignificantImprovement(double old_cost, double new_cost) {
+    if (old_cost <= 0) return false;
+    double improvement = (old_cost - new_cost) / old_cost * 100.0;
+    return improvement >= 0.01;
+}
+
 Route VNSOptimizer::run(int max_iterations) {
     // Khởi tạo random number generator
     std::random_device rd;
@@ -57,75 +71,109 @@ Route VNSOptimizer::run(int max_iterations) {
     best_route.optimize(arcs, charge_options, params, nodes, optimizer);
     Route current_route = best_route;
 
+    // Khởi tạo trọng số toán tử
+    std::vector<double> operator_weights = {0.4, 0.3, 0.2, 0.1}; // 2-opt, relocate, swap, station add/remove
+    int no_improvement_counter = 0;
+
     // Số lượng tối đa các cấu trúc lân cận
-    int k_max = 4; // TWO_OPT, RELOCATE, INSERT_CHARGE, REMOVE_CHARGE
+    int k_max = 4; // TWO_OPT, RELOCATE, SWAP, INSERT_CHARGE/REMOVE_CHARGE
 
     for (int iter = 0; iter < max_iterations; ++iter) {
-        int k = 1;
-        while (k <= k_max) {
-            // Shaking: Tạo một tuyến đường lân cận ngẫu nhiên
-            std::vector<int> s_prime_nodes;
-            switch (k) {
-                case 1:
-                    s_prime_nodes = generateRandomNeighbor(current_route.getNodeIds(), TWO_OPT, nodes);
-                    break;
-                case 2:
-                    s_prime_nodes = generateRandomNeighbor(current_route.getNodeIds(), RELOCATE, nodes);
-                    break;
-                case 3:
-                    s_prime_nodes = generateRandomNeighbor(current_route.getNodeIds(), INSERT_CHARGE, nodes);
-                    break;
-                case 4:
-                    s_prime_nodes = generateRandomNeighbor(current_route.getNodeIds(), REMOVE_CHARGE, nodes);
-                    break;
-                default:
-                    s_prime_nodes = current_route.getNodeIds();
-            }
-            Route s_prime(s_prime_nodes);
-            s_prime.optimize(arcs, charge_options, params, nodes, optimizer);
+        // Chọn lân cận ngẫu nhiên dựa trên trọng số
+        int k = selectWeightedNeighborhood(gen, operator_weights) + 1;
 
-            // Kiểm tra tính hợp lệ của tuyến đường
-            if (!isValidRoute(s_prime.getNodeIds(), nodes, S_prime)) {
-                k++;
-                continue;
-            }
+        // Shaking: Tạo một tuyến đường lân cận ngẫu nhiên
+        std::vector<int> s_prime_nodes;
+        switch (k) {
+            case 1:
+                s_prime_nodes = generateRandomNeighbor(current_route.getNodeIds(), TWO_OPT, nodes);
+                break;
+            case 2:
+                s_prime_nodes = generateRandomNeighbor(current_route.getNodeIds(), RELOCATE, nodes);
+                break;
+            case 3:
+                s_prime_nodes = generateRandomNeighbor(current_route.getNodeIds(), SWAP, nodes);
+                break;
+            case 4:
+                s_prime_nodes = generateRandomNeighbor(current_route.getNodeIds(), rand() % 2 ? INSERT_CHARGE : REMOVE_CHARGE, nodes);
+                break;
+            default:
+                s_prime_nodes = current_route.getNodeIds();
+        }
+        Route s_prime(s_prime_nodes);
+        s_prime.optimize(arcs, charge_options, params, nodes, optimizer);
 
-            // Local Search: Thực hiện tìm kiếm cục bộ trên s_prime bằng TWO_OPT
-            Route best_local = s_prime;
-            int num_trials = 10; // Số lần thử tìm kiếm cục bộ
-            for (int t = 0; t < num_trials; ++t) {
-                std::vector<int> neighbor_nodes = generateRandomNeighbor(best_local.getNodeIds(), TWO_OPT, nodes);
-                Route neighbor(neighbor_nodes);
-                neighbor.optimize(arcs, charge_options, params, nodes, optimizer);
-                if (isValidRoute(neighbor.getNodeIds(), nodes, S_prime) &&
-                    neighbor.getIsFeasible() &&
-                    neighbor.getTotalCost() < best_local.getTotalCost()) {
-                    best_local = neighbor;
-                }
-            }
-            Route s_double_prime = best_local;
+        // Kiểm tra tính hợp lệ của tuyến đường
+        if (!isValidRoute(s_prime.getNodeIds(), nodes, S_prime)) {
+            no_improvement_counter++;
+            continue;
+        }
 
-            // Kiểm tra xem s_double_prime có cải thiện current_route không
-            if (s_double_prime.getIsFeasible() &&
-                isValidRoute(s_double_prime.getNodeIds(), nodes, S_prime) &&
-                s_double_prime.getTotalCost() < current_route.getTotalCost()) {
+        // Local Search: Thực hiện tìm kiếm cục bộ trên s_prime
+        Route best_local = s_prime;
+        int num_trials = 10; // Số lần thử tìm kiếm cục bộ
+        for (int t = 0; t < num_trials; ++t) {
+            std::vector<int> neighbor_nodes = generateRandomNeighbor(best_local.getNodeIds(), TWO_OPT, nodes);
+            Route neighbor(neighbor_nodes);
+            neighbor.optimize(arcs, charge_options, params, nodes, optimizer);
+            if (isValidRoute(neighbor.getNodeIds(), nodes, S_prime) &&
+                neighbor.getIsFeasible() &&
+                neighbor.getTotalCost() < best_local.getTotalCost()) {
+                best_local = neighbor;
+            }
+        }
+        Route s_double_prime = best_local;
+
+        // Kiểm tra tiêu chí chấp nhận
+        bool significant_improvement = false;
+        if (s_double_prime.getIsFeasible() &&
+            isValidRoute(s_double_prime.getNodeIds(), nodes, S_prime)) {
+            if (s_double_prime.getTotalCost() < best_route.getTotalCost()) {
+                // Cải thiện toàn cục
+                best_route = s_double_prime;
                 current_route = s_double_prime;
-                if (s_double_prime.getTotalCost() < best_route.getTotalCost()) {
-                    best_route = s_double_prime;
-                }
-                k = 1; // Reset về cấu trúc lân cận đầu tiên
+                significant_improvement = checkSignificantImprovement(best_route.getTotalCost(), s_double_prime.getTotalCost());
+                no_improvement_counter = significant_improvement ? 0 : no_improvement_counter + 1;
+                // Cập nhật trọng số toán tử
+                operator_weights[k-1] += 0.1; // Tăng trọng số của toán tử thành công
+                double sum_weights = 0;
+                for (double w : operator_weights) sum_weights += w;
+                for (double& w : operator_weights) w /= sum_weights; // Chuẩn hóa
+            } else if (s_double_prime.getTotalCost() < current_route.getTotalCost()) {
+                // Cải thiện cục bộ
+                current_route = s_double_prime;
+                no_improvement_counter++;
             } else {
-                k++; // Chuyển sang cấu trúc lân cận tiếp theo
+                no_improvement_counter++;
             }
+        } else {
+            no_improvement_counter++;
         }
 
         // In thông tin tuyến đường tốt nhất mỗi 10 vòng lặp
         if ((iter + 1) % 10 == 0) {
             std::cout << "Iteration " << iter + 1 << ":\n";
             std::cout << "Best Route:\n";
-            best_route.print();
-            std::cout << "Total Cost: " << best_route.getTotalCost() << "\n";
-            std::cout << "Feasible: " << (best_route.getIsFeasible() ? "Yes" : "No") << "\n";
+            const auto& node_ids = best_route.getNodeIds();
+            std::cout << "  Route: ";
+            for (size_t i = 0; i < node_ids.size(); ++i) {
+                std::string type = node_ids.at(i) == 0 ? "d" : (isCustomer(node_ids[i], nodes) ? "c" : "f");
+                std::cout << node_ids[i] << "(" << type << ")";
+                if (i < node_ids.size() - 1) {
+                    std::cout << " -> ";
+                }
+            }
+            std::cout << "\n";
+            int num_customers = 0, num_stations = 0;
+            for (size_t i = 1; i < node_ids.size() - 1; ++i) {
+                if (isCustomer(node_ids[i], nodes)) num_customers++;
+                if (isChargingStation(node_ids[i], nodes)) num_stations++;
+            }
+            std::cout << "  Number of Customers: " << num_customers << "\n";
+            std::cout << "  Number of Charging Stations: " << num_stations << "\n";
+            std::cout << "  Total Cost: " << std::fixed << std::setprecision(2) << best_route.getTotalCost() << "\n";
+            std::cout << "  Feasible: " << (best_route.getIsFeasible() ? "Yes" : "No") << "\n";
+            std::cout << "  No-Improvement Counter: " << no_improvement_counter << "\n";
             std::cout << "------------------------\n";
         }
     }
