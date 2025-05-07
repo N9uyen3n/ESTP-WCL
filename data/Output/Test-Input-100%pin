@@ -1,0 +1,355 @@
+D:\Work\NEULab\ETSP-WCL-Test9\cmake-build-debug\TestVNS.exe
+Using data directory: D:\Work\NEULab\ESTP-WCL-Test5\data\Input\
+Initial Route: 0 14 12 8 7 6 9 13 15 10 11 0
+Testing MILP...
+Optimization Result:
+  Cost: 57.20
+  Route: 0(Depot) -> 14(Customer) -> 12(Customer) -> 8(Customer) -> 7(Customer) -> 6(Customer) -> 9(Customer) -> 13(Cust
+omer) -> 15(Customer) -> 10(Customer) -> 11(Customer) -> 0(Depot)
+  Details:
+    Node 0 (Depot):
+      Arrival SOC: 30.00
+      Departure SOC: 30.00
+      Arrival Time: 0.00
+      Departure Time: 0.00
+      Wireless Charging (to 14): Yes
+    Node 14 (Customer):
+      Arrival SOC: 34.91
+      Departure SOC: 34.91
+      Arrival Time: 21.36
+      Departure Time: 31.36
+      Wireless Charging (to 12): No
+    Node 12 (Customer):
+      Arrival SOC: 29.82
+      Departure SOC: 29.82
+      Arrival Time: 55.62
+      Departure Time: 65.62
+      Wireless Charging (to 8): No
+    Node 8 (Customer):
+      Arrival SOC: 24.87
+      Departure SOC: 24.87
+      Arrival Time: 89.19
+      Departure Time: 99.19
+      Wireless Charging (to 7): No
+    Node 7 (Customer):
+      Arrival SOC: 20.05
+      Departure SOC: 20.05
+      Arrival Time: 122.13
+      Departure Time: 132.13
+      Wireless Charging (to 6): Yes
+    Node 6 (Customer):
+      Arrival SOC: 22.00
+      Departure SOC: 22.00
+      Arrival Time: 148.41
+      Departure Time: 158.41
+      Wireless Charging (to 9): Yes
+    Node 9 (Customer):
+      Arrival SOC: 20.07
+      Departure SOC: 20.07
+      Arrival Time: 174.51
+      Departure Time: 184.51
+      Wireless Charging (to 13): Yes
+    Node 13 (Customer):
+      Arrival SOC: 21.34
+      Departure SOC: 21.34
+      Arrival Time: 209.78
+      Departure Time: 219.78
+      Wireless Charging (to 15): No
+    Node 15 (Customer):
+      Arrival SOC: 17.66
+      Departure SOC: 17.66
+      Arrival Time: 237.28
+      Departure Time: 247.28
+      Wireless Charging (to 10): No
+    Node 10 (Customer):
+      Arrival SOC: 12.97
+      Departure SOC: 12.97
+      Arrival Time: 269.64
+      Departure Time: 279.64
+      Wireless Charging (to 11): No
+    Node 11 (Customer):
+      Arrival SOC: 11.57
+      Departure SOC: 11.57
+      Arrival Time: 286.31
+      Departure Time: 296.31
+      Wireless Charging (to 0): No
+    Node 0 (Depot):
+      Arrival SOC: 10.00
+      Departure SOC: 10.00
+      Arrival Time: 303.76
+      Departure Time: 303.76
+Testing VNS + MILP...
+CPLEX: No solution found.
+CPLEX: No solution found.
+Iteration 10:
+Best Route:
+Route: 0(Depot) -> 15(Customer) -> 12(Customer) -> 13(Customer) -> 10(Customer) -> 11(Customer) -> 7(Customer) -> 9(Cust
+omer) -> 2(Station) -> 14(Customer) -> 8(Customer) -> 6(Customer) -> 0(Depot)
+Details:
+  Node 0 (Depot):
+    Arrival SOC: 30.00
+    Departure SOC: 30.00
+    Arrival Time: 0.00
+    Departure Time: 0.00
+    Wireless Charging (to 15): No
+  Node 15 (Customer):
+    Arrival SOC: 26.43
+    Departure SOC: 26.43
+    Arrival Time: 12.75
+    Departure Time: 22.75
+    Wireless Charging (to 12): No
+  Node 12 (Customer):
+    Arrival SOC: 24.45
+    Departure SOC: 24.45
+    Arrival Time: 29.82
+    Departure Time: 39.82
+    Wireless Charging (to 13): No
+  Node 13 (Customer):
+    Arrival SOC: 22.74
+    Departure SOC: 22.74
+    Arrival Time: 47.96
+    Departure Time: 57.96
+    Wireless Charging (to 10): No
+  Node 10 (Customer):
+    Arrival SOC: 20.79
+    Departure SOC: 20.79
+    Arrival Time: 67.24
+    Departure Time: 77.24
+    Wireless Charging (to 11): No
+  Node 11 (Customer):
+    Arrival SOC: 19.39
+    Departure SOC: 19.39
+    Arrival Time: 83.91
+    Departure Time: 93.91
+    Wireless Charging (to 7): No
+  Node 7 (Customer):
+    Arrival SOC: 17.10
+    Departure SOC: 17.10
+    Arrival Time: 104.84
+    Departure Time: 114.84
+    Wireless Charging (to 9): No
+  Node 9 (Customer):
+    Arrival SOC: 14.26
+    Departure SOC: 14.26
+    Arrival Time: 128.33
+    Departure Time: 138.33
+    Wireless Charging (to 2): No
+  Node 2 (Station):
+    Arrival SOC: 11.74
+    Departure SOC: 19.60
+    Arrival Time: 147.34
+    Departure Time: 148.91
+    Charging: Type 1, Time 1.57
+    Wireless Charging (to 14): No
+  Node 14 (Customer):
+    Arrival SOC: 16.27
+    Departure SOC: 16.27
+    Arrival Time: 164.76
+    Departure Time: 174.76
+    Wireless Charging (to 8): No
+  Node 8 (Customer):
+    Arrival SOC: 14.17
+    Departure SOC: 14.17
+    Arrival Time: 184.76
+    Departure Time: 194.76
+    Wireless Charging (to 6): No
+  Node 6 (Customer):
+    Arrival SOC: 12.13
+    Departure SOC: 12.13
+    Arrival Time: 204.46
+    Departure Time: 214.46
+    Wireless Charging (to 0): No
+  Node 0 (Depot):
+    Arrival SOC: 10.00
+    Departure SOC: 10.00
+    Arrival Time: 224.62
+    Departure Time: 224.62
+Summary:
+  Number of Customers: 10
+  Number of Charging Stations: 1
+  Total Cost: 26.39
+  Feasible: Yes
+No-Improvement Counter: 10
+------------------------
+CPLEX: No solution found.
+CPLEX: No solution found.
+CPLEX: No solution found.
+Iteration 20:
+Best Route:
+Route: 0(Depot) -> 15(Customer) -> 12(Customer) -> 13(Customer) -> 10(Customer) -> 11(Customer) -> 7(Customer) -> 9(Cust
+omer) -> 2(Station) -> 14(Customer) -> 8(Customer) -> 6(Customer) -> 0(Depot)
+Details:
+  Node 0 (Depot):
+    Arrival SOC: 30.00
+    Departure SOC: 30.00
+    Arrival Time: 0.00
+    Departure Time: 0.00
+    Wireless Charging (to 15): No
+  Node 15 (Customer):
+    Arrival SOC: 26.43
+    Departure SOC: 26.43
+    Arrival Time: 12.75
+    Departure Time: 22.75
+    Wireless Charging (to 12): No
+  Node 12 (Customer):
+    Arrival SOC: 24.45
+    Departure SOC: 24.45
+    Arrival Time: 29.82
+    Departure Time: 39.82
+    Wireless Charging (to 13): No
+  Node 13 (Customer):
+    Arrival SOC: 22.74
+    Departure SOC: 22.74
+    Arrival Time: 47.96
+    Departure Time: 57.96
+    Wireless Charging (to 10): No
+  Node 10 (Customer):
+    Arrival SOC: 20.79
+    Departure SOC: 20.79
+    Arrival Time: 67.24
+    Departure Time: 77.24
+    Wireless Charging (to 11): No
+  Node 11 (Customer):
+    Arrival SOC: 19.39
+    Departure SOC: 19.39
+    Arrival Time: 83.91
+    Departure Time: 93.91
+    Wireless Charging (to 7): No
+  Node 7 (Customer):
+    Arrival SOC: 17.10
+    Departure SOC: 17.10
+    Arrival Time: 104.84
+    Departure Time: 114.84
+    Wireless Charging (to 9): No
+  Node 9 (Customer):
+    Arrival SOC: 14.26
+    Departure SOC: 14.26
+    Arrival Time: 128.33
+    Departure Time: 138.33
+    Wireless Charging (to 2): No
+  Node 2 (Station):
+    Arrival SOC: 11.74
+    Departure SOC: 19.60
+    Arrival Time: 147.34
+    Departure Time: 148.91
+    Charging: Type 1, Time 1.57
+    Wireless Charging (to 14): No
+  Node 14 (Customer):
+    Arrival SOC: 16.27
+    Departure SOC: 16.27
+    Arrival Time: 164.76
+    Departure Time: 174.76
+    Wireless Charging (to 8): No
+  Node 8 (Customer):
+    Arrival SOC: 14.17
+    Departure SOC: 14.17
+    Arrival Time: 184.76
+    Departure Time: 194.76
+    Wireless Charging (to 6): No
+  Node 6 (Customer):
+    Arrival SOC: 12.13
+    Departure SOC: 12.13
+    Arrival Time: 204.46
+    Departure Time: 214.46
+    Wireless Charging (to 0): No
+  Node 0 (Depot):
+    Arrival SOC: 10.00
+    Departure SOC: 10.00
+    Arrival Time: 224.62
+    Departure Time: 224.62
+Summary:
+  Number of Customers: 10
+  Number of Charging Stations: 1
+  Total Cost: 26.39
+  Feasible: Yes
+No-Improvement Counter: 20
+------------------------
+Best Route Parameters:
+Route: 0(Depot) -> 15(Customer) -> 12(Customer) -> 13(Customer) -> 10(Customer) -> 11(Customer) -> 7(Customer) -> 9(Cust
+omer) -> 2(Station) -> 14(Customer) -> 8(Customer) -> 6(Customer) -> 0(Depot)
+Details:
+  Node 0 (Depot):
+    Arrival SOC: 30.00
+    Departure SOC: 30.00
+    Arrival Time: 0.00
+    Departure Time: 0.00
+    Wireless Charging (to 15): No
+  Node 15 (Customer):
+    Arrival SOC: 26.43
+    Departure SOC: 26.43
+    Arrival Time: 12.75
+    Departure Time: 22.75
+    Wireless Charging (to 12): No
+  Node 12 (Customer):
+    Arrival SOC: 24.45
+    Departure SOC: 24.45
+    Arrival Time: 29.82
+    Departure Time: 39.82
+    Wireless Charging (to 13): No
+  Node 13 (Customer):
+    Arrival SOC: 22.74
+    Departure SOC: 22.74
+    Arrival Time: 47.96
+    Departure Time: 57.96
+    Wireless Charging (to 10): No
+  Node 10 (Customer):
+    Arrival SOC: 20.79
+    Departure SOC: 20.79
+    Arrival Time: 67.24
+    Departure Time: 77.24
+    Wireless Charging (to 11): No
+  Node 11 (Customer):
+    Arrival SOC: 19.39
+    Departure SOC: 19.39
+    Arrival Time: 83.91
+    Departure Time: 93.91
+    Wireless Charging (to 7): No
+  Node 7 (Customer):
+    Arrival SOC: 17.10
+    Departure SOC: 17.10
+    Arrival Time: 104.84
+    Departure Time: 114.84
+    Wireless Charging (to 9): No
+  Node 9 (Customer):
+    Arrival SOC: 14.26
+    Departure SOC: 14.26
+    Arrival Time: 128.33
+    Departure Time: 138.33
+    Wireless Charging (to 2): No
+  Node 2 (Station):
+    Arrival SOC: 11.74
+    Departure SOC: 19.60
+    Arrival Time: 147.34
+    Departure Time: 148.91
+    Charging: Type 1, Time 1.57
+    Wireless Charging (to 14): No
+  Node 14 (Customer):
+    Arrival SOC: 16.27
+    Departure SOC: 16.27
+    Arrival Time: 164.76
+    Departure Time: 174.76
+    Wireless Charging (to 8): No
+  Node 8 (Customer):
+    Arrival SOC: 14.17
+    Departure SOC: 14.17
+    Arrival Time: 184.76
+    Departure Time: 194.76
+    Wireless Charging (to 6): No
+  Node 6 (Customer):
+    Arrival SOC: 12.13
+    Departure SOC: 12.13
+    Arrival Time: 204.46
+    Departure Time: 214.46
+    Wireless Charging (to 0): No
+  Node 0 (Depot):
+    Arrival SOC: 10.00
+    Departure SOC: 10.00
+    Arrival Time: 224.62
+    Departure Time: 224.62
+Summary:
+  Number of Customers: 10
+  Number of Charging Stations: 1
+  Total Cost: 26.39
+  Feasible: Yes
+
+Process finished with exit code 0

@@ -1,0 +1,78 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Release-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.30"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "ETSP_WCL_Test12",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ETSP_WCL_Test11::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ETSP_WCL_Test11-Release-7016d7215df2892e3e18.json",
+					"name" : "ETSP_WCL_Test11",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "TestInput::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TestInput-Release-692aa4457970e78b00e9.json",
+					"name" : "TestInput",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "TestVNS::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TestVNS-Release-c4bfd06cf0e5de745fa6.json",
+					"name" : "TestVNS",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/Work/NEULab/ETSP-WCL-Test12/cmake-build-debug",
+		"source" : "D:/Work/NEULab/ETSP-WCL-Test12"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

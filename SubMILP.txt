@@ -1,0 +1,184 @@
+Route MILP::solveSubproblem(int i, int j, int a, const Route& current_route,
+                           const Graph& graph,
+                           const std::vector<std::vector<ChargingOption>>& charge_options,
+                           const Parameters& params) {
+    IloModel model(env);
+    IloCplex cplex(model);
+    SubproblemResult result;
+
+    try {
+        const Arc* arc_ij = graph.findArc(i, j);
+        const Arc* arc_ia = graph.findArc(i, a);
+        const Arc* arc_aj = graph.findArc(a, j);
+        if (!arc_ij || !arc_ia || !arc_aj) {
+            throw std::runtime_error("Cung không tồn tại trong subproblem");
+        }
+
+        IloBoolVar x_ij(env, "x_ij");
+        IloBoolVar x_ia(env, "x_ia");
+        IloBoolVar x_aj(env, "x_aj");
+        IloBoolVar z_ij(env, "z_ij");
+        IloNumVar s_ij(env, 0, IloInfinity, "s_ij");
+        IloNumVar s_ia(env, 0, IloInfinity, "s_ia");
+        IloNumVar s_aj(env, 0, IloInfinity, "s_aj");
+        IloNumVar y_i_a(env, 0, params.getBatteryCapacity(), "y_i_a");
+        IloNumVar y_i_d(env, 0, params.getBatteryCapacity(), "y_i_d");
+        IloNumVar y_a_a(env, 0, params.getBatteryCapacity(), "y_a_a");
+        IloNumVar y_a_d(env, 0, params.getBatteryCapacity(), "y_a_d");
+        IloNumVar y_j_a(env, 0, params.getBatteryCapacity(), "y_j_a");
+        IloNumVar t_i(env, 0, IloInfinity, "t_i");
+        IloNumVar t_a(env, 0, IloInfinity, "t_a");
+        IloNumVar t_j(env, 0, IloInfinity, "t_j");
+        IloNumVar phi_a(env, 0, IloInfinity, "phi_a");
+        IloBoolVarArray w_ak(env, charge_options[a].size());
+        for (size_t k = 0; k < charge_options[a].size(); ++k) {
+            w_ak[k] = IloBoolVar(env, ("w_a_" + std::to_string(k)).c_str());
+        }
+
+        IloExpr cost_expr(env);
+        for (size_t k = 0; k < charge_options[a].size(); ++k) {
+            cost_expr += charge_options[a][k].getCost() * charge_options[a][k].getRate() * phi_a * w_ak[k];
+        }
+        if (arc_ij->getIsWireless()) {
+            cost_expr += params.getWirelessCost() * arc_ij->getWirelessChargeRate() * s_ij * z_ij;
+        }
+        cost_expr += params.getTimeCost() * (t_j - t_i);
+        model.add(IloMinimize(env, cost_expr));
+        cost_expr.end();
+
+        model.add(x_ij + x_ia == 1);
+        model.add(x_ij + x_aj == 1);
+        model.add(x_ia == x_aj);
+
+        model.add(s_ij >= (arc_ij->getDistance() / params.getUmax()) * x_ij);
+        model.add(s_ij <= (arc_ij->getDistance() / params.getUmin()) * x_ij);
+        model.add(s_ia >= (arc_ia->getDistance() / params.getUmax()) * x_ia);
+        model.add(s_ia <= (arc_ia->getDistance() / params.getUmin()) * x_ia);
+        model.add(s_aj >= (arc_aj->getDistance() / params.getUmax()) * x_aj);
+        model.add(s_aj <= (arc_aj->getDistance() / params.getUmin()) * x_aj);
+
+        auto node_ids = current_route.getNodeIds();
+        size_t pos_i = std::find(node_ids.begin(), node_ids.end(), i) - node_ids.begin();
+        model.add(y_i_a == current_route.getSocArrival()[pos_i]);
+        model.add(y_i_d == y_i_a);
+        if (arc_ij->getIsWireless()) {
+            model.add(y_j_a <= y_i_d - params.getEnergyConsumption() * arc_ij->getDistance() +
+                      arc_ij->getWirelessChargeRate() * s_ij * z_ij +
+                      params.getBatteryCapacity() * (1 - x_ij));
+        } else {
+            model.add(y_j_a <= y_i_d - params.getEnergyConsumption() * arc_ij->getDistance() +
+                      params.getBatteryCapacity() * (1 - x_ij));
+        }
+        model.add(y_a_a <= y_i_d - params.getEnergyConsumption() * arc_ia->getDistance() +
+                  params.getBatteryCapacity() * (1 - x_ia));
+        IloExpr charge_expr(env);
+        for (size_t k = 0; k < charge_options[a].size(); ++k) {
+            charge_expr += charge_options[a][k].getRate() * phi_a * w_ak[k];
+        }
+        model.add(y_a_d == y_a_a + charge_expr);
+        model.add(y_j_a <= y_a_d - params.getEnergyConsumption() * arc_aj->getDistance() +
+                  params.getBatteryCapacity() * (1 - x_aj));
+        charge_expr.end();
+
+        model.add(t_i == current_route.getArrivalTime()[pos_i]);
+        model.add(t_j >= t_i + s_ij - params.getBigM() * (1 - x_ij));
+        model.add(t_a >= t_i + s_ia - params.getBigM() * (1 - x_ia));
+        model.add(t_j >= t_a + phi_a + s_aj - params.getBigM() * (1 - x_aj));
+
+        IloExpr sum_w(env);
+        for (size_t k = 0; k < charge_options[a].size(); ++k) {
+            sum_w += w_ak[k];
+        }
+        model.add(sum_w == x_ia);
+        if (arc_ij->getIsWireless()) {
+            model.add(z_ij <= x_ij);
+        }
+        sum_w.end();
+
+        cplex.setOut(env.getNullStream());
+        cplex.setParam(IloCplex::TiLim, 10.0);
+        cplex.setParam(IloCplex::EpGap, 0.01);
+        if (!cplex.solve()) {
+            std::cerr << "CPLEX failed to solve subproblem: " << cplex.getStatus() << std::endl;
+            return current_route;
+        }
+
+        result.cost = cplex.getObjValue();
+        result.new_node_ids = current_route.getNodeIds();
+        result.soc_arrival = current_route.getSocArrival();
+        result.soc_departure = current_route.getSocDeparture();
+        result.arrival_time = current_route.getArrivalTime();
+        result.departure_time = current_route.getDepartureTime();
+        result.wireless_decisions = current_route.getWirelessDecisions();
+        result.charging_decisions = current_route.getChargingDecisions();
+
+        size_t pos_j = std::find(node_ids.begin(), node_ids.end(), j) - node_ids.begin();
+        if (cplex.getValue(x_ia) > 0.5 && cplex.getValue(x_aj) > 0.5) {
+            result.new_node_ids.insert(result.new_node_ids.begin() + pos_j, a);
+            result.soc_arrival.insert(result.soc_arrival.begin() + pos_j, cplex.getValue(y_a_a));
+            result.soc_departure.insert(result.soc_departure.begin() + pos_j, cplex.getValue(y_a_d));
+            result.arrival_time.insert(result.arrival_time.begin() + pos_j, cplex.getValue(t_a));
+            result.departure_time.insert(result.departure_time.begin() + pos_j, cplex.getValue(t_a) + cplex.getValue(phi_a));
+            result.wireless_decisions.insert(result.wireless_decisions.begin() + pos_j - 1, false);
+            result.soc_arrival[pos_j + 1] = cplex.getValue(y_j_a);
+            result.soc_departure[pos_j + 1] = cplex.getValue(y_j_a);
+            result.arrival_time[pos_j + 1] = cplex.getValue(t_j);
+            result.departure_time[pos_j + 1] = cplex.getValue(t_j);
+            for (size_t k = 0; k < charge_options[a].size(); ++k) {
+                if (cplex.getValue(w_ak[k]) > 0.5) {
+                    result.charging_decisions.emplace_back(a, static_cast<int>(k), cplex.getValue(phi_a));
+                    break;
+                }
+            }
+        } else {
+            result.soc_arrival[pos_j] = cplex.getValue(y_j_a);
+            result.soc_departure[pos_j] = cplex.getValue(y_j_a);
+            result.arrival_time[pos_j] = cplex.getValue(t_j);
+            result.departure_time[pos_j] = cplex.getValue(t_j);
+            result.wireless_decisions[pos_j - 1] = (cplex.getValue(z_ij) > 0.5);
+        }
+
+        Route result_route(result.new_node_ids);
+        updateRoute(result_route, result);
+        return result_route;
+    } catch (IloException& e) {
+        std::cerr << "CPLEX Exception in solveSubproblem: " << e.getMessage() << std::endl;
+        return current_route;
+    } catch (const std::exception& e) {
+        std::cerr << "Exception in solveSubproblem: " << e.what() << std::endl;
+        return current_route;
+    }
+}
+
+
+Route VNSOptimizer::localSearch(const Route& candidate_route) {
+    // Kiểm tra tính hợp lệ của tuyến đường
+    if (!isValidRoute(candidate_route.getNodeIds(), nodes, S_prime)) {
+        Route infeasible_route(candidate_route.getNodeIds());
+        infeasible_route.setTotalCost(1e9);
+        infeasible_route.setIsFeasible(false);
+        return infeasible_route;
+    }
+
+    // Sử dụng optimizer để tối ưu hóa quyết định sạc cho toàn tuyến đường
+    OptimizationResult opt_result = optimizer.optimize(
+        candidate_route.getNodeIds(), arcs, charge_options, params, nodes);
+
+    // Kiểm tra xem có giải pháp khả thi được tìm thấy không
+    if (opt_result.cost < 1e9) {
+        // Cập nhật tuyến đường với các quyết định sạc đã tối ưu
+        Route optimized_route(candidate_route.getNodeIds());
+        optimized_route.setSocArrival(opt_result.soc_arrival);
+        optimized_route.setSocDeparture(opt_result.soc_departure);
+        optimized_route.setArrivalTime(opt_result.arrival_time);
+        optimized_route.setDepartureTime(opt_result.departure_time);
+        optimized_route.setChargingDecisions(opt_result.charging_decisions);
+        optimized_route.setWirelessDecisions(opt_result.wireless_decisions);
+        optimized_route.setTotalCost(opt_result.cost);
+        optimized_route.setIsFeasible(true);
+        return optimized_route;
+    } else {
+        // Nếu không tìm thấy giải pháp khả thi, trả về tuyến đường ban đầu
+        return candidate_route;
+    }
+}
