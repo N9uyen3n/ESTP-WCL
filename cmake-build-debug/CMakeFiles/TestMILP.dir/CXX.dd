@@ -1,0 +1,13 @@
+ninja_dyndep_version = 1.0
+build CMakeFiles\TestMILP.dir\TestMILP.cpp.obj: dyndep
+
+build CMakeFiles\TestMILP.dir\src\Route.cpp.obj: dyndep
+
+build CMakeFiles\TestMILP.dir\src\Optimizer.cpp.obj: dyndep
+
+build CMakeFiles\TestMILP.dir\src\Utils.cpp.obj: dyndep
+
+build CMakeFiles\TestMILP.dir\src\Parameters.cpp.obj: dyndep
+
+build CMakeFiles\TestMILP.dir\src\Graph.cpp.obj: dyndep
+

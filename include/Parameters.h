@@ -34,8 +34,8 @@ private:
     double time_cost;            // Chi phí thời gian (c_t)
     double initial_soc;          // SOC ban đầu
     double big_m;                // Hằng số lớn (M)
-    double U_max = vehicle_speed * 0.5;                 // Tốc độ tối đa
-    double U_min = vehicle_speed * 2;                 // Tốc độ tối thiểu
+    double U_max = vehicle_speed * 2;                 // Tốc độ tối đa
+    double U_min = vehicle_speed * 0.5;                 // Tốc độ tối thiểu
 
 
 public:

@@ -7,7 +7,7 @@
 
 
 
-class MILP : public Optimizer {
+class MILP {
 public:
     MILP();
     ~MILP();
@@ -15,12 +15,12 @@ public:
     Route optimize(const std::vector<int>& initial_nodes,
                    const Graph& graph,
                    const std::vector<std::vector<ChargingOption>>& charge_options,
-                   const Parameters& params) override;
+                   const Parameters& params) ;
 
     Route solveSubproblem(int i, int j, int a, const Route& current_route,
                          const Graph& graph,
                          const std::vector<std::vector<ChargingOption>>& charge_options,
-                         const Parameters& params) override;
+                         const Parameters& params) ;
 
 private:
     IloEnv env;

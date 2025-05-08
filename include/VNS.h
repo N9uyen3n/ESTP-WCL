@@ -24,54 +24,59 @@ struct SubproblemResult {
 
 class VNS {
 public:
-    VNS(int max_iterations, int max_neighborhoods, unsigned int seed, const std::vector<int>& required_customer_ids);
+    VNS(const std::vector<int>& initial_route,
+         const Graph& graph,
+         const std::vector<std::vector<ChargingOption>>& charge_options,
+         const Parameters& params,
+         int max_iterations,
+         std::mt19937& rng);
     ~VNS();
 
-    Route optimize(const std::vector<int>& initial_nodes,
-                   const Graph& graph,
-                   const std::vector<std::vector<ChargingOption>>& charge_options,
-                   const Parameters& params);
+    Route run(); // dùng để chạy vòng lặp VNS
 
 private:
     IloEnv env;
+    std::vector<int> current_route;
+    Graph graph;
+    std::vector<std::vector<ChargingOption>> charge_options;
+    Parameters params;
     int max_iterations;
-    int max_neighborhoods; // Currently unused in the VNS loop logic (selection is weighted random)
-    std::mt19937 rng;
-    const std::vector<int> required_customer_ids_; // Stores the set of customer IDs that must be visited
-    std::vector<double> operator_weights_;
-    int no_improvement_counter;
+    std::mt19937& rng;
+    std::vector<double> operator_weights_; // Trọng số cho các cấu trúc hàng xóm
+    int no_improvement_counter; // Đếm số lần không cải thiện
+    // int max_neighborhoods;
 
 
-    SubproblemResult solveSubproblem1(const Route& current_route,
+    SubproblemResult solveSubproblem(const Route& current_route,
                                const Graph& graph,
                                const std::vector<std::vector<ChargingOption>>& charge_options,
-                               const Parameters& params);
+                               const Parameters& params); // MILP Sub problem trong VNS
 
-    Route localSearch(const Route& current_route,
-                      const Graph& graph,
-                      const std::vector<std::vector<ChargingOption>>& charge_options,
-                      const Parameters& params);
+    Route localSearch(const Route& current_route); // hàm tìm kiếm địa phương
 
     Route shake(const Route& current_route, int neighborhood,
-                const Graph& graph, const Parameters& params);
+                const Graph& graph, const Parameters& params); // Shake
 
-    // Neighborhood structures
+    // Các câ trúc hàng xóm
     Route swapNodes(const Route& route, const Graph& graph, const Parameters& params);
     Route relocate(const Route& route, const Graph& graph, const Parameters& params);
     Route insertStation(const Route& route, const Graph& graph, const Parameters& params);
     Route removeStation(const Route& route, const Graph& graph, const Parameters& params);
     Route twoOpt(const Route& route, const Graph& graph, const Parameters& params);
 
+    // Cập nhật cấu trúc
     void updateRoute(Route& route, const SubproblemResult& result);
-    Route evaluateRoute(const Route& route, // Changed to const Route&
-                       const Graph& graph,
-                       const std::vector<std::vector<ChargingOption>>& charge_options,
-                       const Parameters& params);
 
+    // Điê chỉnh trọng số cho từng cấu trúc hàng xóm
     void normalizeWeights();
-    bool checkSignificantImprovement(double old_cost, double new_cost, double threshold = 0.001); // Added threshold
+    // Chọn trọng số
     int selectOperatorWeighted();
+
+
+
+    // Kiểm tra tính khả thi
     bool isValidRoute(const std::vector<int>& route_node_ids, const Graph& graph, const Parameters& params); // Added params
+    // Kiểm tra tính khả thi nhanh
     bool quickFeasibilityCheck(const Route& route, const Graph& graph, const Parameters& params);
 };
 
