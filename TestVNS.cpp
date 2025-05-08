@@ -29,12 +29,15 @@ int main() {
         Utils::printChargingOptionsInfo(charge_options);
 
         // Create initial route
+        std::cout << "\nInitial Route: 0 ";
         std::vector<int> initial_route = {0};
         for (const auto& node : nodes) {
             if (Utils::isCustomer(node.getId(), nodes)) {
                 initial_route.push_back(node.getId());
+                std::cout << node.getId() << " ";
             }
         }
+        std::cout << "0 \n";
         initial_route.push_back(0);
 
         // Initialize random number generator
@@ -42,7 +45,7 @@ int main() {
         std::mt19937 rng(rd());
 
         // Create and run VNS solver
-        int max_iterations = 100;
+        int max_iterations = 1000;
         VNS vns(initial_route, graph, charge_options, params, max_iterations, rng);
         Route optimized_route = vns.run();
 

@@ -270,9 +270,11 @@ std::string Utils::getNodeType(int id, const std::vector<Node>& nodes) {
 bool Utils::isCustomer(int id, const std::vector<Node> &nodes) {
     for (const auto& node : nodes) {
         if (node.getId() == id && node.getType() == NodeType::CUSTOMER) {
+            // std::cout<<"Node ID: " << id << " is a customer.\n";
             return true;
         }
     }
+    // std::cout<<"Node ID: " << id << " is not a customer.\n";
     return false;
 }
 

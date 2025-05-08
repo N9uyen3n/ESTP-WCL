@@ -7,6 +7,7 @@ private:
     int option;
     double rate;
     double cost;
+   
 
 public:
     ChargingOption(double cost, double rate) : cost(cost), rate(rate) {}

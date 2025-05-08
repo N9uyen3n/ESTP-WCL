@@ -551,7 +551,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "C:/Program Files (x86)/ETSP_WCL_Test12"
+			"value" : "C:/Program Files (x86)/ETSP_WCL_Test13"
 		},
 		{
 			"name" : "CMAKE_LINKER",
@@ -1100,42 +1100,6 @@
 			],
 			"type" : "FILEPATH",
 			"value" : "D:/Program Files/IBM/ILOG/CPLEX_Studio2211/cplex/lib/x64_windows_msvc14/stat_mda/cplex2211.lib"
-		},
-		{
-			"name" : "ETSP_WCL_Test12_BINARY_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "D:/Work/NEULab/ETSP-WCL-Test13/cmake-build-debug"
-		},
-		{
-			"name" : "ETSP_WCL_Test12_IS_TOP_LEVEL",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "ON"
-		},
-		{
-			"name" : "ETSP_WCL_Test12_SOURCE_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "D:/Work/NEULab/ETSP-WCL-Test13"
 		},
 		{
 			"name" : "ETSP_WCL_Test13_BINARY_DIR",

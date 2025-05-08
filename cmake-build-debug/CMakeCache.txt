@@ -87,7 +87,7 @@ CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=
 CMAKE_FIND_PACKAGE_REDIRECTS_DIR:STATIC=D:/Work/NEULab/ETSP-WCL-Test13/cmake-build-debug/CMakeFiles/pkgRedirects
 
 //Install path prefix, prepended onto install directories.
-CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/ETSP_WCL_Test12
+CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/ETSP_WCL_Test13
 
 //Path to a program.
 CMAKE_LINKER:FILEPATH=C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.43.34808/bin/Hostx64/x64/link.exe
@@ -203,15 +203,6 @@ CONCERT_LIBRARY:FILEPATH=D:/Program Files/IBM/ILOG/CPLEX_Studio2211/concert/lib/
 
 //Path to a library.
 CPLEX_LIBRARY:FILEPATH=D:/Program Files/IBM/ILOG/CPLEX_Studio2211/cplex/lib/x64_windows_msvc14/stat_mda/cplex2211.lib
-
-//Value Computed by CMake
-ETSP_WCL_Test12_BINARY_DIR:STATIC=D:/Work/NEULab/ETSP-WCL-Test13/cmake-build-debug
-
-//Value Computed by CMake
-ETSP_WCL_Test12_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-ETSP_WCL_Test12_SOURCE_DIR:STATIC=D:/Work/NEULab/ETSP-WCL-Test13
 
 //Value Computed by CMake
 ETSP_WCL_Test13_BINARY_DIR:STATIC=D:/Work/NEULab/ETSP-WCL-Test13/cmake-build-debug
