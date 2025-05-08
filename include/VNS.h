@@ -44,6 +44,7 @@ private:
     std::mt19937& rng;
     std::vector<double> operator_weights_; // Trọng số cho các cấu trúc hàng xóm
     int no_improvement_counter; // Đếm số lần không cải thiện
+    std::vector<int> potential_stations;
     // int max_neighborhoods;
 
 

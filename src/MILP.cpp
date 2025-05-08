@@ -33,6 +33,7 @@ Route MILP::optimize(const std::vector<int>& initial_nodes,
         std::vector<int> node_ids;
         std::vector<int> customer_ids;
         std::vector<int> station_ids;
+        int depot_start_id = 0;
         int depot_end_id = -1;
         for (const auto& node : nodes) {
             node_ids.push_back(node.getId());
@@ -40,9 +41,12 @@ Route MILP::optimize(const std::vector<int>& initial_nodes,
                 customer_ids.push_back(node.getId());
             } else if (node.getType() == NodeType::CHARGING_STATION) {
                 station_ids.push_back(node.getId());
-            } else if (node.getType() == NodeType::DEPOT && node.getId() != 0) {
+            } else if (node.getType() == NodeType::DEPOT && node.getId() != depot_start_id) {
                 depot_end_id = node.getId();
             }
+        }
+        if (depot_end_id == -1) {
+            throw std::runtime_error("Depot end not found");
         }
         std::vector<std::pair<int, int>> wireless_arcs;
         for (const auto& arc : arcs) {
@@ -82,6 +86,18 @@ Route MILP::optimize(const std::vector<int>& initial_nodes,
         for (size_t i = 0; i < node_ids.size(); ++i) {
             s[i] = IloNumVarArray(env, node_ids.size(), 0, IloInfinity, ILOFLOAT);
         }
+        IloNumVarArray u(env, node_ids.size(), 0, IloInfinity, ILOFLOAT);
+
+        // Auxiliary Variables for Linearization
+        IloArray<IloNumVarArray> phi_w(env, node_ids.size());
+        for (size_t i = 0; i < node_ids.size(); ++i) {
+            int node_i = node_ids[i];
+            phi_w[i] = IloNumVarArray(env, charge_options[node_i].size(), 0, IloInfinity, ILOFLOAT);
+        }
+        IloArray<IloNumVarArray> s_z(env, node_ids.size());
+        for (size_t i = 0; i < node_ids.size(); ++i) {
+            s_z[i] = IloNumVarArray(env, node_ids.size(), 0, IloInfinity, ILOFLOAT);
+        }
 
         // Objective Function
         IloExpr obj(env);
@@ -89,7 +105,7 @@ Route MILP::optimize(const std::vector<int>& initial_nodes,
             int node_i = node_ids[i];
             if (std::find(station_ids.begin(), station_ids.end(), node_i) != station_ids.end()) {
                 for (size_t k = 0; k < charge_options[node_i].size(); ++k) {
-                    obj += charge_options[node_i][k].getCost() * charge_options[node_i][k].getRate() * phi[i] * w[i][k];
+                    obj += charge_options[node_i][k].getCost() * charge_options[node_i][k].getRate() * phi_w[i][k];
                 }
             }
         }
@@ -99,16 +115,48 @@ Route MILP::optimize(const std::vector<int>& initial_nodes,
             size_t i_idx = std::find(node_ids.begin(), node_ids.end(), from) - node_ids.begin();
             size_t j_idx = std::find(node_ids.begin(), node_ids.end(), to) - node_ids.begin();
             const Arc* arc = graph.findArc(from, to);
-            obj += params.getWirelessCost() * arc->getWirelessChargeRate() * s[i_idx][j_idx] * z[i_idx][j_idx];
+            obj += params.getWirelessCost() * arc->getWirelessChargeRate() * s_z[i_idx][j_idx];
         }
         obj += params.getTimeCost() * t[node_ids.size() - 1];
         model.add(IloMinimize(env, obj));
         obj.end();
 
+        // Linearization Constraints for phi_w
+        for (size_t i = 0; i < node_ids.size(); ++i) {
+            int node_i = node_ids[i];
+            if (std::find(station_ids.begin(), station_ids.end(), node_i) != station_ids.end()) {
+                for (size_t k = 0; k < charge_options[node_i].size(); ++k) {
+                    double M = params.getBigM();
+                    model.add(phi_w[i][k] <= phi[i]);
+                    model.add(phi_w[i][k] <= M * w[i][k]);
+                    model.add(phi_w[i][k] >= phi[i] - M * (1 - w[i][k]));
+                    model.add(phi_w[i][k] >= 0);
+                }
+            }
+        }
+
+        // Linearization Constraints for s_z
+        for (size_t i = 0; i < node_ids.size(); ++i) {
+            for (size_t j = 0; j < node_ids.size(); ++j) {
+                if (i != j && graph.findArc(node_ids[i], node_ids[j])) {
+                    const Arc* arc = graph.findArc(node_ids[i], node_ids[j]);
+                    if (arc->getIsWireless()) {
+                        double M = arc->getDistance() / params.getUmin();
+                        model.add(s_z[i][j] <= s[i][j]);
+                        model.add(s_z[i][j] <= M * z[i][j]);
+                        model.add(s_z[i][j] >= s[i][j] - M * (1 - z[i][j]));
+                        model.add(s_z[i][j] >= 0);
+                    } else {
+                        model.add(s_z[i][j] == 0);
+                    }
+                }
+            }
+        }
+
         // Flow Constraints
         IloExpr depot_start_flow(env);
         for (size_t j = 0; j < node_ids.size(); ++j) {
-            if (node_ids[j] != 0 && graph.findArc(0, node_ids[j])) {
+            if (node_ids[j] != depot_start_id && graph.findArc(depot_start_id, node_ids[j])) {
                 depot_start_flow += x[0][j];
             }
         }
@@ -118,7 +166,7 @@ Route MILP::optimize(const std::vector<int>& initial_nodes,
         IloExpr depot_end_flow(env);
         for (size_t i = 0; i < node_ids.size(); ++i) {
             if (node_ids[i] != depot_end_id && graph.findArc(node_ids[i], depot_end_id)) {
-                depot_end_flow += x[i][node_ids.size() - 1];
+                depot_end_flow += x[i][std::find(node_ids.begin(), node_ids.end(), depot_end_id) - node_ids.begin()];
             }
         }
         model.add(depot_end_flow == 1);
@@ -160,6 +208,19 @@ Route MILP::optimize(const std::vector<int>& initial_nodes,
             out_flow.end();
         }
 
+        // Subtour Elimination Constraints (Miller-Tucker-Zemlin)
+        for (size_t i = 1; i < node_ids.size(); ++i) {
+            for (size_t j = 1; j < node_ids.size(); ++j) {
+                if (i != j && graph.findArc(node_ids[i], node_ids[j])) {
+                    IloExpr expr(env);
+                    expr = u[i] - u[j] + IloNum(node_ids.size()) * x[i][j];
+                    model.add(expr <= IloNum(node_ids.size()) - 1);
+                    expr.end();
+                }
+            }
+        }
+        model.add(u[0] == 0);
+
         // SOC Constraints
         model.add(y_a[0] == params.getInitialSoc());
         model.add(y_d[0] == y_a[0]);
@@ -168,7 +229,7 @@ Route MILP::optimize(const std::vector<int>& initial_nodes,
             if (std::find(station_ids.begin(), station_ids.end(), node_i) != station_ids.end()) {
                 IloExpr charge_amount(env);
                 for (size_t k = 0; k < charge_options[node_i].size(); ++k) {
-                    charge_amount += charge_options[node_i][k].getRate() * phi[i] * w[i][k];
+                    charge_amount += charge_options[node_i][k].getRate() * phi_w[i][k];
                 }
                 model.add(y_d[i] == y_a[i] + charge_amount);
                 charge_amount.end();
@@ -183,12 +244,13 @@ Route MILP::optimize(const std::vector<int>& initial_nodes,
                     double dist = arc->getDistance();
                     if (arc->getIsWireless()) {
                         model.add(y_a[j] <= y_d[i] - params.getEnergyConsumption() * dist +
-                                  arc->getWirelessChargeRate() * s[i][j] * z[i][j] +
+                                  arc->getWirelessChargeRate() * s_z[i][j] +
                                   params.getBatteryCapacity() * (1 - x[i][j]));
                     } else {
                         model.add(y_a[j] <= y_d[i] - params.getEnergyConsumption() * dist +
                                   params.getBatteryCapacity() * (1 - x[i][j]));
                     }
+                    model.add(y_a[j] >= 0);
                 }
             }
         }
@@ -202,7 +264,6 @@ Route MILP::optimize(const std::vector<int>& initial_nodes,
                 if (i != j && graph.findArc(node_ids[i], node_ids[j])) {
                     const Arc* arc = graph.findArc(node_ids[i], node_ids[j]);
                     double dist = arc->getDistance();
-                    double s_ij = arc->getTravelTime();
                     model.add(s[i][j] >= (dist / params.getUmax()) * x[i][j]);
                     model.add(s[i][j] <= (dist / params.getUmin()) * x[i][j] + params.getBigM() * (1 - x[i][j]));
                     if (std::find(customer_ids.begin(), customer_ids.end(), node_i) != customer_ids.end()) {
@@ -230,7 +291,8 @@ Route MILP::optimize(const std::vector<int>& initial_nodes,
                         in_flow += x[j][i];
                     }
                 }
-                model.add(sum_w == in_flow);
+                model.add(sum_w <= in_flow);
+                model.add(sum_w <= 1);
                 sum_w.end();
                 in_flow.end();
             } else {
@@ -255,8 +317,8 @@ Route MILP::optimize(const std::vector<int>& initial_nodes,
 
         // Solve
         cplex.setOut(std::cout);
-        cplex.setParam(IloCplex::TiLim, 300.0); // 5-minute time limit
-        cplex.setParam(IloCplex::EpGap, 0.01); // 1% MIP gap
+        cplex.setParam(IloCplex::TiLim, 300.0);
+        cplex.setParam(IloCplex::EpGap, 0.01);
         if (!cplex.solve()) {
             std::cout << "MILP::optimize: CPLEX failed, status = " << cplex.getStatus() << "\n";
             return Route(initial_nodes);
@@ -273,7 +335,7 @@ Route MILP::optimize(const std::vector<int>& initial_nodes,
         result.wireless_decisions.clear();
         result.charging_decisions.clear();
 
-        int current = 0;
+        int current = depot_start_id;
         result.new_node_ids.push_back(current);
         std::set<int> visited;
         visited.insert(current);
@@ -303,12 +365,13 @@ Route MILP::optimize(const std::vector<int>& initial_nodes,
             result.soc_departure[i] = cplex.getValue(y_d[idx]);
             result.arrival_time[i] = cplex.getValue(t[idx]);
             double tau_i = graph.findNode(result.new_node_ids[i])->getServiceTime();
-            result.departure_time[i] = cplex.getValue(t[idx]) + cplex.getValue(phi[idx]) + tau_i;
+            double phi_i = cplex.getValue(phi[idx]);
+            result.departure_time[i] = result.arrival_time[i] + phi_i + tau_i;
             int node_i = result.new_node_ids[i];
             if (std::find(station_ids.begin(), station_ids.end(), node_i) != station_ids.end()) {
                 for (size_t k = 0; k < charge_options[node_i].size(); ++k) {
                     if (cplex.getValue(w[idx][k]) > 0.5) {
-                        result.charging_decisions.emplace_back(node_i, static_cast<int>(k), cplex.getValue(phi[idx]));
+                        result.charging_decisions.emplace_back(node_i, static_cast<int>(k), phi_i);
                         break;
                     }
                 }
@@ -412,6 +475,7 @@ Route MILP::solveSubproblem(int i, int j, int a, const Route& current_route,
         model.add(y_j_a <= y_a_d - params.getEnergyConsumption() * arc_aj->getDistance() +
                   params.getBatteryCapacity() * (1 - x_aj));
         model.add(y_j_d == y_j_a);
+        model.add(y_j_a >= 0);
 
         // Time Constraints
         model.add(t_i == current_route.getArrivalTime()[pos_i]);
@@ -430,7 +494,8 @@ Route MILP::solveSubproblem(int i, int j, int a, const Route& current_route,
         for (size_t k = 0; k < charge_options[a].size(); ++k) {
             sum_w += w_ak[k];
         }
-        model.add(sum_w == x_ia);
+        model.add(sum_w <= x_ia);
+        model.add(sum_w <= 1);
         sum_w.end();
         if (arc_ij->getIsWireless()) {
             model.add(z_ij <= x_ij);
@@ -440,8 +505,8 @@ Route MILP::solveSubproblem(int i, int j, int a, const Route& current_route,
 
         // Solve
         cplex.setOut(std::cout);
-        cplex.setParam(IloCplex::TiLim, 5.0); // 5-second time limit
-        cplex.setParam(IloCplex::EpGap, 0.01); // 1% MIP gap
+        cplex.setParam(IloCplex::TiLim, 5.0);
+        cplex.setParam(IloCplex::EpGap, 0.01);
         if (!cplex.solve()) {
             std::cout << "MILP::solveSubproblem: CPLEX failed, status = " << cplex.getStatus() << "\n";
             return current_route;
@@ -460,18 +525,18 @@ Route MILP::solveSubproblem(int i, int j, int a, const Route& current_route,
 
         size_t pos_j = std::find(node_ids.begin(), node_ids.end(), j) - node_ids.begin();
         if (cplex.getValue(x_ia) > 0.5 && cplex.getValue(x_aj) > 0.5) {
-            // Insert station a between i and j
             result.new_node_ids.insert(result.new_node_ids.begin() + pos_j, a);
             result.soc_arrival.insert(result.soc_arrival.begin() + pos_j, cplex.getValue(y_a_a));
             result.soc_departure.insert(result.soc_departure.begin() + pos_j, cplex.getValue(y_a_d));
             result.arrival_time.insert(result.arrival_time.begin() + pos_j, cplex.getValue(t_a));
-            result.departure_time.insert(result.departure_time.begin() + pos_j, cplex.getValue(t_a) + cplex.getValue(phi_a));
+            double tau_a = graph.findNode(a)->getServiceTime();
+            result.departure_time.insert(result.departure_time.begin() + pos_j, cplex.getValue(t_a) + cplex.getValue(phi_a) + tau_a);
             result.wireless_decisions.insert(result.wireless_decisions.begin() + pos_j - 1, false);
-            result.wireless_decisions[pos_j - 1] = false; // No wireless charging on (i, a)
+            result.wireless_decisions[pos_j - 1] = false;
             result.soc_arrival[pos_j + 1] = cplex.getValue(y_j_a);
             result.soc_departure[pos_j + 1] = cplex.getValue(y_j_d);
             result.arrival_time[pos_j + 1] = cplex.getValue(t_j);
-            result.departure_time[pos_j + 1] = cplex.getValue(t_j);
+            result.departure_time[pos_j + 1] = cplex.getValue(t_j) + graph.findNode(j)->getServiceTime();
             for (size_t k = 0; k < charge_options[a].size(); ++k) {
                 if (cplex.getValue(w_ak[k]) > 0.5) {
                     result.charging_decisions.emplace_back(a, static_cast<int>(k), cplex.getValue(phi_a));
@@ -479,11 +544,10 @@ Route MILP::solveSubproblem(int i, int j, int a, const Route& current_route,
                 }
             }
         } else {
-            // Direct path i to j
             result.soc_arrival[pos_j] = cplex.getValue(y_j_a);
             result.soc_departure[pos_j] = cplex.getValue(y_j_d);
             result.arrival_time[pos_j] = cplex.getValue(t_j);
-            result.departure_time[pos_j] = cplex.getValue(t_j);
+            result.departure_time[pos_j] = cplex.getValue(t_j) + graph.findNode(j)->getServiceTime();
             result.wireless_decisions[pos_j - 1] = (arc_ij->getIsWireless() && cplex.getValue(z_ij) > 0.5);
         }
 

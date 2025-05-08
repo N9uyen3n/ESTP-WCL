@@ -15,6 +15,8 @@
 		[
 			"add_executable",
 			"link_directories",
+			"target_link_libraries",
+			"target_compile_definitions",
 			"include_directories"
 		],
 		"files" : 
@@ -41,6 +43,18 @@
 			{
 				"command" : 2,
 				"file" : 0,
+				"line" : 98,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 106,
+				"parent" : 0
+			},
+			{
+				"command" : 4,
+				"file" : 0,
 				"line" : 36,
 				"parent" : 0
 			}
@@ -55,18 +69,25 @@
 					"fragment" : "/DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG /MD /O2 /DNDEBUG /D_ITERATOR_DEBUG_LEVEL=0 -std:c++20 -MD"
 				}
 			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 4,
+					"define" : "_ITERATOR_DEBUG_LEVEL=0"
+				}
+			],
 			"includes" : 
 			[
 				{
-					"backtrace" : 3,
+					"backtrace" : 5,
 					"path" : "D:/Program Files/IBM/ILOG/CPLEX_Studio2211/cplex/include"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 5,
 					"path" : "D:/Program Files/IBM/ILOG/CPLEX_Studio2211/concert/include"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 5,
 					"path" : "D:/Work/NEULab/ETSP-WCL-Test13/Test1/src"
 				}
 			],
@@ -114,6 +135,21 @@
 				"role" : "libraryPath"
 			},
 			{
+				"backtrace" : 3,
+				"fragment" : "\"D:\\Program Files\\IBM\\ILOG\\CPLEX_Studio2211\\cplex\\lib\\x64_windows_msvc14\\stat_mda\\ilocplex.lib\"",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "\"D:\\Program Files\\IBM\\ILOG\\CPLEX_Studio2211\\cplex\\lib\\x64_windows_msvc14\\stat_mda\\cplex2211.lib\"",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "\"D:\\Program Files\\IBM\\ILOG\\CPLEX_Studio2211\\concert\\lib\\x64_windows_msvc14\\stat_mda\\concert.lib\"",
+				"role" : "libraries"
+			},
+			{
 				"fragment" : "kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib",
 				"role" : "libraries"
 			}
@@ -159,7 +195,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/Optimizer.cpp",
+			"path" : "src/MILP.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{

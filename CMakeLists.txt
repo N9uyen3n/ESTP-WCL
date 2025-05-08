@@ -88,14 +88,14 @@ endif()
 add_executable(TestMILP
         TestMILP.cpp
         src/Route.cpp
-        src/Optimizer.cpp
+        src/MILP.cpp
         src/Utils.cpp
         src/Parameters.cpp
         src/Graph.cpp
 )
 
 # Link libraries for TestVNS
-target_link_libraries(TestVNS PRIVATE
+target_link_libraries(TestMILP PRIVATE
         ${ILOCPLEX_LIBRARY}
         ${CPLEX_LIBRARY}
         ${CONCERT_LIBRARY}
@@ -103,11 +103,11 @@ target_link_libraries(TestVNS PRIVATE
 
 
 # Định nghĩa _ITERATOR_DEBUG_LEVEL=0 để tắt kiểm tra iterator debug
-target_compile_definitions(TestVNS PRIVATE _ITERATOR_DEBUG_LEVEL=0)
+target_compile_definitions(TestMILP PRIVATE _ITERATOR_DEBUG_LEVEL=0)
 
 # Set MSVC runtime library for TestReader
 if(MSVC)
-    set_property(TARGET TestVNS PROPERTY
+    set_property(TARGET TestMILP PROPERTY
             MSVC_RUNTIME_LIBRARY "MultiThreadedDLL"
     )
 endif()
