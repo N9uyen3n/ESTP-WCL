@@ -39,7 +39,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "d:/Work/NEULab/ETSP-WCL-Test13/cmake-build-debug"
+			"value" : "d:/Work/NEULab/ETSP-WCL-R2-1/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -479,7 +479,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "D:/Work/NEULab/ETSP-WCL-Test13/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "D:/Work/NEULab/ETSP-WCL-R2-1/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -539,7 +539,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "D:/Work/NEULab/ETSP-WCL-Test13"
+			"value" : "D:/Work/NEULab/ETSP-WCL-R2-1"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -735,7 +735,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "ETSP_WCL_Test13"
+			"value" : "ETSP_WCL_R2_1"
 		},
 		{
 			"name" : "CMAKE_RANLIB",
@@ -1102,6 +1102,42 @@
 			"value" : "D:/Program Files/IBM/ILOG/CPLEX_Studio2211/cplex/lib/x64_windows_msvc14/stat_mda/cplex2211.lib"
 		},
 		{
+			"name" : "ETSP_WCL_R2_1_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "D:/Work/NEULab/ETSP-WCL-R2-1/cmake-build-debug"
+		},
+		{
+			"name" : "ETSP_WCL_R2_1_IS_TOP_LEVEL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "ON"
+		},
+		{
+			"name" : "ETSP_WCL_R2_1_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "D:/Work/NEULab/ETSP-WCL-R2-1"
+		},
+		{
 			"name" : "ETSP_WCL_Test13_BINARY_DIR",
 			"properties" : 
 			[
@@ -1111,7 +1147,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "D:/Work/NEULab/ETSP-WCL-Test13/cmake-build-debug"
+			"value" : "D:/Work/NEULab/ETSP-WCL-R2-1/cmake-build-debug"
 		},
 		{
 			"name" : "ETSP_WCL_Test13_IS_TOP_LEVEL",
@@ -1135,7 +1171,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "D:/Work/NEULab/ETSP-WCL-Test13"
+			"value" : "D:/Work/NEULab/ETSP-WCL-R2-1"
 		},
 		{
 			"name" : "ILOCPLEX_LIBRARY",

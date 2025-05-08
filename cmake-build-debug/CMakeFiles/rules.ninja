@@ -6,7 +6,7 @@
 # It is included in the main 'build.ninja'.
 
 # =============================================================================
-# Project: ETSP_WCL_Test13
+# Project: ETSP_WCL_R2_1
 # Configurations: Release
 # =============================================================================
 # =============================================================================
@@ -217,7 +217,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = C:\Users\Admin\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe --regenerate-during-build -SD:\Work\NEULab\ETSP-WCL-Test13 -BD:\Work\NEULab\ETSP-WCL-Test13\cmake-build-debug
+  command = C:\Users\Admin\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe --regenerate-during-build -SD:\Work\NEULab\ETSP-WCL-R2-1 -BD:\Work\NEULab\ETSP-WCL-R2-1\cmake-build-debug
   description = Re-running CMake...
   generator = 1
 
