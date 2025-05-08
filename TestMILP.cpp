@@ -37,14 +37,71 @@ int main() {
         // Create and run MILP optimizer
         MILP milp;
         auto start_time = std::chrono::high_resolution_clock::now();
+        //
+        // Route optimized_route = milp.optimize(initial_nodes, graph, charging_options, params);
+        //
+        // auto end_time = std::chrono::high_resolution_clock::now();
+        // auto duration = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time).count();
+        //
+        // // Print results
+        // std::cout << "\nOptimization Results:\n";
+        // std::cout << "Total cost: " << optimized_route.getTotalCost() << "\n";
+        // std::cout << "Computation time: " << duration << " seconds\n";
+        // std::cout << "Route: ";
+        // for (int node_id : optimized_route.getNodeIds()) {
+        //     std::cout << node_id << " ";
+        // }
+        // std::cout << "\n";
+        //
+        // std::cout << "\nDetailed Route Information:\n";
+        // std::cout << std::fixed << std::setprecision(2);
+        // for (size_t i = 0; i < optimized_route.getNodeIds().size(); ++i) {
+        //     int node_id = optimized_route.getNodeIds()[i];
+        //     std::cout << "Node " << node_id << ":\n";
+        //     std::cout << "  Arrival Time: " << optimized_route.getArrivalTime()[i] << "\n";
+        //     std::cout << "  SOC on Arrival: " << optimized_route.getSocArrival()[i] << "\n";
+        //     std::cout << "  Departure Time: " << optimized_route.getDepartureTime()[i] << "\n";
+        //     std::cout << "  SOC on Departure: " << optimized_route.getSocDeparture()[i] << "\n";
+        // }
+        //
+        // std::cout << "\nCharging Decisions:\n";
+        // for (const auto& decision : optimized_route.getChargingDecisions()) {
+        //     std::cout << "Node " << decision.station_id << ": Option " << decision.option_index
+        //               << ", Duration " << decision.charging_time << "\n";
+        // }
+        //
+        // std::cout << "\nWireless Charging:\n";
+        // const auto& wireless = optimized_route.getWirelessDecisions();
+        // for (size_t i = 0; i < wireless.size(); ++i) {
+        //     if (wireless[i]) {
+        //         std::cout << "Wireless charging used between nodes "
+        //                   << optimized_route.getNodeIds()[i] << " and "
+        //                   << optimized_route.getNodeIds()[i + 1] << "\n";
+        //     }
+        // }
+        //
+        //  auto start_time = std::chrono::high_resolution_clock::now();
 
-        Route optimized_route = milp.optimize(initial_nodes, graph, charging_options, params);
+        // Create fixed arcs (example: fix some arcs from initial_nodes)
+        std::vector<std::pair<int, int>> fixed_arcs;
+        // Fix the first few arcs in initial_nodes (e.g., depot to first customer and first customer to second)
+        for (size_t i = 0; i < std::min(initial_nodes.size() - 1, size_t(2)); ++i) {
+            fixed_arcs.emplace_back(initial_nodes[i], initial_nodes[i + 1]);
+        }
+
+
+        Route optimized_route = milp.MILPFixVariable(fixed_arcs, graph, charging_options, params);
 
         auto end_time = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time).count();
 
         // Print results
-        std::cout << "\nOptimization Results:\n";
+        std::cout << "\nOptimization Results (with Fixed Variables):\n";
+        std::cout << "Fixed Arcs: ";
+        for (const auto& arc : fixed_arcs) {
+            std::cout << "(" << arc.first << ", " << arc.second << ") ";
+        }
+        std::cout << "\n";
         std::cout << "Total cost: " << optimized_route.getTotalCost() << "\n";
         std::cout << "Computation time: " << duration << " seconds\n";
         std::cout << "Route: ";

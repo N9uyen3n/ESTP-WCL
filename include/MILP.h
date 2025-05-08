@@ -11,6 +11,7 @@
 #include "Parameters.h"
 #include "Utils.h"
 
+
 struct SubproblemResult {
     double cost;                            // Chi phí tổng của tuyến đường
     std::vector<int> new_node_ids;          // Danh sách các nút của tuyến đường
@@ -32,11 +33,10 @@ public:
                    const Graph& graph,
                    const std::vector<std::vector<ChargingOption>>& charge_options,
                    const Parameters& params);
-
-    Route solveSubproblem(int i, int j, int a, const Route& current_route,
-                         const Graph& graph,
-                         const std::vector<std::vector<ChargingOption>>& charge_options,
-                         const Parameters& params);
+    Route MILPFixVariable(const std::vector<std::pair<int, int>>& fixed_arcs,
+                            const Graph& graph,
+                            const std::vector<std::vector<ChargingOption>>& charge_options,
+                            const Parameters& params);
 
 private:
     IloEnv env;
