@@ -15,6 +15,7 @@ private:
     double x, y;
     double service_time;
 
+
 public:
     Node(int id, std::string string_id, char type, double x, double y, double service_time);
 

@@ -8,7 +8,7 @@
 int main() {
     try {
         // Read input data
-        std::string csv_file_dir = "../data/Input/";
+        std::string csv_file_dir = "../data/Input/c5-s5/";
         std::vector<Node> nodes = Utils::readNodes(csv_file_dir + "nodes.csv");
         Utils::printNodesInfo(nodes);
 
@@ -24,15 +24,11 @@ int main() {
         // Create graph instance
         Graph graph(nodes, arcs);
 
-        // Create initial route (depot + customers)
-        std::vector<int> initial_nodes;
-        initial_nodes.push_back(0); // Depot
-        for (const auto& node : nodes) {
-            if (node.getType() == NodeType::CUSTOMER) {
-                initial_nodes.push_back(node.getId());
-            }
-        }
-        initial_nodes.push_back(0); // Return to depot
+        // Create random number generator
+        std::mt19937 rng(42);
+
+        // Generate initial route
+        std::vector<int> initial_nodes = Utils::generateInitialRoute(nodes, arcs, params, rng);
 
         // Create and run MILP optimizer
         MILP milp;
@@ -83,35 +79,35 @@ int main() {
         //  auto start_time = std::chrono::high_resolution_clock::now();
 
         // Create fixed arcs (example: fix some arcs from initial_nodes)
-        std::vector<std::pair<int, int>> fixed_arcs;
-        // Fix the first few arcs in initial_nodes (e.g., depot to first customer and first customer to second)
-        for (size_t i = 0; i < std::min(initial_nodes.size() - 1, size_t(2)); ++i) {
-            fixed_arcs.emplace_back(initial_nodes[i], initial_nodes[i + 1]);
-        }
 
 
-        Route optimized_route = milp.MILPFixVariable(fixed_arcs, graph, charging_options, params);
+
+
+
+        Route optimized_route = milp.MILPFixCustomerSequence(initial_nodes, graph, charging_options, params);
 
         auto end_time = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time).count();
 
-        // Print results
-        std::cout << "\nOptimization Results (with Fixed Variables):\n";
-        std::cout << "Fixed Arcs: ";
-        for (const auto& arc : fixed_arcs) {
-            std::cout << "(" << arc.first << ", " << arc.second << ") ";
-        }
+        auto start_time_1 = std::chrono::high_resolution_clock::now();
+
+        Route route2 = milp.optimize(initial_nodes, graph, charging_options, params);
+        auto end_time_1 = std::chrono::high_resolution_clock::now();
+        auto duration_1 = std::chrono::duration_cast<std::chrono::seconds>(end_time_1 - start_time).count();
+
         std::cout << "\n";
         std::cout << "Total cost: " << optimized_route.getTotalCost() << "\n";
         std::cout << "Computation time: " << duration << " seconds\n";
+        std::cout << "Route: ";
+        std::cout << "\n";
+        std::cout << "Total cost: " << optimized_route.getTotalCost() << "\n";
+        std::cout << "Computation time (No Fix): " << duration_1 << " seconds\n";
         std::cout << "Route: ";
         for (int node_id : optimized_route.getNodeIds()) {
             std::cout << node_id << " ";
         }
         std::cout << "\n";
 
-        std::cout << "\nDetailed Route Information:\n";
-        std::cout << std::fixed << std::setprecision(2);
         for (size_t i = 0; i < optimized_route.getNodeIds().size(); ++i) {
             int node_id = optimized_route.getNodeIds()[i];
             std::cout << "Node " << node_id << ":\n";

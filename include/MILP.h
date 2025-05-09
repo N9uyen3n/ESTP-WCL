@@ -37,6 +37,10 @@ public:
                             const Graph& graph,
                             const std::vector<std::vector<ChargingOption>>& charge_options,
                             const Parameters& params);
+    Route MILPFixCustomerSequence(const std::vector<int>& fixed_nodes,
+                                    const Graph& graph,
+                                    const std::vector<std::vector<ChargingOption>>& charge_options,
+                                    const Parameters& params);
 
 private:
     IloEnv env;

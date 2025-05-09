@@ -33,6 +33,9 @@ std::vector<Node> Utils::readNodes(const std::string& filename) {
         std::getline(ss, cell, ','); service_time = std::stod(cell);
 
         char type_char = type_str.empty() ? 'c' : std::tolower(type_str[0]);
+        if (id == 0) {
+            type_char = 'd'; // First node is depot
+        }
         Node node(id, string_id, type_char, x, y, service_time);
         node.setId(id++);
         nodes.push_back(node);

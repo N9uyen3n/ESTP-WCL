@@ -317,8 +317,7 @@ Route MILP::optimize(const std::vector<int>& initial_nodes,
 
         // Solve
         cplex.setOut(std::cout);
-        cplex.setParam(IloCplex::TiLim, 300.0);
-        cplex.setParam(IloCplex::EpGap, 0.01);
+        cplex.setParam(IloCplex::EpGap, 0.5);
         if (!cplex.solve()) {
             std::cout << "MILP::optimize: CPLEX failed, status = " << cplex.getStatus() << "\n";
             return Route(initial_nodes);
@@ -391,16 +390,21 @@ Route MILP::optimize(const std::vector<int>& initial_nodes,
         return Route(initial_nodes);
     }
 }
-
-Route MILP::MILPFixVariable(const std::vector<std::pair<int, int>>& fixed_arcs,
-                           const Graph& graph,
-                           const std::vector<std::vector<ChargingOption>>& charge_options,
-                           const Parameters& params) {
+Route MILP::MILPFixCustomerSequence(const std::vector<int>& initial_nodes,
+                                    const Graph& graph,
+                                    const std::vector<std::vector<ChargingOption>>& charge_options,
+                                    const Parameters& params) {
     auto start_time = std::chrono::high_resolution_clock::now();
     IloModel model(env);
     IloCplex cplex(model);
 
     try {
+        // Validate input
+        if (!Utils::validateInitialNodes(initial_nodes, graph)) {
+            std::cout << "MILP::optimize: Invalid initial nodes\n";
+            throw std::runtime_error("Invalid initial node list");
+        }
+
         // Sets
         const auto& nodes = graph.getNodes();
         const auto& arcs = graph.getArcs();
@@ -429,6 +433,28 @@ Route MILP::MILPFixVariable(const std::vector<std::pair<int, int>>& fixed_arcs,
             }
         }
 
+        // Define allowed arcs
+        std::set<std::pair<int, int>> allowed_arcs;
+        allowed_arcs.insert({depot_start_id, initial_nodes[0]});
+        for (size_t i = 0; i < initial_nodes.size() - 1; ++i) {
+            allowed_arcs.insert({initial_nodes[i], initial_nodes[i + 1]});
+            for (int station : station_ids) {
+                allowed_arcs.insert({initial_nodes[i], station});
+                allowed_arcs.insert({station, initial_nodes[i + 1]});
+            }
+        }
+        allowed_arcs.insert({initial_nodes.back(), depot_end_id});
+        // Add station-to-station arcs
+        for (int s1 : station_ids) {
+            for (int s2 : station_ids) {
+                if (s1 != s2 && graph.findArc(s1, s2)) {
+                    allowed_arcs.insert({s1, s2});
+                }
+            }
+        }
+
+
+
         // Decision Variables
         IloArray<IloBoolVarArray> x(env, node_ids.size());
         for (size_t i = 0; i < node_ids.size(); ++i) {
@@ -437,23 +463,21 @@ Route MILP::MILPFixVariable(const std::vector<std::pair<int, int>>& fixed_arcs,
                 x[i][j] = IloBoolVar(env, ("x_" + std::to_string(node_ids[i]) + "_" + std::to_string(node_ids[j])).c_str());
             }
         }
-        // Fix variables for arcs in fixed_arcs
-        for (const auto& arc : fixed_arcs) {
-            int from = arc.first;
-            int to = arc.second;
-            size_t i_idx = std::find(node_ids.begin(), node_ids.end(), from) - node_ids.begin();
-            size_t j_idx = std::find(node_ids.begin(), node_ids.end(), to) - node_ids.begin();
-            if (graph.findArc(from, to)) {
-                x[i_idx][j_idx].setBounds(1, 1); // Fix x[i][j] = 1
-            } else {
-                throw std::runtime_error("Fixed arc does not exist in graph");
-            }
-        }
         IloArray<IloBoolVarArray> z(env, node_ids.size());
         for (size_t i = 0; i < node_ids.size(); ++i) {
             z[i] = IloBoolVarArray(env, node_ids.size());
             for (size_t j = 0; j < node_ids.size(); ++j) {
                 z[i][j] = IloBoolVar(env, ("z_" + std::to_string(node_ids[i]) + "_" + std::to_string(node_ids[j])).c_str());
+            }
+        }
+
+        // Fix arcs
+        for (size_t i = 0; i < node_ids.size(); ++i) {
+            for (size_t j = 0; j < node_ids.size(); ++j) {
+                if (i != j && !allowed_arcs.count({node_ids[i], node_ids[j]}) && graph.findArc(node_ids[i], node_ids[j])) {
+                    x[i][j].setBounds(0, 0);
+                    z[i][j].setBounds(0, 0);
+                }
             }
         }
         IloNumVarArray y_a(env, node_ids.size(), 0, params.getBatteryCapacity(), ILOFLOAT);
@@ -703,11 +727,10 @@ Route MILP::MILPFixVariable(const std::vector<std::pair<int, int>>& fixed_arcs,
 
         // Solve
         cplex.setOut(std::cout);
-        cplex.setParam(IloCplex::TiLim, 300.0);
-        cplex.setParam(IloCplex::EpGap, 0.01);
+        cplex.setParam(IloCplex::EpGap, 0.5);
         if (!cplex.solve()) {
-            std::cout << "MILP::MILPFixVariable: CPLEX failed, status = " << cplex.getStatus() << "\n";
-            return Route(std::vector<int>{});
+            std::cout << "MILP::optimize: CPLEX failed, status = " << cplex.getStatus() << "\n";
+            return Route(initial_nodes);
         }
 
         // Extract Route
@@ -740,8 +763,8 @@ Route MILP::MILPFixVariable(const std::vector<std::pair<int, int>>& fixed_arcs,
                 }
             }
             if (!found) {
-                std::cout << "MILP::MILPFixVariable: Failed to construct route\n";
-                return Route(std::vector<int>{});
+                std::cout << "MILP::optimize: Failed to construct route\n";
+                return Route(initial_nodes);
             }
         }
 
@@ -770,11 +793,11 @@ Route MILP::MILPFixVariable(const std::vector<std::pair<int, int>>& fixed_arcs,
 
         auto end_time = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time).count();
-        std::cout << "MILP::MILPFixVariable: Success, cost = " << result.cost << ", Time = " << duration << " s\n";
+        std::cout << "MILP::optimize: Success, cost = " << result.cost << ", Time = " << duration << " s\n";
         return result_route;
     } catch (IloException& e) {
-        std::cout << "MILP::MILPFixVariable: CPLEX Exception: " << e.getMessage() << "\n";
-        return Route(std::vector<int>{});
+        std::cout << "MILP::optimize: CPLEX Exception: " << e.getMessage() << "\n";
+        return Route(initial_nodes);
     }
 }
 void MILP::updateRoute(Route& route, const SubproblemResult& result) {
