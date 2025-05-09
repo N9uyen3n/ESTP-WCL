@@ -89,20 +89,20 @@ int main() {
         auto end_time = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time).count();
 
-        auto start_time_1 = std::chrono::high_resolution_clock::now();
-
-        Route route2 = milp.optimize(initial_nodes, graph, charging_options, params);
-        auto end_time_1 = std::chrono::high_resolution_clock::now();
-        auto duration_1 = std::chrono::duration_cast<std::chrono::seconds>(end_time_1 - start_time).count();
+        // auto start_time_1 = std::chrono::high_resolution_clock::now();
+        //
+        // Route route2 = milp.optimize(initial_nodes, graph, charging_options, params);
+        // auto end_time_1 = std::chrono::high_resolution_clock::now();
+        // auto duration_1 = std::chrono::duration_cast<std::chrono::seconds>(end_time_1 - start_time).count();
 
         std::cout << "\n";
         std::cout << "Total cost: " << optimized_route.getTotalCost() << "\n";
         std::cout << "Computation time: " << duration << " seconds\n";
         std::cout << "Route: ";
         std::cout << "\n";
-        std::cout << "Total cost: " << optimized_route.getTotalCost() << "\n";
-        std::cout << "Computation time (No Fix): " << duration_1 << " seconds\n";
-        std::cout << "Route: ";
+        // std::cout << "Total cost: " << optimized_route.getTotalCost() << "\n";
+        // std::cout << "Computation time (No Fix): " << duration_1 << " seconds\n";
+        // std::cout << "Route: ";
         for (int node_id : optimized_route.getNodeIds()) {
             std::cout << node_id << " ";
         }

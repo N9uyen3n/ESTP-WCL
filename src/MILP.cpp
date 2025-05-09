@@ -250,7 +250,7 @@ Route MILP::optimize(const std::vector<int>& initial_nodes,
                         model.add(y_a[j] <= y_d[i] - params.getEnergyConsumption() * dist +
                                   params.getBatteryCapacity() * (1 - x[i][j]));
                     }
-                    model.add(y_a[j] >= 0);
+                    model.add(y_a[j] >= params.getMinSoc()); // Thay y_a[j] >= 0
                 }
             }
         }
@@ -302,6 +302,7 @@ Route MILP::optimize(const std::vector<int>& initial_nodes,
                 model.add(phi[i] == 0);
             }
         }
+
         for (size_t i = 0; i < node_ids.size(); ++i) {
             for (size_t j = 0; j < node_ids.size(); ++j) {
                 if (i != j && graph.findArc(node_ids[i], node_ids[j])) {
@@ -660,7 +661,7 @@ Route MILP::MILPFixCustomerSequence(const std::vector<int>& initial_nodes,
                         model.add(y_a[j] <= y_d[i] - params.getEnergyConsumption() * dist +
                                   params.getBatteryCapacity() * (1 - x[i][j]));
                     }
-                    model.add(y_a[j] >= 0);
+                    model.add(y_a[j] >= params.getMinSoc()); // Thay y_a[j] >= 0
                 }
             }
         }
@@ -786,6 +787,7 @@ Route MILP::MILPFixCustomerSequence(const std::vector<int>& initial_nodes,
                 }
             }
         }
+
 
         result.feasible = true;
         Route result_route(result.new_node_ids);
