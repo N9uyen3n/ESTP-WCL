@@ -16,6 +16,7 @@ VNS::VNS(const std::vector<int>& initial_route,
          int max_iterations,
          std::mt19937& rng)
     : env(),
+       init_route(init_route),
       current_route(initial_route),
       graph(graph),
       charge_options(charge_options),
@@ -23,9 +24,8 @@ VNS::VNS(const std::vector<int>& initial_route,
       max_iterations(max_iterations),
       rng(rng),
       operator_weights_({0.4, 0.3, 0.2, 0.1}),
-      no_improvement_counter(0),
-      potential_stations() { // Initialize empty potential_stations
-    if (!isValidRoute(initial_route, graph, params)) {
+      no_improvement_counter(0){
+    if (!Utils::validateInitialNodes(initial_route, graph)) {
         throw std::invalid_argument("Invalid initial route");
     }
     for (const auto& node : graph.getNodes()) {
@@ -40,75 +40,138 @@ VNS::VNS(const std::vector<int>& initial_route,
 VNS::~VNS() {
     env.end();
 }
+// Hàm kiểm tra tính hợp lệ của tuyến đường (tương tự isValidRoute trong VNSOptimizer)
+bool isValidRoute(const std::vector<int>& route, const Graph& graph, const std::vector<int>& initial_nodes) {
+    if (route.front() != 0 || route.back() != 0) return false;
+
+    // Lấy danh sách khách hàng bắt buộc từ initial_nodes
+    std::set<int> required_customers;
+    for (int id : initial_nodes) {
+        if (Utils::isCustomer(id, graph.getNodes())) {
+            required_customers.insert(id);
+        }
+    }
+
+    // Kiểm tra khách hàng được thăm
+    std::set<int> visited_customers;
+    for (size_t i = 1; i < route.size() - 1; ++i) {
+        if (route[i] == 0) return false; // Không được có depot giữa chừng
+        if (Utils::isCustomer(route[i], graph.getNodes())) {
+            if (visited_customers.count(route[i])) return false; // Không lặp lại khách hàng
+            visited_customers.insert(route[i]);
+        }
+    }
+    return visited_customers == required_customers;
+}
+
+// Hàm kiểm tra cải thiện đáng kể (tương tự checkSignificantImprovement)
+bool checkSignificantImprovement(double old_cost, double new_cost) {
+    if (old_cost <= 0) return false;
+    double improvement = (old_cost - new_cost) / old_cost * 100.0;
+    return improvement >= 0.01;
+}
 
 Route VNS::run() {
     Route best_route(current_route);
     SubproblemResult initial_result = solveSubproblem(best_route, graph, charge_options, params);
-    updateRoute(best_route, initial_result);
-    double best_cost = initial_result.cost;
+
+    // Nếu tuyến đường ban đầu không khả thi hoặc không hợp lệ, thử sửa chữa
+    if (!initial_result.feasible || !isValidRoute(best_route.getNodeIds(), graph, init_route)) {
+        best_route.setTotalCost(std::numeric_limits<double>::infinity());
+        best_route.setFeasible(false);
+        // Thử chèn trạm sạc
+        best_route = insertStation(best_route, graph, params);
+        initial_result = solveSubproblem(best_route, graph, charge_options, params);
+
+        // Nếu vẫn không khả thi, thử shaking tối đa 10 lần
+        int max_attempts = 10;
+        int attempt = 0;
+        while ((!initial_result.feasible || !isValidRoute(best_route.getNodeIds(), graph, init_route)) && attempt < max_attempts) {
+            int neighborhood = attempt % 4; // Chọn toán tử lân cận
+            best_route = shake(Route(best_route.getNodeIds()), neighborhood, graph, params);
+            initial_result = solveSubproblem(best_route, graph, charge_options, params);
+            if (!initial_result.feasible) {
+                best_route = insertStation(best_route, graph, params);
+                initial_result = solveSubproblem(best_route, graph, charge_options, params);
+            }
+            attempt++;
+        }
+
+        // Nếu vẫn không khả thi, đặt chi phí vô cực và tiếp tục
+        if (!initial_result.feasible || !isValidRoute(best_route.getNodeIds(), graph, init_route)) {
+            std::cerr << "Warning: Could not find a feasible initial route after " << max_attempts << " attempts." << std::endl;
+            best_route.setTotalCost(std::numeric_limits<double>::infinity());
+            best_route.setFeasible(false);
+        } else {
+            updateRoute(best_route, initial_result);
+        }
+    } else {
+        updateRoute(best_route, initial_result);
+    }
+
+    double best_cost = initial_result.feasible ? initial_result.cost : std::numeric_limits<double>::infinity();
+    current_route = best_route.getNodeIds();
+    double current_cost = best_cost;
+    int no_improvement_counter = 0;
 
     for (int iteration = 0; iteration < max_iterations; ++iteration) {
         int neighborhood = selectOperatorWeighted();
+        std::cout << "Selected Neighborhood: " << neighborhood + 1 << "\n";
+
+        // Shaking
         Route shaken_route = shake(Route(current_route), neighborhood, graph, params);
-        Route local_optimum = localSearch(shaken_route);
-        SubproblemResult result = solveSubproblem(local_optimum, graph, charge_options, params);
+        SubproblemResult shake_result = solveSubproblem(shaken_route, graph, charge_options, params);
 
-        if (result.feasible && result.cost < best_cost) {
-            best_cost = result.cost;
-            best_route = local_optimum;
-            current_route = result.new_node_ids; // Update with new_node_ids including inserted stations
-            no_improvement_counter = 0;
-            operator_weights_[neighborhood] *= 1.1;
-            normalizeWeights();
-        } else {
-            // Handle infeasible route
-            if (!result.feasible) {
-                const int max_attempts = 5;
-                Route temp_route = local_optimum;
-                bool fixed = false;
-
-                for (int attempt = 0; attempt < max_attempts && !fixed; ++attempt) {
-                    bool needs_charging = false;
-                    double soc = params.getInitialSoc();
-                    const auto& nodes = temp_route.getNodeIds();
-                    for (size_t i = 0; i < nodes.size() - 1; ++i) {
-                        const Arc* arc = graph.findArc(nodes[i], nodes[i + 1]);
-                        if (!arc) break;
-                        soc -= params.getEnergyConsumption() * arc->getDistance();
-                        if (soc < params.getMinSoc()) {
-                            needs_charging = true;
-                            break;
-                        }
-                        if (Utils::isChargingStation(nodes[i + 1], graph.getNodes())) {
-                            soc = params.getBatteryCapacity();
-                        }
-                    }
-
-                    if (needs_charging) {
-                        temp_route = insertStation(temp_route, graph, params); // Adds to potential_stations
-                    } else {
-                        int alt_neighborhood = std::uniform_int_distribution<>(0, 3)(rng);
-                        temp_route = shake(temp_route, alt_neighborhood, graph, params);
-                    }
-
-                    result = solveSubproblem(temp_route, graph, charge_options, params);
-                    if (result.feasible && result.cost < best_cost) {
-                        best_cost = result.cost;
-                        best_route = temp_route;
-                        current_route = result.new_node_ids;
-                        no_improvement_counter = 0;
-                        operator_weights_[neighborhood] *= 1.1;
-                        normalizeWeights();
-                        fixed = true;
-                    }
-                }
-            }
-            no_improvement_counter++;
-            if (no_improvement_counter >= 50) {
-                break;
+        // Nếu tuyến đường không khả thi hoặc không hợp lệ, thử chèn trạm sạc
+        if (!shake_result.feasible || !isValidRoute(shaken_route.getNodeIds(), graph, init_route)) {
+            shaken_route = insertStation(shaken_route, graph, params);
+            shake_result = solveSubproblem(shaken_route, graph, charge_options, params);
+            if (!shake_result.feasible || !isValidRoute(shaken_route.getNodeIds(), graph, init_route)) {
+                no_improvement_counter++;
+                continue;
             }
         }
 
+        // Local Search
+        Route local_optimum = localSearch(shaken_route);
+        SubproblemResult result = solveSubproblem(local_optimum, graph, charge_options, params);
+
+        // Kiểm tra tính hợp lệ và khả thi
+        if (!result.feasible || !isValidRoute(local_optimum.getNodeIds(), graph, init_route)) {
+            no_improvement_counter++;
+            continue;
+        }
+
+        // Evaluate cost
+        double new_cost = result.cost;
+
+        // Acceptance criterion
+        bool significant_improvement = false;
+        if (new_cost < best_cost) {
+            best_cost = new_cost;
+            best_route = local_optimum;
+            current_route = Route(result.new_node_ids).getNodeIds();
+            updateRoute(Route(current_route), result);
+            current_cost = new_cost;
+            significant_improvement = checkSignificantImprovement(best_cost, new_cost);
+            no_improvement_counter = significant_improvement ? 0 : no_improvement_counter + 1;
+            operator_weights_[neighborhood] += 0.1; // Tăng trọng số
+            normalizeWeights();
+        } else if (new_cost < current_cost) {
+            current_route = Route(result.new_node_ids).getNodeIds();
+            updateRoute(Route(current_route), result);
+            current_cost = new_cost;
+            no_improvement_counter++;
+        } else {
+            no_improvement_counter++;
+        }
+
+        // Thoát sớm nếu không cải thiện quá lâu
+        if (no_improvement_counter >= 100) {
+            break;
+        }
+
+        // Logging every 10 iterations
         if ((iteration + 1) % 10 == 0) {
             std::cout << "Iteration " << iteration + 1 << ":\n";
             std::cout << "  Best Cost: " << best_cost << "\n";
@@ -121,29 +184,16 @@ Route VNS::run() {
                 std::cout << " ";
             }
             std::cout << "\n";
-
-            // Solve subproblem for current route to get charging decisions
-            Route temp_route(current_route);
-            SubproblemResult current_result = solveSubproblem(temp_route, graph, charge_options, params);
-            if (current_result.feasible) {
-                std::cout << "  Charging Decisions:\n";
-                for (size_t i = 0; i < current_result.new_node_ids.size(); ++i) {
-                    if (current_result.charging_decisions[i].getChargingTime() > 0) {
-                        std::cout << "    Node " << current_result.new_node_ids[i]
-                                  << ": Station ID = " << current_result.charging_decisions[i].getStationId()
-                                  << ", Option = " << current_result.charging_decisions[i].getOption()
-                                  << ", Charging Time = " << current_result.charging_decisions[i].getChargingTime() << " units\n";
-                    }
-                }
-            } else {
-                std::cout << "  Charging Decisions: Infeasible route\n";
-            }
-
+            std::cout << "  No-Improvement Counter: " << no_improvement_counter << "\n";
             std::cout << "  Operator Weights: ";
-            for (double w : operator_weights_) std::cout << w << " ";
-            std::cout << "\n  No Improvement Counter: " << no_improvement_counter << "\n";
+            for (double w : operator_weights_) {
+                std::cout << std::fixed << std::setprecision(2) << w << " ";
+            }
+            std::cout << "\n------------------------\n";
         }
     }
+
+    // Cập nhật lại best_route trước khi trả về
     updateRoute(best_route, solveSubproblem(best_route, graph, charge_options, params));
     return best_route;
 }
@@ -155,13 +205,13 @@ SubproblemResult VNS::solveSubproblem(const Route& current_route,
     SubproblemResult result;
     result.new_node_ids = current_route.getNodeIds();
     result.feasible = false;
-    result.cost = 1e9;
+    result.cost = std::numeric_limits<double>::infinity();
     result.soc_arrival.resize(result.new_node_ids.size(), 0.0);
     result.soc_departure.resize(result.new_node_ids.size(), 0.0);
     result.arrival_time.resize(result.new_node_ids.size(), 0.0);
     result.departure_time.resize(result.new_node_ids.size(), 0.0);
     result.charging_decisions.resize(result.new_node_ids.size(), ChargingDecision(0, 0, 0.0));
-    result.wireless_decisions.clear();
+    result.wireless_decisions.resize(result.new_node_ids.size() - 1, false);
 
     if (params.getInitialSoc() < params.getMinSoc() || params.getInitialSoc() > params.getBatteryCapacity()) {
         std::cerr << "Error: initial_SOC (" << params.getInitialSoc()
@@ -174,241 +224,137 @@ SubproblemResult VNS::solveSubproblem(const Route& current_route,
         IloEnv env;
         IloModel model(env);
         IloCplex cplex(model);
+        cplex.setParam(IloCplex::TiLim, 50);
+        cplex.setParam(IloCplex::EpGap, 0.1);
+        cplex.setOut(env.getNullStream());
 
         int n = result.new_node_ids.size();
         int m = n - 1;
 
-        // Find valid insertion positions (between two customers)
-        std::vector<size_t> valid_positions;
-        for (size_t i = 1; i < n - 1; ++i) {
-            if (Utils::isCustomer(result.new_node_ids[i - 1], graph.getNodes()) &&
-                Utils::isCustomer(result.new_node_ids[i], graph.getNodes())) {
-                valid_positions.push_back(i);
-            }
-        }
-
-        // Potential stations to consider
-        int p = potential_stations.size();
-        std::vector<int> stations_to_consider = potential_stations;
-
         // Decision variables
-        IloNumVarArray phi(env, n + p, 0, IloInfinity, ILOFLOAT); // Charging time for original and inserted nodes
-        std::vector<IloBoolVarArray> w(n + p);
+        IloNumVarArray t(env, n, 0, IloInfinity, ILOFLOAT); // Arrival time
+        IloNumVarArray ya(env, n, params.getMinSoc(), params.getBatteryCapacity(), ILOFLOAT); // SOC on arrival
+        IloNumVarArray yd(env, n, params.getMinSoc(), params.getBatteryCapacity(), ILOFLOAT); // SOC on departure
+        IloNumVarArray phi(env, n, 0, IloInfinity, ILOFLOAT); // Charging time
+        std::vector<IloBoolVarArray> w(n); // Charging option selection
         for (int i = 0; i < n; ++i) {
             w[i] = IloBoolVarArray(env, charge_options[result.new_node_ids[i]].size());
         }
-        for (int i = n; i < n + p; ++i) {
-            int station_id = stations_to_consider[i - n];
-            w[i] = IloBoolVarArray(env, charge_options[station_id].size());
-        }
-        IloNumVarArray s(env, m + p, 0, IloInfinity, ILOFLOAT); // Travel time
-        IloNumVarArray ya(env, n + p, params.getMinSoc(), params.getBatteryCapacity(), ILOFLOAT);
-        IloNumVarArray yd(env, n + p, params.getMinSoc(), params.getBatteryCapacity(), ILOFLOAT);
-        IloNumVarArray t(env, n + p, 0, IloInfinity, ILOFLOAT);
-        IloNumVarArray depart(env, n + p, 0, IloInfinity, ILOFLOAT);
+        IloNumVarArray s(env, m, 0, IloInfinity, ILOFLOAT); // Travel time
+        IloBoolVarArray z(env, m); // Wireless charging decision
 
         // Linearization variables for phi[i] * w[i][k]
-        std::vector<IloNumVarArray> phi_w(n + p);
-        for (int i = 0; i < n + p; ++i) {
-            int node_id = (i < n) ? result.new_node_ids[i] : stations_to_consider[i - n];
-            phi_w[i] = IloNumVarArray(env, charge_options[node_id].size(), 0, IloInfinity, ILOFLOAT);
-        }
-
-        // Variables for station insertion
-        IloBoolVarArray z(env, p); // Whether to use each potential station
-        std::vector<IloBoolVarArray> y(p); // Position selection for each station
-        for (int l = 0; l < p; ++l) {
-            y[l] = IloBoolVarArray(env, valid_positions.size());
-        }
-
-        // Ensure at most one station is inserted at each position
-        IloExprArray pos_usage(env, valid_positions.size());
-        for (int k = 0; k < valid_positions.size(); ++k) {
-            pos_usage[k] = IloExpr(env);
-            for (int l = 0; l < p; ++l) {
-                pos_usage[k] += y[l][k];
-            }
-            model.add(pos_usage[k] <= 1);
-        }
-
-        // Each station is inserted at most at one position
-        for (int l = 0; l < p; ++l) {
-            IloExpr sum_y(env);
-            for (int k = 0; k < valid_positions.size(); ++k) {
-                sum_y += y[l][k];
-            }
-            model.add(sum_y == z[l]);
+        std::vector<IloNumVarArray> phi_w(n);
+        for (int i = 0; i < n; ++i) {
+            phi_w[i] = IloNumVarArray(env, charge_options[result.new_node_ids[i]].size(), 0, IloInfinity, ILOFLOAT);
         }
 
         // Objective function
         IloExpr obj(env);
-        for (int i = 0; i < n + p; ++i) {
-            int node_id = (i < n) ? result.new_node_ids[i] : stations_to_consider[i - n];
-            for (size_t kk = 0; kk < charge_options[node_id].size(); ++kk) {
-                obj += charge_options[node_id][kk].getCost() * charge_options[node_id][kk].getRate() * phi_w[i][kk];
+        for (int i = 0; i < n; ++i) {
+            int node_id = result.new_node_ids[i];
+            for (size_t k = 0; k < charge_options[node_id].size(); ++k) {
+                obj += charge_options[node_id][k].getCost() * charge_options[node_id][k].getRate() * phi_w[i][k];
             }
         }
-        obj += params.getTimeCost() * t[n + p - 1];
+        for (int i = 0; i < m; ++i) {
+            const Arc* arc = graph.findArc(result.new_node_ids[i], result.new_node_ids[i + 1]);
+            if (arc && arc->getIsWireless()) {
+                obj += params.getWirelessCost() * arc->getWirelessChargeRate() * s[i] * z[i];
+            }
+        }
+        obj += params.getTimeCost() * t[n - 1];
         model.add(IloMinimize(env, obj));
 
         // Linearization constraints for phi[i] * w[i][k]
-        for (int i = 0; i < n + p; ++i) {
-            int node_id = (i < n) ? result.new_node_ids[i] : stations_to_consider[i - n];
-            for (size_t kk = 0; kk < charge_options[node_id].size(); ++kk) {
-                double U_phi = params.getBatteryCapacity() / (charge_options[node_id].size() > 0 ? charge_options[node_id][0].getRate() : 1.0);
-                model.add(phi_w[i][kk] <= phi[i]);
-                model.add(phi_w[i][kk] <= U_phi * w[i][kk]);
-                model.add(phi_w[i][kk] >= phi[i] - U_phi * (1 - w[i][kk]));
-                model.add(phi_w[i][kk] >= 0);
-            }
-        }
-
-        // Constraints for no charging at nodes without options
         for (int i = 0; i < n; ++i) {
-            int node = result.new_node_ids[i];
-            if (charge_options[node].empty()) {
+            int node_id = result.new_node_ids[i];
+            for (size_t k = 0; k < charge_options[node_id].size(); ++k) {
+                double U_phi = params.getBatteryCapacity() / (charge_options[node_id].size() > 0 ? charge_options[node_id][0].getRate() : 1.0);
+                model.add(phi_w[i][k] <= phi[i]);
+                model.add(phi_w[i][k] <= U_phi * w[i][k]);
+                model.add(phi_w[i][k] >= phi[i] - U_phi * (1 - w[i][k]));
+                model.add(phi_w[i][k] >= 0);
+            }
+        }
+
+        // No charging at nodes without options
+        for (int i = 0; i < n; ++i) {
+            if (charge_options[result.new_node_ids[i]].empty()) {
                 model.add(phi[i] == 0);
-            }
-        }
-        for (int i = n; i < n + p; ++i) {
-            int l = i - n;
-            for (size_t kk = 0; kk < charge_options[stations_to_consider[l]].size(); ++kk) {
-                model.add(phi_w[i][kk] <= params.getBatteryCapacity() * z[l]);
-            }
-        }
-
-        // Time constraints
-        model.add(depart[0] == t[0]);
-        model.add(t[0] == 0);
-
-        // Build new route dynamically
-        std::vector<int> new_route = result.new_node_ids;
-        std::vector<int> node_mapping(n + p, -1); // Maps variable indices to new_route indices
-        node_mapping[0] = 0; // First node is always the depot
-        int current_idx = 1; // Index in new_route
-
-        for (size_t i = 1; i < n; ++i) {
-            // Check if a station is inserted before position i
-            IloExpr travel_time(env);
-            for (int l = 0; l < p; ++l) {
-                for (size_t k = 0; k < valid_positions.size(); ++k) {
-                    if (valid_positions[k] == i) {
-                        // Insert station l at position i
-                        model.add(t[n + l] >= depart[current_idx - 1] + travel_time);
-                        model.add(depart[n + l] == t[n + l] + phi[n + l]);
-                        node_mapping[n + l] = current_idx;
-                        current_idx++;
-                        const Arc* arc = graph.findArc(stations_to_consider[l], result.new_node_ids[i]);
-                        if (!arc) {
-                            std::cerr << "Error: Arc from " << stations_to_consider[l] << " to " << result.new_node_ids[i] << " not found." << std::endl;
-                            env.end();
-                            return result;
-                        }
-                        double d = arc->getDistance();
-                        travel_time = d / params.getUmax() * y[l][k];
-                    }
+                for (size_t k = 0; k < w[i].getSize(); ++k) {
+                    model.add(w[i][k] == 0);
                 }
             }
-            // Add original node i
-            node_mapping[i] = current_idx;
-            const Arc* arc = graph.findArc(new_route[current_idx - 1], result.new_node_ids[i]);
+        }
+
+        // Time progression constraints
+        model.add(t[0] == 0);
+        for (int i = 1; i < n; ++i) {
+            const Arc* arc = graph.findArc(result.new_node_ids[i - 1], result.new_node_ids[i]);
             if (!arc) {
-                std::cerr << "Error: Arc from " << new_route[current_idx - 1] << " to " << result.new_node_ids[i] << " not found." << std::endl;
+                std::cerr << "Error: Arc from " << result.new_node_ids[i - 1] << " to " << result.new_node_ids[i] << " not found." << std::endl;
                 env.end();
                 return result;
             }
-            double d = arc->getDistance();
-            double min_s = d / params.getUmax();
-            double max_s = d / params.getUmin();
-            model.add(t[i] >= depart[current_idx - 1] + s[current_idx - 1]);
-            s[current_idx - 1].setBounds(min_s, max_s);
-            int node = result.new_node_ids[i];
-            if (!charge_options[node].empty()) {
-                model.add(depart[i] == t[i] + phi[i]);
-            } else if (node != 0) {
-                model.add(depart[i] == t[i] + graph.findNode(node)->getServiceTime());
+            double service_time = graph.findNode(result.new_node_ids[i - 1])->getServiceTime();
+            if (Utils::isChargingStation(result.new_node_ids[i - 1], graph.getNodes())) {
+                model.add(t[i] >= t[i - 1] + phi[i - 1] + s[i - 1]);
+            } else if (result.new_node_ids[i - 1] != 0) {
+                model.add(t[i] >= t[i - 1] + service_time + s[i - 1]);
             } else {
-                model.add(depart[i] == t[i]);
+                model.add(t[i] >= t[i - 1] + s[i - 1]);
             }
-            current_idx++;
+            double min_s = arc->getDistance() / params.getUmax();
+            double max_s = arc->getDistance() / params.getUmin();
+            s[i - 1].setBounds(min_s, max_s);
         }
 
         // SOC constraints
         model.add(ya[0] == params.getInitialSoc());
-        for (int i = 0; i < n + p; ++i) {
-            model.add(ya[i] >= params.getMinSoc());
-            model.add(yd[i] >= params.getMinSoc());
-        }
-        for (int i = 0; i < n; ++i) {
-            if (!charge_options[result.new_node_ids[i]].empty()) {
+        model.add(yd[0] == ya[0]);
+        for (int i = 1; i < n; ++i) {
+            const Arc* arc = graph.findArc(result.new_node_ids[i - 1], result.new_node_ids[i]);
+            double energy_consumed = params.getEnergyConsumption() * arc->getDistance();
+            IloExpr soc_change(env);
+            soc_change = yd[i - 1] - energy_consumed;
+            if (arc->getIsWireless()) {
+                soc_change += arc->getWirelessChargeRate() * s[i - 1] * z[i - 1];
+            }
+            model.add(ya[i] <= soc_change);
+            if (Utils::isChargingStation(result.new_node_ids[i], graph.getNodes())) {
                 IloExpr charge_amount(env);
-                for (size_t kk = 0; kk < charge_options[result.new_node_ids[i]].size(); ++kk) {
-                    charge_amount += charge_options[result.new_node_ids[i]][kk].getRate() * phi_w[i][kk];
+                for (size_t k = 0; k < charge_options[result.new_node_ids[i]].size(); ++k) {
+                    charge_amount += charge_options[result.new_node_ids[i]][k].getRate() * phi_w[i][k];
                 }
                 model.add(yd[i] == ya[i] + charge_amount);
             } else {
                 model.add(yd[i] == ya[i]);
             }
         }
-        for (int i = n; i < n + p; ++i) {
-            int l = i - n;
-            IloExpr charge_amount(env);
-            for (size_t kk = 0; kk < charge_options[stations_to_consider[l]].size(); ++kk) {
-                charge_amount += charge_options[stations_to_consider[l]][kk].getRate() * phi_w[i][kk];
-            }
-            model.add(yd[i] == ya[i] + charge_amount);
-        }
-
-        // SOC for arcs
-        for (int i = 1; i < current_idx; ++i) {
-            int var_idx = -1;
-            for (int j = 0; j < n + p; ++j) {
-                if (node_mapping[j] == i) {
-                    var_idx = j;
-                    break;
-                }
-            }
-            int prev_var_idx = -1;
-            for (int j = 0; j < n + p; ++j) {
-                if (node_mapping[j] == i - 1) {
-                    prev_var_idx = j;
-                    break;
-                }
-            }
-            const Arc* arc = graph.findArc(new_route[i - 1], new_route[i]);
-            if (!arc) {
-                std::cerr << "Error: Arc from " << new_route[i - 1] << " to " << new_route[i] << " not found." << std::endl;
-                env.end();
-                return result;
-            }
-            double d = arc->getDistance();
-            model.add(ya[var_idx] <= yd[prev_var_idx] - params.getEnergyConsumption() * d);
-        }
 
         // Charging selection constraints
         for (int i = 0; i < n; ++i) {
-            int node = result.new_node_ids[i];
-            if (!charge_options[node].empty()) {
+            if (!charge_options[result.new_node_ids[i]].empty()) {
                 IloExpr sum_w(env);
-                for (size_t kk = 0; kk < charge_options[node].size(); ++kk) {
-                    sum_w += w[i][kk];
+                for (size_t k = 0; k < charge_options[result.new_node_ids[i]].size(); ++k) {
+                    sum_w += w[i][k];
                 }
                 model.add(sum_w <= 1);
             }
         }
-        for (int i = n; i < n + p; ++i) {
-            int l = i - n;
-            IloExpr sum_w(env);
-            for (size_t kk = 0; kk < charge_options[stations_to_consider[l]].size(); ++kk) {
-                sum_w += w[i][kk];
-            }
-            model.add(sum_w <= z[l]);
+
+        // Battery capacity constraints
+        for (int i = 0; i < n; ++i) {
+            model.add(ya[i] >= params.getMinSoc());
+            model.add(yd[i] >= params.getMinSoc());
+            model.add(ya[i] <= params.getBatteryCapacity());
+            model.add(yd[i] <= params.getBatteryCapacity());
         }
 
         // Solve the model
-        cplex.setOut(env.getNullStream());
         if (!cplex.solve()) {
-            std::cerr << "CPLEX: No solution found." << std::endl;
+            std::cerr << "CPLEX: No solution found. Status: " << cplex.getStatus() << std::endl;
             env.end();
             return result;
         }
@@ -417,39 +363,28 @@ SubproblemResult VNS::solveSubproblem(const Route& current_route,
         result.cost = cplex.getObjValue();
         result.feasible = true;
 
-        // Build new route
-        result.new_node_ids = current_route.getNodeIds();
-        for (int l = 0; l < p; ++l) {
-            if (cplex.getValue(z[l]) > 0.5) {
-                for (size_t k = 0; k < valid_positions.size(); ++k) {
-                    if (cplex.getValue(y[l][k]) > 0.5) {
-                        result.new_node_ids.insert(result.new_node_ids.begin() + valid_positions[k], stations_to_consider[l]);
-                        break;
-                    }
+        for (int i = 0; i < n; ++i) {
+            result.soc_arrival[i] = cplex.getValue(ya[i]);
+            result.soc_departure[i] = cplex.getValue(yd[i]);
+            result.arrival_time[i] = cplex.getValue(t[i]);
+            result.departure_time[i] = result.arrival_time[i];
+            if (Utils::isChargingStation(result.new_node_ids[i], graph.getNodes())) {
+                result.departure_time[i] += cplex.getValue(phi[i]);
+            } else if (result.new_node_ids[i] != 0 && i != n - 1) {
+                result.departure_time[i] += graph.findNode(result.new_node_ids[i])->getServiceTime();
+            }
+            for (size_t k = 0; k < charge_options[result.new_node_ids[i]].size(); ++k) {
+                if (cplex.getValue(w[i][k]) > 0.5) {
+                    result.charging_decisions[i] = ChargingDecision(result.new_node_ids[i], static_cast<int>(k + 1), cplex.getValue(phi[i]));
+                    break;
                 }
             }
         }
 
-        // Update variables
-        result.soc_arrival.resize(result.new_node_ids.size(), 0.0);
-        result.soc_departure.resize(result.new_node_ids.size(), 0.0);
-        result.arrival_time.resize(result.new_node_ids.size(), 0.0);
-        result.departure_time.resize(result.new_node_ids.size(), 0.0);
-        result.charging_decisions.resize(result.new_node_ids.size(), ChargingDecision(0, 0, 0.0));
-
-        for (int i = 0; i < n + p; ++i) {
-            if (node_mapping[i] != -1) {
-                result.soc_arrival[node_mapping[i]] = cplex.getValue(ya[i]);
-                result.soc_departure[node_mapping[i]] = cplex.getValue(yd[i]);
-                result.arrival_time[node_mapping[i]] = cplex.getValue(t[i]);
-                result.departure_time[node_mapping[i]] = cplex.getValue(depart[i]);
-                int node_id = (i < n) ? result.new_node_ids[node_mapping[i]] : stations_to_consider[i - n];
-                for (size_t kk = 0; kk < charge_options[node_id].size(); ++kk) {
-                    if (cplex.getValue(w[i][kk]) > 0.5) {
-                        result.charging_decisions[node_mapping[i]] = ChargingDecision(node_id, static_cast<int>(kk + 1), cplex.getValue(phi[i]));
-                        break;
-                    }
-                }
+        for (int i = 0; i < m; ++i) {
+            const Arc* arc = graph.findArc(result.new_node_ids[i], result.new_node_ids[i + 1]);
+            if (arc && arc->getIsWireless() && cplex.getValue(z[i]) > 0.5) {
+                result.wireless_decisions[i] = true;
             }
         }
 
@@ -465,6 +400,7 @@ SubproblemResult VNS::solveSubproblem(const Route& current_route,
 }
 
 Route VNS::localSearch(const Route& current_route) {
+    std::cout << "Performing local search...\n";
     Route best_local = current_route;
     SubproblemResult best_result = solveSubproblem(best_local, graph, charge_options, params);
     if (!best_result.feasible) return current_route;
@@ -472,8 +408,27 @@ Route VNS::localSearch(const Route& current_route) {
     bool improved = true;
     while (improved) {
         improved = false;
+        // Try 2-opt
         Route new_route = twoOpt(best_local, graph, params);
         SubproblemResult new_result = solveSubproblem(new_route, graph, charge_options, params);
+        if (new_result.feasible && new_result.cost < best_result.cost) {
+            best_local = new_route;
+            best_result = new_result;
+            improved = true;
+            continue;
+        }
+        // Try relocate
+        new_route = relocate(best_local, graph, params);
+        new_result = solveSubproblem(new_route, graph, charge_options, params);
+        if (new_result.feasible && new_result.cost < best_result.cost) {
+            best_local = new_route;
+            best_result = new_result;
+            improved = true;
+            continue;
+        }
+        // Try swap
+        new_route = swapNodes(best_local, graph, params);
+        new_result = solveSubproblem(new_route, graph, charge_options, params);
         if (new_result.feasible && new_result.cost < best_result.cost) {
             best_local = new_route;
             best_result = new_result;
@@ -486,13 +441,14 @@ Route VNS::localSearch(const Route& current_route) {
 
 Route VNS::shake(const Route& current_route, int neighborhood,
                  const Graph& graph, const Parameters& params) {
+    std::cout << "Shaking route...\n";
     Route shaken_route = current_route;
     switch (neighborhood) {
         case 0: return twoOpt(shaken_route, graph, params);
         case 1: return relocate(shaken_route, graph, params);
         case 2: return swapNodes(shaken_route, graph, params);
         case 3: {
-            if (std::uniform_real_distribution<>(0, 1)(rng) < 0.5) {
+            if (graph.getStationCopies().empty() || std::uniform_real_distribution<>(0, 1)(rng) < 0.5) {
                 return insertStation(shaken_route, graph, params);
             } else {
                 return removeStation(shaken_route, graph, params);
@@ -500,15 +456,20 @@ Route VNS::shake(const Route& current_route, int neighborhood,
         }
         default: return shaken_route;
     }
+    std::cout << "Take neighborhood type: " << neighborhood << "\n";
 }
 
 Route VNS::swapNodes(const Route& route, const Graph& graph, const Parameters& params) {
     std::vector<int> new_nodes = route.getNodeIds();
     int i = std::uniform_int_distribution<>(1, new_nodes.size() - 2)(rng);
     int j = std::uniform_int_distribution<>(1, new_nodes.size() - 2)(rng);
+    while (i == j) {
+        j = std::uniform_int_distribution<>(1, new_nodes.size() - 2)(rng);
+    }
     std::swap(new_nodes[i], new_nodes[j]);
-    if (isValidRoute(new_nodes, graph, params)) {
-        return Route(new_nodes);
+    Route new_route(new_nodes);
+    if (isValidRoute(new_nodes, graph, init_route)) {
+        return new_route;
     }
     return route;
 }
@@ -517,11 +478,15 @@ Route VNS::relocate(const Route& route, const Graph& graph, const Parameters& pa
     std::vector<int> new_nodes = route.getNodeIds();
     int i = std::uniform_int_distribution<>(1, new_nodes.size() - 2)(rng);
     int j = std::uniform_int_distribution<>(1, new_nodes.size() - 2)(rng);
+    while (i == j) {
+        j = std::uniform_int_distribution<>(1, new_nodes.size() - 2)(rng);
+    }
     int node = new_nodes[i];
     new_nodes.erase(new_nodes.begin() + i);
     new_nodes.insert(new_nodes.begin() + j, node);
-    if (isValidRoute(new_nodes, graph, params)) {
-        return Route(new_nodes);
+    Route new_route(new_nodes);
+    if (isValidRoute(new_nodes, graph, init_route)) {
+        return new_route;
     }
     return route;
 }
@@ -530,11 +495,24 @@ Route VNS::insertStation(const Route& route, const Graph& graph, const Parameter
     const auto& stations = graph.getStationCopies();
     if (stations.empty()) return route;
 
-    // Add a random station to potential_stations
-    int station = stations[std::uniform_int_distribution<>(0, stations.size() - 1)(rng)];
-    potential_stations.push_back(station);
+    std::vector<int> new_nodes = route.getNodeIds();
+    std::vector<size_t> valid_positions;
+    for (size_t i = 1; i < new_nodes.size() - 1; ++i) {
+        if (Utils::isCustomer(new_nodes[i - 1], graph.getNodes()) &&
+            Utils::isCustomer(new_nodes[i], graph.getNodes())) {
+            valid_positions.push_back(i);
+        }
+    }
+    if (valid_positions.empty()) return route;
 
-    // Return original route (no direct insertion)
+    int station = stations[std::uniform_int_distribution<>(0, stations.size() - 1)(rng)];
+    size_t pos = valid_positions[std::uniform_int_distribution<>(0, valid_positions.size() - 1)(rng)];
+    new_nodes.insert(new_nodes.begin() + pos, station);
+
+    Route new_route(new_nodes);
+    if (isValidRoute(new_nodes, graph, init_route)) {
+        return new_route;
+    }
     return route;
 }
 
@@ -551,8 +529,9 @@ Route VNS::removeStation(const Route& route, const Graph& graph, const Parameter
     if (station_indices.empty()) return route;
     int idx = station_indices[std::uniform_int_distribution<>(0, station_indices.size() - 1)(rng)];
     new_nodes.erase(new_nodes.begin() + idx);
-    if (isValidRoute(new_nodes, graph, params)) {
-        return Route(new_nodes);
+    Route new_route(new_nodes);
+    if (isValidRoute(new_nodes, graph, init_route)) {
+        return new_route;
     }
     return route;
 }
@@ -562,8 +541,9 @@ Route VNS::twoOpt(const Route& route, const Graph& graph, const Parameters& para
     int i = std::uniform_int_distribution<>(1, new_nodes.size() - 2)(rng);
     int j = std::uniform_int_distribution<>(i + 1, new_nodes.size() - 1)(rng);
     std::reverse(new_nodes.begin() + i, new_nodes.begin() + j);
-    if (isValidRoute(new_nodes, graph, params)) {
-        return Route(new_nodes);
+    Route new_route(new_nodes);
+    if (isValidRoute(new_nodes, graph, init_route)) {
+        return new_route;
     }
     return route;
 }
@@ -592,30 +572,33 @@ int VNS::selectOperatorWeighted() {
     return dist(rng);
 }
 
-bool VNS::isValidRoute(const std::vector<int>& route_node_ids, const Graph& graph, const Parameters& params) {
-    if (route_node_ids.empty()) return false;
-    if (Utils::isCustomer(route_node_ids[0], graph.getNodes()) || Utils::isCustomer(route_node_ids.back(), graph.getNodes())) {
-        return false;
-    }
-    std::set<int> customers;
-    for (int id : route_node_ids) {
-        if (!graph.findNode(id)) return false;
-        if (Utils::isCustomer(id, graph.getNodes())) customers.insert(id);
-    }
-    return true;
-}
-
-bool VNS::quickFeasibilityCheck(const Route& route, const Graph& graph, const Parameters& params) {
-    double soc = params.getInitialSoc();
-    const auto& nodes = route.getNodeIds();
-    for (size_t i = 0; i < nodes.size() - 1; ++i) {
-        const Arc* arc = graph.findArc(nodes[i], nodes[i + 1]);
-        if (!arc) return false;
-        soc -= params.getEnergyConsumption() * arc->getDistance();
-        if (soc < params.getMinSoc()) return false;
-        if (Utils::isChargingStation(nodes[i + 1], graph.getNodes())) {
-            soc = params.getBatteryCapacity();
-        }
-    }
-    return soc >= params.getMinSoc();
-}
+// bool VNS::isValidRoute(const std::vector<int>& route_node_ids, const Graph& graph, const Parameters& params) {
+//     if (route_node_ids.empty()) return false;
+//     if (Utils::isCustomer(route_node_ids[0], graph.getNodes()) ||
+//         Utils::isCustomer(route_node_ids.back(), graph.getNodes())) {
+//         return false;
+//     }
+//
+//     for (size_t i = 0; i < route_node_ids.size() - 1; ++i) {
+//         if (!graph.findNode(route_node_ids[i]) || !graph.findNode(route_node_ids[i + 1])) {
+//             return false;
+//         }
+//         if (!graph.findArc(route_node_ids[i], route_node_ids[i + 1])) {
+//             return false;
+//         }
+//     }
+//
+//     std::set<int> customers;
+//     for (int id : route_node_ids) {
+//         if (Utils::isCustomer(id, graph.getNodes())) {
+//             customers.insert(id);
+//         }
+//     }
+//     std::set<int> required_customers;
+//     for (const auto& node : graph.getNodes()) {
+//         if (Utils::isCustomer(node.getId(), graph.getNodes())) {
+//             required_customers.insert(node.getId());
+//         }
+//     }
+//     return customers == required_customers;
+// }

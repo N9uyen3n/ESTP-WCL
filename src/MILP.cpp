@@ -250,7 +250,7 @@ Route MILP::optimize(const std::vector<int>& initial_nodes,
                         model.add(y_a[j] <= y_d[i] - params.getEnergyConsumption() * dist +
                                   params.getBatteryCapacity() * (1 - x[i][j]));
                     }
-                    model.add(y_a[j] >= params.getMinSoc()); // Thay y_a[j] >= 0
+                    model.add(y_a[j] >= params.getEnergyConsumption());
                 }
             }
         }
@@ -302,7 +302,6 @@ Route MILP::optimize(const std::vector<int>& initial_nodes,
                 model.add(phi[i] == 0);
             }
         }
-
         for (size_t i = 0; i < node_ids.size(); ++i) {
             for (size_t j = 0; j < node_ids.size(); ++j) {
                 if (i != j && graph.findArc(node_ids[i], node_ids[j])) {
@@ -661,7 +660,7 @@ Route MILP::MILPFixCustomerSequence(const std::vector<int>& initial_nodes,
                         model.add(y_a[j] <= y_d[i] - params.getEnergyConsumption() * dist +
                                   params.getBatteryCapacity() * (1 - x[i][j]));
                     }
-                    model.add(y_a[j] >= params.getMinSoc()); // Thay y_a[j] >= 0
+                    model.add(y_a[j] >= params.getMinSoc());
                 }
             }
         }
@@ -742,7 +741,7 @@ Route MILP::MILPFixCustomerSequence(const std::vector<int>& initial_nodes,
         result.soc_departure.resize(node_ids.size());
         result.arrival_time.resize(node_ids.size());
         result.departure_time.resize(node_ids.size());
-        result.wireless_decisions.clear();
+        result.wireless_dec isions.clear();
         result.charging_decisions.clear();
 
         int current = depot_start_id;
@@ -781,7 +780,7 @@ Route MILP::MILPFixCustomerSequence(const std::vector<int>& initial_nodes,
             if (std::find(station_ids.begin(), station_ids.end(), node_i) != station_ids.end()) {
                 for (size_t k = 0; k < charge_options[node_i].size(); ++k) {
                     if (cplex.getValue(w[idx][k]) > 0.5) {
-                        result.charging_decisions.emplace_back(node_i, static_cast<int>(k), phi_i);
+                        result.charging_decisions.emplace_back(node_i, static_cast<int>(k + 1), phi_i);
                         break;
                     }
                 }

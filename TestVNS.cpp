@@ -13,7 +13,7 @@
 int main() {
     try {
         std::cout << std::fixed << std::setprecision(2);
-        std::string csv_file_dir = "../data/Input/";
+        std::string csv_file_dir = "../data/Input/c5-s5/";
 
         // Load data from CSV files
         std::vector<Node> nodes = Utils::readNodes(csv_file_dir + "nodes.csv");

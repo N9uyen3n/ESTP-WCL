@@ -25,6 +25,7 @@ class Route {
 
 public:
     Route(const std::vector<int>& nodes);
+
     const std::vector<int>& getNodeIds() const { return node_ids; }
     const std::vector<ChargingDecision>& getChargingDecisions() const { return charging_decisions; }
     const std::vector<bool>& getWirelessDecisions() const { return wireless_decisions; }

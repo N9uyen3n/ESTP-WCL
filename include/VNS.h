@@ -36,6 +36,7 @@ public:
 
 private:
     IloEnv env;
+    std::vector<int> init_route;
     std::vector<int> current_route;
     Graph graph;
     std::vector<std::vector<ChargingOption>> charge_options;
@@ -44,7 +45,6 @@ private:
     std::mt19937& rng;
     std::vector<double> operator_weights_; // Trọng số cho các cấu trúc hàng xóm
     int no_improvement_counter; // Đếm số lần không cải thiện
-    std::vector<int> potential_stations;
     // int max_neighborhoods;
 
 
@@ -76,7 +76,8 @@ private:
 
 
     // Kiểm tra tính khả thi
-    bool isValidRoute(const std::vector<int>& route_node_ids, const Graph& graph, const Parameters& params); // Added params
+    bool isValidRoute(const std::vector<int>& route, const Graph& graph, const std::vector<int>& initial_nodes);
+    // bool isValidRoute(const std::vector<int>& route_node_ids, const Graph& graph, const Parameters& params); // Added params
     // Kiểm tra tính khả thi nhanh
     bool quickFeasibilityCheck(const Route& route, const Graph& graph, const Parameters& params);
 };
