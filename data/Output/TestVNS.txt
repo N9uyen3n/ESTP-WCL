@@ -1,5 +1,4 @@
-
-D:\Work\NEULab\ETSP-WCL-Test14\cmake-build-debug\TestVNS.exe
+D:\Work\NEULab\ETSP-WCL-Test16\cmake-build-debug\TestVNS.exe
 Reading input data from directory: ../data/Input/
 
 Nodes loaded:
@@ -36,7 +35,7 @@ Parameters Information:
   U_min: 0.50
 ../data/Input/wireless_arcs.csv
 1
-234
+2
 Arcs loaded:
 Arcs Information:
   From: 0, To: 1, Distance: 0.00, Travel Time: 0.00, Wireless: No, Charge Rate: 0.00
@@ -147,7 +146,7 @@ Arcs Information:
   From: 6, To: 10, Distance: 32.20, Travel Time: 32.20, Wireless: No, Charge Rate: 0.00
   From: 6, To: 11, Distance: 24.84, Travel Time: 24.84, Wireless: No, Charge Rate: 0.00
   From: 6, To: 12, Distance: 21.02, Travel Time: 21.02, Wireless: No, Charge Rate: 0.00
-  From: 6, To: 13, Distance: 31.58, Travel Time: 31.58, Wireless: Yes, Charge Rate: 0.55
+  From: 6, To: 13, Distance: 31.58, Travel Time: 31.58, Wireless: No, Charge Rate: 0.00
   From: 6, To: 14, Distance: 17.80, Travel Time: 17.80, Wireless: No, Charge Rate: 0.00
   From: 6, To: 15, Distance: 15.56, Travel Time: 15.56, Wireless: No, Charge Rate: 0.00
   From: 6, To: 16, Distance: 15.23, Travel Time: 15.23, Wireless: No, Charge Rate: 0.00
@@ -253,7 +252,7 @@ Arcs Information:
   From: 13, To: 3, Distance: 64.12, Travel Time: 64.12, Wireless: No, Charge Rate: 0.00
   From: 13, To: 4, Distance: 39.56, Travel Time: 39.56, Wireless: No, Charge Rate: 0.00
   From: 13, To: 5, Distance: 51.89, Travel Time: 51.89, Wireless: No, Charge Rate: 0.00
-  From: 13, To: 6, Distance: 31.58, Travel Time: 31.58, Wireless: Yes, Charge Rate: 0.55
+  From: 13, To: 6, Distance: 31.58, Travel Time: 31.58, Wireless: No, Charge Rate: 0.00
   From: 13, To: 7, Distance: 36.07, Travel Time: 36.07, Wireless: No, Charge Rate: 0.00
   From: 13, To: 8, Distance: 45.04, Travel Time: 45.04, Wireless: No, Charge Rate: 0.00
   From: 13, To: 9, Distance: 50.54, Travel Time: 50.54, Wireless: No, Charge Rate: 0.00
@@ -317,108 +316,116 @@ Charging Options Information:
   Node ID: 1
     Option 1.00: Cost = 0.50, Rate = 5.00
     Option 2.00: Cost = 1.00, Rate = 10.00
-    Option 0.00: Cost = 0.00, Rate = 0.00
   Node ID: 2
     Option 1.00: Cost = 0.50, Rate = 5.00
     Option 2.00: Cost = 1.00, Rate = 10.00
-    Option 0.00: Cost = 0.00, Rate = 0.00
   Node ID: 3
     Option 1.00: Cost = 0.50, Rate = 5.00
     Option 2.00: Cost = 1.00, Rate = 10.00
-    Option 0.00: Cost = 0.00, Rate = 0.00
   Node ID: 4
     Option 1.00: Cost = 0.50, Rate = 5.00
     Option 2.00: Cost = 1.00, Rate = 10.00
-    Option 0.00: Cost = 0.00, Rate = 0.00
   Node ID: 5
     Option 1.00: Cost = 0.50, Rate = 5.00
     Option 2.00: Cost = 1.00, Rate = 10.00
-    Option 0.00: Cost = 0.00, Rate = 0.00
 
-Initial route: 0 11 6 8 7 12 14 13 15 9 10 16
-MILP::optimize: Success, cost = 39.80, Time = 5 s
-MILP::optimize: Success, cost = 40.89, Time = 5 s
-MILP::optimize: Success, cost = 39.80, Time = 5 s
-MILP::optimize: Success, cost = 39.80, Time = 5 s
-MILP::optimize: Success, cost = 45.34, Time = 5 s
+Initial route: 0 9 7 13 14 10 15 6 8 12 11 16
+MILP::optimize: Success, cost = 38.82, Time = 20 s
+MILP::optimize: Success, cost = 34.18, Time = 20 s
+MILP::optimize: Success, cost = 31.73, Time = 20 s
+MILP::optimize: Success, cost = 31.28, Time = 20 s
+MILP::optimize: Success, cost = 32.46, Time = 20 s
+MILP::optimize: Success, cost = 37.79, Time = 20 s
+MILP::optimize: Success, cost = 34.43, Time = 20 s
+MILP::optimize: Success, cost = 34.48, Time = 20 s
+MILP::optimize: Success, cost = 33.04, Time = 20 s
+MILP::optimize: Success, cost = 30.56, Time = 20 s
+MILP::optimize: Success, cost = 26.52, Time = 1 s
 Iteration 10:
-Best cost: 39.80
+Best cost: 26.52
 No-Improvement Counter: 10
-Best route: [0->11->1->13->15->4->6->8->7->12->14->2->9->10->16]
+Best route: [0->9->7->11->8->14->4->6->15->12->10->13->1->16]
 Charging decisions: 1
-Wireless decisions: 14
-------------------------
-MILP::optimize: Success, cost = 44.01, Time = 5 s
-MILP::optimize: Success, cost = 41.47, Time = 5 s
-MILP::optimize: Success, cost = 44.41, Time = 5 s
-MILP::optimize: Success, cost = 39.58, Time = 5 s
-MILP::optimize: Success, cost = 36.46, Time = 5 s
-MILP::optimize: Success, cost = 40.26, Time = 5 s
-MILP::optimize: Success, cost = 36.28, Time = 5 s
-MILP::optimize: Success, cost = 41.23, Time = 5 s
-MILP::optimize: Success, cost = 44.76, Time = 5 s
-MILP::optimize: Success, cost = 36.18, Time = 5 s
+Station 4: Option 1, Duration 2.14
+Wireless decisions: 0
+------------------------------------------------------------------------
+MILP::optimize: Success, cost = 27.41, Time = 20 s
+MILP::optimize: Success, cost = 32.21, Time = 20 s
+MILP::optimize: Success, cost = 31.44, Time = 20 s
+MILP::optimize: Success, cost = 40.37, Time = 20 s
+MILP::optimize: Success, cost = 31.13, Time = 20 s
+MILP::optimize: Success, cost = 29.49, Time = 20 s
+MILP::optimize: Success, cost = 33.70, Time = 20 s
+MILP::optimize: Success, cost = 29.12, Time = 20 s
+MILP::optimize: Success, cost = 31.54, Time = 20 s
+MILP::optimize: Success, cost = 28.58, Time = 20 s
 Iteration 20:
-Best cost: 36.18
+Best cost: 26.52
 No-Improvement Counter: 20
-Best route: [0->11->1->13->12->7->8->6->14->15->9->10->16]
+Best route: [0->9->7->11->8->14->4->6->15->12->10->13->1->16]
 Charging decisions: 1
-Wireless decisions: 12
-------------------------
-MILP::optimize: Success, cost = 38.81, Time = 5 s
-MILP::optimize: Success, cost = 37.30, Time = 5 s
-MILP::optimize: Success, cost = 34.38, Time = 5 s
-MILP::optimize: Success, cost = 42.11, Time = 5 s
-MILP::optimize: Success, cost = 33.30, Time = 5 s
-MILP::optimize: Success, cost = 36.52, Time = 5 s
-MILP::optimize: Success, cost = 38.13, Time = 5 s
-MILP::optimize: Success, cost = 35.07, Time = 5 s
-MILP::optimize: Success, cost = 35.86, Time = 5 s
-MILP::optimize: Success, cost = 35.46, Time = 5 s
+Station 4: Option 1, Duration 2.14
+Wireless decisions: 0
+------------------------------------------------------------------------
+MILP::optimize: Success, cost = 28.39, Time = 20 s
+MILP::optimize: Success, cost = 30.08, Time = 20 s
+MILP::optimize: Success, cost = 28.74, Time = 20 s
+MILP::optimize: Success, cost = 31.84, Time = 20 s
+MILP::optimize: Success, cost = 29.23, Time = 20 s
+MILP::optimize: Success, cost = 33.13, Time = 20 s
+MILP::optimize: Success, cost = 28.79, Time = 20 s
+MILP::optimize: Success, cost = 33.13, Time = 20 s
+MILP::optimize: Success, cost = 30.02, Time = 20 s
+MILP::optimize: Success, cost = 28.39, Time = 20 s
 Iteration 30:
-Best cost: 33.30
+Best cost: 26.52
 No-Improvement Counter: 30
-Best route: [0->11->13->12->1->7->10->9->15->14->6->8->16]
+Best route: [0->9->7->11->8->14->4->6->15->12->10->13->1->16]
 Charging decisions: 1
-Wireless decisions: 12
-------------------------
-MILP::optimize: Success, cost = 40.89, Time = 5 s
-MILP::optimize: Success, cost = 38.01, Time = 5 s
-MILP::optimize: Success, cost = 35.70, Time = 5 s
-MILP::optimize: Success, cost = 33.30, Time = 5 s
-MILP::optimize: Success, cost = 40.08, Time = 5 s
-MILP::optimize: Success, cost = 36.79, Time = 5 s
-MILP::optimize: Success, cost = 42.93, Time = 5 s
-MILP::optimize: Success, cost = 36.07, Time = 5 s
-MILP::optimize: Success, cost = 36.82, Time = 5 s
+Station 4: Option 1, Duration 2.14
+Wireless decisions: 0
+------------------------------------------------------------------------
+MILP::optimize: Success, cost = 28.25, Time = 20 s
+MILP::optimize: Success, cost = 28.78, Time = 20 s
+MILP::optimize: Success, cost = 28.79, Time = 20 s
+MILP::optimize: Success, cost = 28.33, Time = 20 s
+MILP::optimize: Success, cost = 37.30, Time = 20 s
+MILP::optimize: Success, cost = 29.43, Time = 20 s
+MILP::optimize: Success, cost = 27.86, Time = 20 s
+MILP::optimize: Success, cost = 29.26, Time = 20 s
+MILP::optimize: Success, cost = 30.08, Time = 20 s
+MILP::optimize: Success, cost = 31.39, Time = 20 s
 Iteration 40:
-Best cost: 33.30
+Best cost: 26.52
 No-Improvement Counter: 40
-Best route: [0->11->13->12->1->7->10->9->15->14->6->8->16]
+Best route: [0->9->7->11->8->14->4->6->15->12->10->13->1->16]
 Charging decisions: 1
-Wireless decisions: 12
-------------------------
-MILP::optimize: Success, cost = 34.01, Time = 5 s
-MILP::optimize: Success, cost = 34.11, Time = 5 s
-MILP::optimize: Success, cost = 40.23, Time = 5 s
-MILP::optimize: Success, cost = 36.46, Time = 5 s
-MILP::optimize: Success, cost = 34.75, Time = 5 s
-MILP::optimize: Success, cost = 35.53, Time = 5 s
-MILP::optimize: Success, cost = 36.13, Time = 5 s
-MILP::optimize: Success, cost = 29.91, Time = 5 s
-MILP::optimize: Success, cost = 34.81, Time = 5 s
+Station 4: Option 1, Duration 2.14
+Wireless decisions: 0
+------------------------------------------------------------------------
+MILP::optimize: Success, cost = 30.90, Time = 20 s
+MILP::optimize: Success, cost = 31.62, Time = 20 s
+MILP::optimize: Success, cost = 33.78, Time = 20 s
+MILP::optimize: Success, cost = 32.12, Time = 20 s
+MILP::optimize: Success, cost = 36.76, Time = 20 s
+MILP::optimize: Success, cost = 27.41, Time = 20 s
+MILP::optimize: Success, cost = 33.77, Time = 20 s
+MILP::optimize: Success, cost = 35.38, Time = 20 s
+MILP::optimize: Success, cost = 29.23, Time = 20 s
+MILP::optimize: Success, cost = 32.75, Time = 20 s
 Iteration 50:
-Best cost: 29.91
+Best cost: 26.52
 No-Improvement Counter: 50
-Best route: [0->11->13->12->1->9->7->10->15->14->6->8->16]
+Best route: [0->9->7->11->8->14->4->6->15->12->10->13->1->16]
 Charging decisions: 1
-Wireless decisions: 12
-------------------------
+Station 4: Option 1, Duration 2.14
+Wireless decisions: 0
+------------------------------------------------------------------------
 
-=== VNS Results ===
-Best route found: 0 (Depot) 11 (Customer) 13 (Customer) 12 (Customer) 1 (Station) 9 (Customer) 7 (Customer) 10 (Customer
-) 15 (Customer) 14 (Customer) 6 (Customer) 8 (Customer) 16 (Depot)
-Total cost: 29.91
+====== VNS Results ======
+Best route found: 0 (Depot) 9 (Customer) 7 (Customer) 11 (Customer) 8 (Customer) 14 (Customer) 4 (Station) 6 (Customer)
+15 (Customer) 12 (Customer) 10 (Customer) 13 (Customer) 1 (Station) 16 (Depot)
+Total cost: 26.52
 
 Detailed route information:
 Node 0 (Depot):
@@ -426,80 +433,73 @@ Node 0 (Depot):
   SOC Departure: 30.00
   Arrival Time: 0.00
   Departure Time: 0.00
-  Wireless Charging to next node: No
-Node 11 (Customer):
-  SOC Arrival: 28.43
-  SOC Departure: 28.43
-  Arrival Time: 5.59
-  Departure Time: 15.59
-  Wireless Charging to next node: No
-Node 13 (Customer):
-  SOC Arrival: 25.66
-  SOC Departure: 25.66
-  Arrival Time: 25.51
-  Departure Time: 35.51
-  Wireless Charging to next node: No
-Node 12 (Customer):
-  SOC Arrival: 23.95
-  SOC Departure: 23.95
-  Arrival Time: 41.62
-  Departure Time: 51.62
-  Wireless Charging to next node: No
-Node 1 (Station):
-  SOC Arrival: 20.98
-  SOC Departure: 35.53
-  Arrival Time: 62.22
-  Departure Time: 65.13
-  Wireless Charging to next node: No
 Node 9 (Customer):
-  SOC Arrival: 32.03
-  SOC Departure: 32.03
-  Arrival Time: 77.63
-  Departure Time: 87.63
-  Wireless Charging to next node: No
+  SOC Arrival: 26.50
+  SOC Departure: 26.50
+  Arrival Time: 12.50
+  Departure Time: 22.50
 Node 7 (Customer):
-  SOC Arrival: 29.20
-  SOC Departure: 29.20
-  Arrival Time: 97.75
-  Departure Time: 107.75
-  Wireless Charging to next node: No
-Node 10 (Customer):
-  SOC Arrival: 25.86
-  SOC Departure: 25.86
-  Arrival Time: 119.67
-  Departure Time: 129.67
-  Wireless Charging to next node: No
-Node 15 (Customer):
-  SOC Arrival: 21.16
-  SOC Departure: 21.16
-  Arrival Time: 146.44
-  Departure Time: 156.44
-  Wireless Charging to next node: No
-Node 14 (Customer):
-  SOC Arrival: 17.66
-  SOC Departure: 17.66
-  Arrival Time: 168.94
-  Departure Time: 178.94
-  Wireless Charging to next node: No
-Node 6 (Customer):
-  SOC Arrival: 15.17
-  SOC Departure: 15.17
-  Arrival Time: 187.85
-  Departure Time: 197.85
-  Wireless Charging to next node: No
+  SOC Arrival: 23.67
+  SOC Departure: 23.67
+  Arrival Time: 32.61
+  Departure Time: 42.61
+Node 11 (Customer):
+  SOC Arrival: 21.37
+  SOC Departure: 21.37
+  Arrival Time: 50.81
+  Departure Time: 60.81
 Node 8 (Customer):
-  SOC Arrival: 13.13
-  SOC Departure: 13.13
-  Arrival Time: 205.13
-  Departure Time: 215.13
-  Wireless Charging to next node: No
+  SOC Arrival: 16.68
+  SOC Departure: 16.68
+  Arrival Time: 77.58
+  Departure Time: 87.58
+Node 14 (Customer):
+  SOC Arrival: 14.58
+  SOC Departure: 14.58
+  Arrival Time: 95.08
+  Departure Time: 105.08
+Node 4 (Station):
+  SOC Arrival: 13.38
+  SOC Departure: 24.07
+  Arrival Time: 109.35
+  Departure Time: 111.49
+Node 6 (Customer):
+  SOC Arrival: 22.67
+  SOC Departure: 22.67
+  Arrival Time: 116.49
+  Departure Time: 126.49
+Node 15 (Customer):
+  SOC Arrival: 20.49
+  SOC Departure: 20.49
+  Arrival Time: 134.27
+  Departure Time: 144.27
+Node 12 (Customer):
+  SOC Arrival: 18.51
+  SOC Departure: 18.51
+  Arrival Time: 151.34
+  Departure Time: 161.34
+Node 10 (Customer):
+  SOC Arrival: 15.62
+  SOC Departure: 15.62
+  Arrival Time: 171.65
+  Departure Time: 181.65
+Node 13 (Customer):
+  SOC Arrival: 13.67
+  SOC Departure: 13.67
+  Arrival Time: 188.61
+  Departure Time: 198.61
+Node 1 (Station):
+  SOC Arrival: 10.00
+  SOC Departure: 10.00
+  Arrival Time: 211.74
+  Departure Time: 211.74
 Node 16 (Depot):
   SOC Arrival: 10.00
   SOC Departure: 10.00
-  Arrival Time: 226.31
-  Departure Time: 226.31
+  Arrival Time: 211.74
+  Departure Time: 211.74
 
 Charging decisions:
-  Station ID: 1, Option: 1, Charging Time: 2.91
+  Station ID: 4, Option: 1, Charging Time: 2.14
 
 Process finished with exit code 0
