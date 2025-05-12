@@ -83,6 +83,63 @@ if(MSVC)
             MSVC_RUNTIME_LIBRARY "MultiThreadedDLL"
     )
 endif()
+
+add_executable(TestVNS1
+        TestVNS1.cpp
+        src/VNS1.cpp
+        src/Route.cpp
+        src/Utils.cpp
+        src/Parameters.cpp
+        src/Graph.cpp
+)
+
+# Link libraries for TestVNS
+target_link_libraries(TestVNS1 PRIVATE
+        ${ILOCPLEX_LIBRARY}
+        ${CPLEX_LIBRARY}
+        ${CONCERT_LIBRARY}
+)
+#
+
+# Định nghĩa _ITERATOR_DEBUG_LEVEL=0 để tắt kiểm tra iterator debug
+target_compile_definitions(TestVNS1 PRIVATE _ITERATOR_DEBUG_LEVEL=0)
+
+# Set MSVC runtime library for TestReader
+if(MSVC)
+    set_property(TARGET TestVNS1 PROPERTY
+            MSVC_RUNTIME_LIBRARY "MultiThreadedDLL"
+    )
+endif()
+
+
+add_executable(TestVNS2
+        TestVNS2.cpp
+        src/VNS2.cpp
+        src/Route.cpp
+        src/Utils.cpp
+        src/Parameters.cpp
+        src/Graph.cpp
+)
+
+# Link libraries for TestVNS
+target_link_libraries(TestVNS2 PRIVATE
+        ${ILOCPLEX_LIBRARY}
+        ${CPLEX_LIBRARY}
+        ${CONCERT_LIBRARY}
+)
+#
+
+# Định nghĩa _ITERATOR_DEBUG_LEVEL=0 để tắt kiểm tra iterator debug
+target_compile_definitions(TestVNS2 PRIVATE _ITERATOR_DEBUG_LEVEL=0)
+
+# Set MSVC runtime library for TestReader
+if(MSVC)
+    set_property(TARGET TestVNS2 PROPERTY
+            MSVC_RUNTIME_LIBRARY "MultiThreadedDLL"
+    )
+endif()
+
+
 #
 #add_executable(TestMILP
 #        TestMILP.cpp

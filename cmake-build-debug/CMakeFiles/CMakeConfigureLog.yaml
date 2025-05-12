@@ -109,8 +109,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-bvpkti"
-      binary: "D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-bvpkti"
+      source: "D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-tkr6gn"
+      binary: "D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-tkr6gn"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
@@ -119,43 +119,41 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-bvpkti'
+        Change Dir: 'D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-tkr6gn'
         
-        Run Build Command(s): C:/Users/Admin/AppData/Local/Programs/CLion/bin/ninja/win/x64/ninja.exe -v cmTC_f5d35
-        [1/2] C:\\PROGRA~1\\MICROS~3\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1443~1.348\\bin\\Hostx64\\x64\\cl.exe  /nologo   /DWIN32 /D_WINDOWS  /Ob0 /Od /RTC1 -MDd -Zi /showIncludes /FoCMakeFiles\\cmTC_f5d35.dir\\CMakeCCompilerABI.c.obj /FdCMakeFiles\\cmTC_f5d35.dir\\ /FS -c C:\\Users\\Admin\\AppData\\Local\\Programs\\CLion\\bin\\cmake\\win\\x64\\share\\cmake-3.30\\Modules\\CMakeCCompilerABI.c
-        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\Users\\Admin\\AppData\\Local\\Programs\\CLion\\bin\\cmake\\win\\x64\\bin\\cmake.exe -E vs_link_exe --intdir=CMakeFiles\\cmTC_f5d35.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~3\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1443~1.348\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_f5d35.dir\\CMakeCCompilerABI.c.obj  /out:cmTC_f5d35.exe /implib:cmTC_f5d35.lib /pdb:cmTC_f5d35.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
-        FAILED: cmTC_f5d35.exe 
-        C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\Users\\Admin\\AppData\\Local\\Programs\\CLion\\bin\\cmake\\win\\x64\\bin\\cmake.exe -E vs_link_exe --intdir=CMakeFiles\\cmTC_f5d35.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~3\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1443~1.348\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_f5d35.dir\\CMakeCCompilerABI.c.obj  /out:cmTC_f5d35.exe /implib:cmTC_f5d35.lib /pdb:cmTC_f5d35.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
-        FINAL LINK: command "C:\\PROGRA~1\\MICROS~3\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1443~1.348\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_f5d35.dir\\CMakeCCompilerABI.c.obj /out:cmTC_f5d35.exe /implib:cmTC_f5d35.lib /pdb:cmTC_f5d35.pdb /version:0.0 /machine:x64 /debug /INCREMENTAL /subsystem:console kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTFILE:CMakeFiles\\cmTC_f5d35.dir/intermediate.manifest CMakeFiles\\cmTC_f5d35.dir/manifest.res" failed (exit code 1104) with the following output:
-        LINK : fatal error LNK1104: cannot open file 'cmTC_f5d35.exe'\x0d
-        ninja: build stopped: subcommand failed.
-        
-      exitCode: 1
-  -
-    kind: "try_compile-v1"
-    backtrace:
-      - "C:/Users/Admin/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:56 (try_compile)"
-      - "CMakeLists.txt:2 (project)"
-    checks:
-      - "Check for working C compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.43.34808/bin/Hostx64/x64/cl.exe"
-    directories:
-      source: "D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-59z0r7"
-      binary: "D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-59z0r7"
-    cmakeVariables:
-      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
-      CMAKE_C_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
-      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
-    buildResult:
-      variable: "CMAKE_C_COMPILER_WORKS"
-      cached: true
-      stdout: |
-        Change Dir: 'D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-59z0r7'
-        
-        Run Build Command(s): C:/Users/Admin/AppData/Local/Programs/CLion/bin/ninja/win/x64/ninja.exe -v cmTC_82e48
-        [1/2] C:\\PROGRA~1\\MICROS~3\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1443~1.348\\bin\\Hostx64\\x64\\cl.exe  /nologo   /DWIN32 /D_WINDOWS  /Ob0 /Od /RTC1 -MDd -Zi /showIncludes /FoCMakeFiles\\cmTC_82e48.dir\\testCCompiler.c.obj /FdCMakeFiles\\cmTC_82e48.dir\\ /FS -c D:\\Work\\NEULab\\ETSP-WCL-Test16\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-59z0r7\\testCCompiler.c
-        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\Users\\Admin\\AppData\\Local\\Programs\\CLion\\bin\\cmake\\win\\x64\\bin\\cmake.exe -E vs_link_exe --intdir=CMakeFiles\\cmTC_82e48.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~3\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1443~1.348\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_82e48.dir\\testCCompiler.c.obj  /out:cmTC_82e48.exe /implib:cmTC_82e48.lib /pdb:cmTC_82e48.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        Run Build Command(s): C:/Users/Admin/AppData/Local/Programs/CLion/bin/ninja/win/x64/ninja.exe -v cmTC_af44a
+        [1/2] C:\\PROGRA~1\\MICROS~3\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1443~1.348\\bin\\Hostx64\\x64\\cl.exe  /nologo   /DWIN32 /D_WINDOWS  /Ob0 /Od /RTC1 -MDd -Zi /showIncludes /FoCMakeFiles\\cmTC_af44a.dir\\CMakeCCompilerABI.c.obj /FdCMakeFiles\\cmTC_af44a.dir\\ /FS -c C:\\Users\\Admin\\AppData\\Local\\Programs\\CLion\\bin\\cmake\\win\\x64\\share\\cmake-3.30\\Modules\\CMakeCCompilerABI.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\Users\\Admin\\AppData\\Local\\Programs\\CLion\\bin\\cmake\\win\\x64\\bin\\cmake.exe -E vs_link_exe --intdir=CMakeFiles\\cmTC_af44a.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~3\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1443~1.348\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_af44a.dir\\CMakeCCompilerABI.c.obj  /out:cmTC_af44a.exe /implib:cmTC_af44a.lib /pdb:cmTC_af44a.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
         
       exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Admin/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "C:/Users/Admin/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        linker tool for 'C': C:/PROGRA~1/MICROS~3/2022/COMMUN~1/VC/Tools/MSVC/1443~1.348/bin/Hostx64/x64/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Admin/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "C:/Users/Admin/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "C:/Users/Admin/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Running the C compiler's linker: "C:/PROGRA~1/MICROS~3/2022/COMMUN~1/VC/Tools/MSVC/1443~1.348/bin/Hostx64/x64/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.43.34808.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
   -
     kind: "try_compile-v1"
     backtrace:
@@ -165,8 +163,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-psl0uo"
-      binary: "D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-psl0uo"
+      source: "D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-d2s77d"
+      binary: "D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-d2s77d"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /EHsc"
       CMAKE_CXX_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
@@ -176,42 +174,39 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-psl0uo'
+        Change Dir: 'D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-d2s77d'
         
-        Run Build Command(s): C:/Users/Admin/AppData/Local/Programs/CLion/bin/ninja/win/x64/ninja.exe -v cmTC_bf5b9
-        [1/2] C:\\PROGRA~1\\MICROS~3\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1443~1.348\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /EHsc  /Ob0 /Od /RTC1 -MDd -Zi /showIncludes /FoCMakeFiles\\cmTC_bf5b9.dir\\CMakeCXXCompilerABI.cpp.obj /FdCMakeFiles\\cmTC_bf5b9.dir\\ /FS -c C:\\Users\\Admin\\AppData\\Local\\Programs\\CLion\\bin\\cmake\\win\\x64\\share\\cmake-3.30\\Modules\\CMakeCXXCompilerABI.cpp
-        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\Users\\Admin\\AppData\\Local\\Programs\\CLion\\bin\\cmake\\win\\x64\\bin\\cmake.exe -E vs_link_exe --intdir=CMakeFiles\\cmTC_bf5b9.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~3\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1443~1.348\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_bf5b9.dir\\CMakeCXXCompilerABI.cpp.obj  /out:cmTC_bf5b9.exe /implib:cmTC_bf5b9.lib /pdb:cmTC_bf5b9.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
-        FAILED: cmTC_bf5b9.exe 
-        C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\Users\\Admin\\AppData\\Local\\Programs\\CLion\\bin\\cmake\\win\\x64\\bin\\cmake.exe -E vs_link_exe --intdir=CMakeFiles\\cmTC_bf5b9.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~3\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1443~1.348\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_bf5b9.dir\\CMakeCXXCompilerABI.cpp.obj  /out:cmTC_bf5b9.exe /implib:cmTC_bf5b9.lib /pdb:cmTC_bf5b9.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
-        FINAL LINK: command "C:\\PROGRA~1\\MICROS~3\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1443~1.348\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_bf5b9.dir\\CMakeCXXCompilerABI.cpp.obj /out:cmTC_bf5b9.exe /implib:cmTC_bf5b9.lib /pdb:cmTC_bf5b9.pdb /version:0.0 /machine:x64 /debug /INCREMENTAL /subsystem:console kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTFILE:CMakeFiles\\cmTC_bf5b9.dir/intermediate.manifest CMakeFiles\\cmTC_bf5b9.dir/manifest.res" failed (exit code 1104) with the following output:
-        LINK : fatal error LNK1104: cannot open file 'cmTC_bf5b9.exe'\x0d
-        ninja: build stopped: subcommand failed.
-        
-      exitCode: 1
-  -
-    kind: "try_compile-v1"
-    backtrace:
-      - "C:/Users/Admin/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeTestCXXCompiler.cmake:56 (try_compile)"
-      - "CMakeLists.txt:2 (project)"
-    checks:
-      - "Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.43.34808/bin/Hostx64/x64/cl.exe"
-    directories:
-      source: "D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-z7g7lq"
-      binary: "D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-z7g7lq"
-    cmakeVariables:
-      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /EHsc"
-      CMAKE_CXX_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
-      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
-      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
-    buildResult:
-      variable: "CMAKE_CXX_COMPILER_WORKS"
-      cached: true
-      stdout: |
-        Change Dir: 'D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-z7g7lq'
-        
-        Run Build Command(s): C:/Users/Admin/AppData/Local/Programs/CLion/bin/ninja/win/x64/ninja.exe -v cmTC_72020
-        [1/2] C:\\PROGRA~1\\MICROS~3\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1443~1.348\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /EHsc  /Ob0 /Od /RTC1 -MDd -Zi /showIncludes /FoCMakeFiles\\cmTC_72020.dir\\testCXXCompiler.cxx.obj /FdCMakeFiles\\cmTC_72020.dir\\ /FS -c D:\\Work\\NEULab\\ETSP-WCL-Test16\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-z7g7lq\\testCXXCompiler.cxx
-        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\Users\\Admin\\AppData\\Local\\Programs\\CLion\\bin\\cmake\\win\\x64\\bin\\cmake.exe -E vs_link_exe --intdir=CMakeFiles\\cmTC_72020.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~3\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1443~1.348\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_72020.dir\\testCXXCompiler.cxx.obj  /out:cmTC_72020.exe /implib:cmTC_72020.lib /pdb:cmTC_72020.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        Run Build Command(s): C:/Users/Admin/AppData/Local/Programs/CLion/bin/ninja/win/x64/ninja.exe -v cmTC_64cbe
+        [1/2] C:\\PROGRA~1\\MICROS~3\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1443~1.348\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /EHsc  /Ob0 /Od /RTC1 -MDd -Zi /showIncludes /FoCMakeFiles\\cmTC_64cbe.dir\\CMakeCXXCompilerABI.cpp.obj /FdCMakeFiles\\cmTC_64cbe.dir\\ /FS -c C:\\Users\\Admin\\AppData\\Local\\Programs\\CLion\\bin\\cmake\\win\\x64\\share\\cmake-3.30\\Modules\\CMakeCXXCompilerABI.cpp
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\Users\\Admin\\AppData\\Local\\Programs\\CLion\\bin\\cmake\\win\\x64\\bin\\cmake.exe -E vs_link_exe --intdir=CMakeFiles\\cmTC_64cbe.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MICROS~3\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1443~1.348\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_64cbe.dir\\CMakeCXXCompilerABI.cpp.obj  /out:cmTC_64cbe.exe /implib:cmTC_64cbe.lib /pdb:cmTC_64cbe.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
         
       exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Admin/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "C:/Users/Admin/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        linker tool for 'CXX': C:/PROGRA~1/MICROS~3/2022/COMMUN~1/VC/Tools/MSVC/1443~1.348/bin/Hostx64/x64/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Admin/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "C:/Users/Admin/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "C:/Users/Admin/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Running the CXX compiler's linker: "C:/PROGRA~1/MICROS~3/2022/COMMUN~1/VC/Tools/MSVC/1443~1.348/bin/Hostx64/x64/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.43.34808.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
 ...

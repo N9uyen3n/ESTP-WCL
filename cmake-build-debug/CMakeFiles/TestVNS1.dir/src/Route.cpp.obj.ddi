@@ -1,0 +1,13 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "CMakeFiles\\TestVNS1.dir\\src\\Route.cpp.obj",
+            "outputs": [
+                "CMakeFiles\\TestVNS1.dir\\src\\Route.cpp.obj.ddi"
+            ],
+            "requires": []
+        }
+    ]
+}

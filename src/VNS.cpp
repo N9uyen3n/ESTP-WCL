@@ -25,6 +25,9 @@ VNS::~VNS() {
 ILOSTLBEGIN
 Route VNS::run() {
     Route S0 = init_route;
+    if (!quickFeasibilityCheck(init_route, graph, params)) {
+        S0 = localSearch(init_route);
+    }
 
     Route S = S0;
     double C_S = S.getTotalCost();
@@ -88,14 +91,18 @@ Route VNS::run() {
                 std::cout << "Station " << decision.station_id << ": Option " << decision.option_index
                           << ", Duration " << decision.charging_time << "\n";
             }
-            int i = 0;
-            std::cout << "Wireless decisions: " << Sbest.getArcWirelessDecisions().size() << "\n";
-            for(auto & arc_wireless : Sbest.getArcWirelessDecisions()) {
-                std::cout << "Wireless charging between nodes " << arc_wireless.first << " and "
-                          << arc_wireless.second << ": " << "\n";
-                i++;
+            if (Sbest.getChargingDecisions().size() > 0) {
+                int i = 0;
+                std::cout << "Wireless decisions: " << Sbest.getArcWirelessDecisions().size() << "\n";
+                for(auto & arc_wireless : Sbest.getArcWirelessDecisions()) {
+                    std::cout << "Wireless charging between nodes " << arc_wireless.first << " and "
+                              << arc_wireless.second << ": " << "\n";
+                    i++;
+                }
+            } else {
+                std::cout << "No use wireless arcs\n";
             }
-            std::cout << "------------------------\n";
+            std::cout << "------------------------------------------------------------------------\n";
         }
     }
 
@@ -439,9 +446,8 @@ Route VNS::solveSubproblem(const std::vector<int>& initial_nodes,
 
         // Solve
         // cplex.setOut(std::cout);
-        cplex.setParam(IloCplex::EpGap, 0.6);
         cplex.setOut(env.getNullStream());
-        cplex.setParam(IloCplex::TiLim, 5);
+        cplex.setParam(IloCplex::TiLim, 20);
         // cplex.setOut(IloCplex::);
         if (!cplex.solve()) {
             std::cout << "MILP::optimize: CPLEX failed, status = " << cplex.getStatus() << "\n";
@@ -472,7 +478,9 @@ Route VNS::solveSubproblem(const std::vector<int>& initial_nodes,
                     cplex.getValue(x[i_idx][j]) > 0.5 && visited.find(node_ids[j]) == visited.end()) {
                     result.new_node_ids.push_back(node_ids[j]);
                     result.wireless_decisions.push_back(cplex.getValue(z[i_idx][j]) > 0.5);
-                    result.arc_wireless_decisions.push_back(std::pair<int, int>(i_idx, j));
+                    if (cplex.getValue(z[i_idx][j]) > 0.5) {
+                        result.arc_wireless_decisions.emplace_back(current, node_ids[j]);
+                    }
                     current = node_ids[j];
                     visited.insert(current);
                     found = true;
@@ -759,11 +767,11 @@ Route VNS::localSearch(const Route& current_route) {
     return optimized_route;
 }
 
-Route VNS::locaclSearch1(const Route& current_route) {
-    std::vector<int> initial_nodes = current_route.getNodeIds();
-    Route optimized_route = solveSubproblem(initial_nodes, graph, charge_options, params);
-    return optimized_route;
-}
+// Route VNS::locaclSearch1(const Route& current_route) {
+//     std::vector<int> initial_nodes = current_route.getNodeIds();
+//     Route optimized_route = solveSubproblem(initial_nodes, graph, charge_options, params);
+//     return optimized_route;
+// }
 
 //Route VNS::run() {
 //    // Require: Tập khách hàng, kho (depot), trạm sạc, làn sạc không dây, ràng buộc SOC

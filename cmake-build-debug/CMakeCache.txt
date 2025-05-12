@@ -205,15 +205,6 @@ CONCERT_LIBRARY:FILEPATH=D:/Program Files/IBM/ILOG/CPLEX_Studio2211/concert/lib/
 CPLEX_LIBRARY:FILEPATH=D:/Program Files/IBM/ILOG/CPLEX_Studio2211/cplex/lib/x64_windows_msvc14/stat_mda/cplex2211.lib
 
 //Value Computed by CMake
-ETSP_WCL_Test14_BINARY_DIR:STATIC=D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug
-
-//Value Computed by CMake
-ETSP_WCL_Test14_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-ETSP_WCL_Test14_SOURCE_DIR:STATIC=D:/Work/NEULab/ETSP-WCL-Test16
-
-//Value Computed by CMake
 ETSP_WCL_Test16_BINARY_DIR:STATIC=D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug
 
 //Value Computed by CMake

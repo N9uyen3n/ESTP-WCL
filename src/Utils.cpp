@@ -181,14 +181,14 @@ std::vector<std::vector<ChargingOption>> Utils::readChargingOptions(
     file.close();
 
     // Add no-charging option for charging stations
-    for (const auto& node : nodes) {
-        if (node.getType() == NodeType::CHARGING_STATION || node.getStringId().find("_") != std::string::npos) {
-            ChargingOption no_charge(0.0, 0.0);
-            no_charge.setStationId(node.getId());
-            no_charge.setOption(0);
-            charging_options[node.getId()].push_back(no_charge);
-        }
-    }
+    // for (const auto& node : nodes) {
+    //     if (node.getType() == NodeType::CHARGING_STATION || node.getStringId().find("_") != std::string::npos) {
+    //         ChargingOption no_charge(0.0, 0.0);
+    //         no_charge.setStationId(node.getId());
+    //         no_charge.setOption(0);
+    //         charging_options[node.getId()].push_back(no_charge);
+    //     }
+    // }
 
     return charging_options;
 }

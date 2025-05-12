@@ -53,7 +53,7 @@ void testVNS(const std::string& csv_file_dir, int max_iterations = 100) {
         Route best_route = vns.run();
 
         // 5. In kết quả
-        std::cout << "\n=== VNS Results ===\n";
+        std::cout << "\n====== VNS Results ======\n";
         if (best_route.isFeasible()) {
             std::cout << "Best route found: ";
             for (int id : best_route.getNodeIds()) {
@@ -66,7 +66,6 @@ void testVNS(const std::string& csv_file_dir, int max_iterations = 100) {
             const auto& soc_departure = best_route.getSocDeparture();
             const auto& arrival_time = best_route.getArrivalTime();
             const auto& departure_time = best_route.getDepartureTime();
-            const auto& wireless_decisions = best_route.getWirelessDecisions();
             const auto& charging_decisions = best_route.getChargingDecisions();
 
             for (size_t i = 0; i < best_route.getNodeIds().size(); ++i) {
@@ -76,9 +75,6 @@ void testVNS(const std::string& csv_file_dir, int max_iterations = 100) {
                           << "  SOC Departure: " << soc_departure[i] << "\n"
                           << "  Arrival Time: " << arrival_time[i] << "\n"
                           << "  Departure Time: " << departure_time[i] << "\n";
-                if (i < wireless_decisions.size()) {
-                    std::cout << "  Wireless Charging to next node: " << (wireless_decisions[i] ? "Yes" : "No") << "\n";
-                }
             }
 
             std::cout << "\nCharging decisions:\n";
@@ -87,6 +83,7 @@ void testVNS(const std::string& csv_file_dir, int max_iterations = 100) {
                           << ", Option: " << decision.getOption()
                           << ", Charging Time: " << decision.getChargingTime() << "\n";
             }
+
         } else {
             std::cout << "No feasible route found.\n";
         }
@@ -97,7 +94,7 @@ void testVNS(const std::string& csv_file_dir, int max_iterations = 100) {
 }
 
 int main() {
-    std::string csv_file_dir = "../data/Input/c5-s5/";
+    std::string csv_file_dir = "../data/Input/";
     testVNS(csv_file_dir, 100); // Chạy VNS với 100 vòng lặp
     return 0;
 }

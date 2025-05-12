@@ -17,7 +17,9 @@
 					[
 						0,
 						1,
-						2
+						2,
+						3,
+						4
 					]
 				}
 			],
@@ -34,7 +36,9 @@
 					[
 						0,
 						1,
-						2
+						2,
+						3,
+						4
 					]
 				}
 			],
@@ -59,6 +63,20 @@
 					"id" : "TestVNS::@6890427a1f51a3e7e1df",
 					"jsonFile" : "target-TestVNS-Release-5b87980d13505234d569.json",
 					"name" : "TestVNS",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "TestVNS1::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TestVNS1-Release-5474c0cd63bf80b0bf58.json",
+					"name" : "TestVNS1",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "TestVNS2::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TestVNS2-Release-a76baf0e8b9f06b67988.json",
+					"name" : "TestVNS2",
 					"projectIndex" : 0
 				}
 			]

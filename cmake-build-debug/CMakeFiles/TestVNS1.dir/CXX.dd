@@ -1,0 +1,13 @@
+ninja_dyndep_version = 1.0
+build CMakeFiles\TestVNS1.dir\TestVNS1.cpp.obj: dyndep
+
+build CMakeFiles\TestVNS1.dir\src\VNS1.cpp.obj: dyndep
+
+build CMakeFiles\TestVNS1.dir\src\Route.cpp.obj: dyndep
+
+build CMakeFiles\TestVNS1.dir\src\Utils.cpp.obj: dyndep
+
+build CMakeFiles\TestVNS1.dir\src\Parameters.cpp.obj: dyndep
+
+build CMakeFiles\TestVNS1.dir\src\Graph.cpp.obj: dyndep
+

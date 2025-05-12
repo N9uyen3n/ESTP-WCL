@@ -53,7 +53,8 @@ private:
                                     const Graph& graph,
                                     const std::vector<std::vector<ChargingOption>>& charge_options,
                                     const Parameters& params); // Solve the subproblem using CPLEX with fixed customer sequence
-    Route locaclSearch1(const Route& current_route);
+    //I think this is not used
+    // Route locaclSearch1(const Route& current_route);
 
     Route localSearch(const Route& current_route); // Perform local search on the current route
 

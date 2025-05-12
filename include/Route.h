@@ -3,6 +3,8 @@
 #include "Graph.h"
 #include <vector>
 
+#include "Utils.h"
+
 struct ChargingDecision {
     int station_id, option_index;
     double charging_time;
@@ -48,7 +50,18 @@ public:
     void setDepartureTime(const std::vector<double>& times) { departure_time = times; }
     void setTotalCost(double cost) { total_cost = cost; }
     void setFeasible(bool f) { feasible = f; }
+
+    // void deleteChargingDecisions(const std::vector<Node>& nodes) {
+    //     for (const auto& node: node_ids) {
+    //         if (Utils::isChargingStation(node, nodes)) {
+    //             node_ids.erase(std::remove(node_ids.begin(), node_ids.end(), node));
+    //         }
+    //         charging_decisions.clear();
+    //     }
+    // }
     bool checkFeasibility(const Graph& graph, const Parameters& params) const;
+
+
 };
 
 #endif

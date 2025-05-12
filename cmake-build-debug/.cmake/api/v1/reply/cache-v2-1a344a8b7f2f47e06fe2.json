@@ -1102,42 +1102,6 @@
 			"value" : "D:/Program Files/IBM/ILOG/CPLEX_Studio2211/cplex/lib/x64_windows_msvc14/stat_mda/cplex2211.lib"
 		},
 		{
-			"name" : "ETSP_WCL_Test14_BINARY_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "D:/Work/NEULab/ETSP-WCL-Test16/cmake-build-debug"
-		},
-		{
-			"name" : "ETSP_WCL_Test14_IS_TOP_LEVEL",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "ON"
-		},
-		{
-			"name" : "ETSP_WCL_Test14_SOURCE_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "D:/Work/NEULab/ETSP-WCL-Test16"
-		},
-		{
 			"name" : "ETSP_WCL_Test16_BINARY_DIR",
 			"properties" : 
 			[
