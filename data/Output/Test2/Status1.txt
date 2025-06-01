@@ -1,0 +1,305 @@
+D:\Work\NEULab\ETSP-WCL-Test19\cmake-build-debug\TestMILP.exe
+Reading input data from directory: ../data/Input/Small_1/Output_t1/dataset_1_rc_201.1_C5_S2_instance1/
+
+Nodes loaded:
+Nodes Information:
+  ID: 0, StringID: D0, Type: Depot, Coordinates: (40.00, 50.00), Service Time: 0.00
+  ID: 1, StringID: C1, Type: Customer, Coordinates: (44.00, 5.00), Service Time: 10.00
+  ID: 2, StringID: C2, Type: Customer, Coordinates: (42.00, 15.00), Service Time: 10.00
+  ID: 3, StringID: C3, Type: Customer, Coordinates: (40.00, 15.00), Service Time: 10.00
+  ID: 4, StringID: C4, Type: Customer, Coordinates: (95.00, 35.00), Service Time: 10.00
+  ID: 5, StringID: C5, Type: Customer, Coordinates: (92.00, 30.00), Service Time: 10.00
+  ID: 6, StringID: S1, Type: Station, Coordinates: (78.00, 24.00), Service Time: 0.00
+  ID: 7, StringID: S2, Type: Station, Coordinates: (68.00, 19.00), Service Time: 0.00
+  ID: 8, StringID: D1, Type: Depot, Coordinates: (40.00, 50.00), Service Time: 0.00
+
+Parameters loaded:
+Parameters Information:
+  Battery Capacity: 100000.00
+  Min SOC: 20.00
+  Energy Consumption: 1.25
+  Vehicle Speed: 20.00
+  Wireless Cost: 15.00
+  Time Cost: 1.00
+  Initial SOC: 100000.00
+  Big-M: 1000000.00
+  U_max: 40.00
+  U_min: 10.00
+../data/Input/Small_1/Output_t1/dataset_1_rc_201.1_C5_S2_instance1/wireless_arcs.csv
+1
+23456789101112131415161718192021222324252627282930
+Arcs loaded:
+Arcs Information:
+  From: 0, To: 1, Distance: 45.18, Travel Time: 2.26, Wireless: Yes, Charge Rate: 40.00
+  From: 0, To: 2, Distance: 35.06, Travel Time: 1.75, Wireless: No, Charge Rate: 0.00
+  From: 0, To: 3, Distance: 35.00, Travel Time: 1.75, Wireless: No, Charge Rate: 0.00
+  From: 0, To: 4, Distance: 57.01, Travel Time: 2.85, Wireless: Yes, Charge Rate: 40.00
+  From: 0, To: 5, Distance: 55.71, Travel Time: 2.79, Wireless: Yes, Charge Rate: 40.00
+  From: 0, To: 6, Distance: 46.04, Travel Time: 2.30, Wireless: Yes, Charge Rate: 40.00
+  From: 0, To: 7, Distance: 41.77, Travel Time: 2.09, Wireless: No, Charge Rate: 0.00
+  From: 0, To: 8, Distance: 0.00, Travel Time: 0.00, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 0, Distance: 45.18, Travel Time: 2.26, Wireless: Yes, Charge Rate: 40.00
+  From: 1, To: 2, Distance: 10.20, Travel Time: 0.51, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 3, Distance: 10.77, Travel Time: 0.54, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 4, Distance: 59.17, Travel Time: 2.96, Wireless: Yes, Charge Rate: 40.00
+  From: 1, To: 5, Distance: 54.12, Travel Time: 2.71, Wireless: Yes, Charge Rate: 40.00
+  From: 1, To: 6, Distance: 38.95, Travel Time: 1.95, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 7, Distance: 27.78, Travel Time: 1.39, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 8, Distance: 45.18, Travel Time: 2.26, Wireless: Yes, Charge Rate: 40.00
+  From: 2, To: 0, Distance: 35.06, Travel Time: 1.75, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 1, Distance: 10.20, Travel Time: 0.51, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 3, Distance: 2.00, Travel Time: 0.10, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 4, Distance: 56.65, Travel Time: 2.83, Wireless: Yes, Charge Rate: 40.00
+  From: 2, To: 5, Distance: 52.20, Travel Time: 2.61, Wireless: Yes, Charge Rate: 40.00
+  From: 2, To: 6, Distance: 37.11, Travel Time: 1.86, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 7, Distance: 26.31, Travel Time: 1.32, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 8, Distance: 35.06, Travel Time: 1.75, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 0, Distance: 35.00, Travel Time: 1.75, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 1, Distance: 10.77, Travel Time: 0.54, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 2, Distance: 2.00, Travel Time: 0.10, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 4, Distance: 58.52, Travel Time: 2.93, Wireless: Yes, Charge Rate: 40.00
+  From: 3, To: 5, Distance: 54.12, Travel Time: 2.71, Wireless: Yes, Charge Rate: 40.00
+  From: 3, To: 6, Distance: 39.05, Travel Time: 1.95, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 7, Distance: 28.28, Travel Time: 1.41, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 8, Distance: 35.00, Travel Time: 1.75, Wireless: No, Charge Rate: 0.00
+  From: 4, To: 0, Distance: 57.01, Travel Time: 2.85, Wireless: Yes, Charge Rate: 40.00
+  From: 4, To: 1, Distance: 59.17, Travel Time: 2.96, Wireless: Yes, Charge Rate: 40.00
+  From: 4, To: 2, Distance: 56.65, Travel Time: 2.83, Wireless: Yes, Charge Rate: 40.00
+  From: 4, To: 3, Distance: 58.52, Travel Time: 2.93, Wireless: Yes, Charge Rate: 40.00
+  From: 4, To: 5, Distance: 5.83, Travel Time: 0.29, Wireless: No, Charge Rate: 0.00
+  From: 4, To: 6, Distance: 20.25, Travel Time: 1.01, Wireless: No, Charge Rate: 0.00
+  From: 4, To: 7, Distance: 31.38, Travel Time: 1.57, Wireless: No, Charge Rate: 0.00
+  From: 4, To: 8, Distance: 57.01, Travel Time: 2.85, Wireless: Yes, Charge Rate: 40.00
+  From: 5, To: 0, Distance: 55.71, Travel Time: 2.79, Wireless: Yes, Charge Rate: 40.00
+  From: 5, To: 1, Distance: 54.12, Travel Time: 2.71, Wireless: Yes, Charge Rate: 40.00
+  From: 5, To: 2, Distance: 52.20, Travel Time: 2.61, Wireless: Yes, Charge Rate: 40.00
+  From: 5, To: 3, Distance: 54.12, Travel Time: 2.71, Wireless: Yes, Charge Rate: 40.00
+  From: 5, To: 4, Distance: 5.83, Travel Time: 0.29, Wireless: No, Charge Rate: 0.00
+  From: 5, To: 6, Distance: 15.23, Travel Time: 0.76, Wireless: No, Charge Rate: 0.00
+  From: 5, To: 7, Distance: 26.40, Travel Time: 1.32, Wireless: No, Charge Rate: 0.00
+  From: 5, To: 8, Distance: 55.71, Travel Time: 2.79, Wireless: Yes, Charge Rate: 40.00
+  From: 6, To: 0, Distance: 46.04, Travel Time: 2.30, Wireless: Yes, Charge Rate: 40.00
+  From: 6, To: 1, Distance: 38.95, Travel Time: 1.95, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 2, Distance: 37.11, Travel Time: 1.86, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 3, Distance: 39.05, Travel Time: 1.95, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 4, Distance: 20.25, Travel Time: 1.01, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 5, Distance: 15.23, Travel Time: 0.76, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 7, Distance: 11.18, Travel Time: 0.56, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 8, Distance: 46.04, Travel Time: 2.30, Wireless: Yes, Charge Rate: 40.00
+  From: 7, To: 0, Distance: 41.77, Travel Time: 2.09, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 1, Distance: 27.78, Travel Time: 1.39, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 2, Distance: 26.31, Travel Time: 1.32, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 3, Distance: 28.28, Travel Time: 1.41, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 4, Distance: 31.38, Travel Time: 1.57, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 5, Distance: 26.40, Travel Time: 1.32, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 6, Distance: 11.18, Travel Time: 0.56, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 8, Distance: 41.77, Travel Time: 2.09, Wireless: No, Charge Rate: 0.00
+  From: 8, To: 0, Distance: 0.00, Travel Time: 0.00, Wireless: No, Charge Rate: 0.00
+  From: 8, To: 1, Distance: 45.18, Travel Time: 2.26, Wireless: Yes, Charge Rate: 40.00
+  From: 8, To: 2, Distance: 35.06, Travel Time: 1.75, Wireless: No, Charge Rate: 0.00
+  From: 8, To: 3, Distance: 35.00, Travel Time: 1.75, Wireless: No, Charge Rate: 0.00
+  From: 8, To: 4, Distance: 57.01, Travel Time: 2.85, Wireless: Yes, Charge Rate: 40.00
+  From: 8, To: 5, Distance: 55.71, Travel Time: 2.79, Wireless: Yes, Charge Rate: 40.00
+  From: 8, To: 6, Distance: 46.04, Travel Time: 2.30, Wireless: Yes, Charge Rate: 40.00
+  From: 8, To: 7, Distance: 41.77, Travel Time: 2.09, Wireless: No, Charge Rate: 0.00
+
+Charging options loaded:
+Charging Options Information:
+  Node ID: 6
+    Option 1.00: Cost = 50.00, Rate = 0.87
+    Option 2.00: Cost = 50.00, Rate = 2.10
+  Node ID: 7
+    Option 1.00: Cost = 50.00, Rate = 0.58
+    Option 2.00: Cost = 50.00, Rate = 1.66
+
+Initial route: 0 5 3 4 1 2 8
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+CPXPARAM_TimeLimit                               3600
+Tried aggregator 2 times.
+MIP Presolve eliminated 280 rows and 101 columns.
+MIP Presolve modified 194 coefficients.
+Aggregator did 48 substitutions.
+Reduced MIP has 368 rows, 192 columns, and 1155 nonzeros.
+Reduced MIP has 103 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (1.36 ticks)
+Probing fixed 0 vars, tightened 4 bounds.
+Probing time = 0.00 sec. (0.48 ticks)
+Cover probing fixed 0 vars, tightened 2 bounds.Default row names c1, c2 ... being created.
+
+Tried aggregator 1 time.
+Detecting symmetries...
+MIP Presolve modified 20 coefficients.
+Reduced MIP has 368 rows, 192 columns, and 1155 nonzeros.
+Reduced MIP has 103 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (0.64 ticks)
+Probing time = 0.01 sec. (0.51 ticks)
+Clique table members: 493.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: dynamic search.
+Parallel mode: deterministic, using up to 8 threads.
+Root relaxation solution time = 0.00 sec. (0.63 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+
+      0     0        0.0000    23                      0.0000       23
+      0     0        0.0000    16                    Cuts: 47       68
+      0     0        0.0000    21                    Cuts: 29      124
+      0     0        0.0000    16                    Cuts: 19      154
+      0     0        0.0000    16                    Cuts: 26      174
+*     0+    0                           57.7926        0.0000           100.00%
+*     0+    0                           57.7926        0.0000           100.00%
+      0     0  -1.00000e+75     0       57.7926        0.0000      174  100.00%
+*     0+    0                           55.0130        0.0000           100.00%
+Detecting symmetries...
+
+Repeating presolve.
+Tried aggregator 2 times.
+MIP Presolve eliminated 117 rows and 56 columns.
+MIP Presolve modified 74 coefficients.
+Aggregator did 28 substitutions.
+Reduced MIP has 223 rows, 108 columns, and 781 nonzeros.
+Reduced MIP has 75 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (0.62 ticks)
+Probing time = 0.00 sec. (0.23 ticks)
+Cover probing fixed 0 vars, tightened 9 bounds.
+Tried aggregator 1 time.
+Detecting symmetries...
+MIP Presolve modified 130 coefficients.
+Reduced MIP has 223 rows, 108 columns, and 781 nonzeros.
+Reduced MIP has 75 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.02 sec. (0.43 ticks)
+Represolve time = 0.02 sec. (1.56 ticks)
+Probing time = 0.00 sec. (0.28 ticks)
+Clique table members: 47.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: dynamic search.
+Parallel mode: deterministic, using up to 8 threads.
+Root relaxation solution time = 0.00 sec. (0.63 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+
+*     0+    0                           55.0130        0.0000           100.00%
+      0     0        0.0000    23       55.0130        0.0000      224  100.00%
+      0     0        0.0000     7       55.0130   Flowcuts: 3      234  100.00%
+      0     0        0.0000    11       55.0130   Flowcuts: 6      240  100.00%
+      0     0        0.0000    12       55.0130      Cuts: 18      266  100.00%
+Detecting symmetries...
+      0     2        0.0000     5       55.0130        0.0000      266  100.00%
+Elapsed time = 0.27 sec. (92.52 ticks, tree = 0.02 MB, solutions = 2)
+*    10+    4                           55.0130        0.0000           100.00%
+*   850   142      integral     0       54.8374        0.0000     3855  100.00%
+*   930   222      integral     0       54.4321        0.0000     5668  100.00%
+*  1027   236      integral     0       54.2881        0.0000     6225  100.00%
+*  1065   239      integral     0       54.2752        0.0000     6160  100.00%
+*  2471   718      integral     0       54.1212        0.0000    19001  100.00%
+*  5102+ 1561                           54.1212        0.0000           100.00%
+*  5225+ 1585                           54.1197        0.0000           100.00%
+   5885  1792        cutoff             54.1197        0.0000    73262  100.00%
+
+Performing restart 1
+
+Repeating presolve.
+Tried aggregator 1 time.
+MIP Presolve modified 116 coefficients.
+Reduced MIP has 223 rows, 108 columns, and 781 nonzeros.
+Reduced MIP has 75 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (0.32 ticks)
+Tried aggregator 1 time.
+MIP Presolve modified 104 coefficients.
+Reduced MIP has 223 rows, 108 columns, and 781 nonzeros.
+Reduced MIP has 75 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (0.44 ticks)
+Represolve time = 0.02 sec. (1.86 ticks)
+   5893     0        0.0000     4       54.1197       Cuts: 3    80349  100.00%
+   5893     0        0.0000     4       54.1197       Cuts: 8    80358  100.00%
+   5893     0        0.0000    10       54.1197      Cuts: 23    80377  100.00%
+*  7046+  230                           54.1039        0.0000           100.00%
+   8654   776    infeasible             54.1039        0.0000   106464  100.00%
+  15183  2580        0.0000     8       54.1039        0.0000   175795  100.00%
+  22103  4557        0.0000    12       54.1039        0.0000   257568  100.00%
+  29157  6382    infeasible             54.1039        0.0000   350114  100.00%
+  36198  7072        0.0000    11       54.1039        0.0000   412531  100.00%
+  41428  7381        0.0001    12       54.1039        0.0000   505768  100.00%
+  46030  7317    infeasible             54.1039        0.0000   533459  100.00%
+  52492  7558    infeasible             54.1039        0.0000   618209  100.00%
+* 58829  7538      integral     0       53.7330        0.0672   709901   99.87%
+  76113  4795        2.9193    16       53.7330        0.8249   968202   98.46%
+Elapsed time = 7.97 sec. (3192.52 ticks, tree = 1.32 MB, solutions = 11)
+* 85179  2024      integral     0       44.7495        3.9203  1117728   91.24%
+
+Clique cuts applied:  2
+Cover cuts applied:  52
+Implied bound cuts applied:  25
+Flow cuts applied:  39
+Mixed integer rounding cuts applied:  12
+Multi commodity flow cuts applied:  4
+
+Root node processing (before b&c):
+  Real time             =    0.27 sec. (92.47 ticks)
+Parallel b&c, 8 threads:
+  Real time             =    9.01 sec. (3638.03 ticks)
+  Sync time (average)   =    2.38 sec.
+  Wait time (average)   =    0.01 sec.
+                          ------------
+Total (root+branch&cut) =    9.28 sec. (3730.50 ticks)
+MILP::optimize: Success, cost = 44.75, Time = 9 s
+
+====== MILP Results ======
+Best route found: 0 (Depot) 4 (Customer) 6 (Station) 7 (Station) 3 (Customer) 5 (Customer) 2 (Customer) 1 (Customer) 8 (
+Depot)
+Total cost: 44.75
+
+Detailed route information:
+Node 0 (Depot):
+  SOC Arrival: 100000.00
+  SOC Departure: 100000.00
+  Arrival Time: 0.00
+  Departure Time: 0.00
+Node 4 (Customer):
+  SOC Arrival: 99928.74
+  SOC Departure: 99928.74
+  Arrival Time: 1.43
+  Departure Time: 11.43
+Node 6 (Station):
+  SOC Arrival: 99903.43
+  SOC Departure: 99903.43
+  Arrival Time: 11.93
+  Departure Time: 11.93
+Node 7 (Station):
+  SOC Arrival: 100000.00
+  SOC Departure: 100000.00
+  Arrival Time: 6.11
+  Departure Time: 6.11
+Node 3 (Customer):
+  SOC Arrival: 99980.00
+  SOC Departure: 99980.00
+  Arrival Time: 0.71
+  Departure Time: 10.71
+Node 5 (Customer):
+  SOC Arrival: 99912.35
+  SOC Departure: 99912.35
+  Arrival Time: 12.06
+  Departure Time: 22.06
+Node 2 (Customer):
+  SOC Arrival: 99847.10
+  SOC Departure: 99847.10
+  Arrival Time: 23.37
+  Departure Time: 33.37
+Node 1 (Customer):
+  SOC Arrival: 99834.35
+  SOC Departure: 99834.35
+  Arrival Time: 33.62
+  Departure Time: 43.62
+Node 8 (Depot):
+  SOC Arrival: 100000.00
+  SOC Departure: 100000.00
+  Arrival Time: 44.75
+  Departure Time: 44.75
+
+Charging decisions:
+
+Wireless charging decisions:
+
+Process finished with exit code 0

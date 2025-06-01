@@ -1,0 +1,13 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "CMakeFiles\\ExMILP.dir\\src\\MILP.cpp.obj",
+            "outputs": [
+                "CMakeFiles\\ExMILP.dir\\src\\MILP.cpp.obj.ddi"
+            ],
+            "requires": []
+        }
+    ]
+}

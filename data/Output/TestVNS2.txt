@@ -1,0 +1,556 @@
+D:\Work\NEULab\ETSP-WCL-Test16\cmake-build-debug\TestVNS2.exe
+Reading input data from directory: ../data/Input/
+
+Nodes loaded:
+Nodes Information:
+  ID: 0, StringID: D0, Type: Depot, Coordinates: (35.00, 35.00), Service Time: 0.00
+  ID: 1, StringID: S0, Type: Station, Coordinates: (35.00, 35.00), Service Time: 0.00
+  ID: 2, StringID: S1, Type: Station, Coordinates: (61.00, 37.00), Service Time: 0.00
+  ID: 3, StringID: S2, Type: Station, Coordinates: (74.00, 39.00), Service Time: 0.00
+  ID: 4, StringID: S3, Type: Station, Coordinates: (47.00, 57.00), Service Time: 0.00
+  ID: 5, StringID: S4, Type: Station, Coordinates: (57.00, 65.00), Service Time: 0.00
+  ID: 6, StringID: C1, Type: Customer, Coordinates: (41.00, 49.00), Service Time: 10.00
+  ID: 7, StringID: C2, Type: Customer, Coordinates: (35.00, 17.00), Service Time: 10.00
+  ID: 8, StringID: C3, Type: Customer, Coordinates: (55.00, 45.00), Service Time: 10.00
+  ID: 9, StringID: C4, Type: Customer, Coordinates: (55.00, 20.00), Service Time: 10.00
+  ID: 10, StringID: C5, Type: Customer, Coordinates: (15.00, 30.00), Service Time: 10.00
+  ID: 11, StringID: C6, Type: Customer, Coordinates: (25.00, 30.00), Service Time: 10.00
+  ID: 12, StringID: C7, Type: Customer, Coordinates: (20.00, 50.00), Service Time: 10.00
+  ID: 13, StringID: C8, Type: Customer, Coordinates: (10.00, 43.00), Service Time: 10.00
+  ID: 14, StringID: C9, Type: Customer, Coordinates: (55.00, 60.00), Service Time: 10.00
+  ID: 15, StringID: C10, Type: Customer, Coordinates: (30.00, 60.00), Service Time: 10.00
+  ID: 16, StringID: D1, Type: Depot, Coordinates: (35.00, 35.00), Service Time: 0.00
+
+Parameters loaded:
+Parameters Information:
+  Battery Capacity: 100.00
+  Min SOC: 10.00
+  Energy Consumption: 0.14
+  Vehicle Speed: 1.00
+  Wireless Cost: 1.00
+  Time Cost: 0.10
+  Initial SOC: 30.00
+  Big-M: 1000000.00
+  U_max: 2.00
+  U_min: 0.50
+../data/Input/wireless_arcs.csv
+1
+2
+Arcs loaded:
+Arcs Information:
+  From: 0, To: 1, Distance: 0.00, Travel Time: 0.00, Wireless: No, Charge Rate: 0.00
+  From: 0, To: 2, Distance: 26.08, Travel Time: 26.08, Wireless: No, Charge Rate: 0.00
+  From: 0, To: 3, Distance: 39.20, Travel Time: 39.20, Wireless: No, Charge Rate: 0.00
+  From: 0, To: 4, Distance: 25.06, Travel Time: 25.06, Wireless: No, Charge Rate: 0.00
+  From: 0, To: 5, Distance: 37.20, Travel Time: 37.20, Wireless: No, Charge Rate: 0.00
+  From: 0, To: 6, Distance: 15.23, Travel Time: 15.23, Wireless: No, Charge Rate: 0.00
+  From: 0, To: 7, Distance: 18.00, Travel Time: 18.00, Wireless: No, Charge Rate: 0.00
+  From: 0, To: 8, Distance: 22.36, Travel Time: 22.36, Wireless: No, Charge Rate: 0.00
+  From: 0, To: 9, Distance: 25.00, Travel Time: 25.00, Wireless: No, Charge Rate: 0.00
+  From: 0, To: 10, Distance: 20.62, Travel Time: 20.62, Wireless: No, Charge Rate: 0.00
+  From: 0, To: 11, Distance: 11.18, Travel Time: 11.18, Wireless: No, Charge Rate: 0.00
+  From: 0, To: 12, Distance: 21.21, Travel Time: 21.21, Wireless: No, Charge Rate: 0.00
+  From: 0, To: 13, Distance: 26.25, Travel Time: 26.25, Wireless: No, Charge Rate: 0.00
+  From: 0, To: 14, Distance: 32.02, Travel Time: 32.02, Wireless: No, Charge Rate: 0.00
+  From: 0, To: 15, Distance: 25.50, Travel Time: 25.50, Wireless: No, Charge Rate: 0.00
+  From: 0, To: 16, Distance: 0.00, Travel Time: 0.00, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 0, Distance: 0.00, Travel Time: 0.00, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 2, Distance: 26.08, Travel Time: 26.08, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 3, Distance: 39.20, Travel Time: 39.20, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 4, Distance: 25.06, Travel Time: 25.06, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 5, Distance: 37.20, Travel Time: 37.20, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 6, Distance: 15.23, Travel Time: 15.23, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 7, Distance: 18.00, Travel Time: 18.00, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 8, Distance: 22.36, Travel Time: 22.36, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 9, Distance: 25.00, Travel Time: 25.00, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 10, Distance: 20.62, Travel Time: 20.62, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 11, Distance: 11.18, Travel Time: 11.18, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 12, Distance: 21.21, Travel Time: 21.21, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 13, Distance: 26.25, Travel Time: 26.25, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 14, Distance: 32.02, Travel Time: 32.02, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 15, Distance: 25.50, Travel Time: 25.50, Wireless: No, Charge Rate: 0.00
+  From: 1, To: 16, Distance: 0.00, Travel Time: 0.00, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 0, Distance: 26.08, Travel Time: 26.08, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 1, Distance: 26.08, Travel Time: 26.08, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 3, Distance: 13.15, Travel Time: 13.15, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 4, Distance: 24.41, Travel Time: 24.41, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 5, Distance: 28.28, Travel Time: 28.28, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 6, Distance: 23.32, Travel Time: 23.32, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 7, Distance: 32.80, Travel Time: 32.80, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 8, Distance: 10.00, Travel Time: 10.00, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 9, Distance: 18.03, Travel Time: 18.03, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 10, Distance: 46.53, Travel Time: 46.53, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 11, Distance: 36.67, Travel Time: 36.67, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 12, Distance: 43.01, Travel Time: 43.01, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 13, Distance: 51.35, Travel Time: 51.35, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 14, Distance: 23.77, Travel Time: 23.77, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 15, Distance: 38.60, Travel Time: 38.60, Wireless: No, Charge Rate: 0.00
+  From: 2, To: 16, Distance: 26.08, Travel Time: 26.08, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 0, Distance: 39.20, Travel Time: 39.20, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 1, Distance: 39.20, Travel Time: 39.20, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 2, Distance: 13.15, Travel Time: 13.15, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 4, Distance: 32.45, Travel Time: 32.45, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 5, Distance: 31.06, Travel Time: 31.06, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 6, Distance: 34.48, Travel Time: 34.48, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 7, Distance: 44.78, Travel Time: 44.78, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 8, Distance: 19.92, Travel Time: 19.92, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 9, Distance: 26.87, Travel Time: 26.87, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 10, Distance: 59.68, Travel Time: 59.68, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 11, Distance: 49.82, Travel Time: 49.82, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 12, Distance: 55.11, Travel Time: 55.11, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 13, Distance: 64.12, Travel Time: 64.12, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 14, Distance: 28.32, Travel Time: 28.32, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 15, Distance: 48.75, Travel Time: 48.75, Wireless: No, Charge Rate: 0.00
+  From: 3, To: 16, Distance: 39.20, Travel Time: 39.20, Wireless: No, Charge Rate: 0.00
+  From: 4, To: 0, Distance: 25.06, Travel Time: 25.06, Wireless: No, Charge Rate: 0.00
+  From: 4, To: 1, Distance: 25.06, Travel Time: 25.06, Wireless: No, Charge Rate: 0.00
+  From: 4, To: 2, Distance: 24.41, Travel Time: 24.41, Wireless: No, Charge Rate: 0.00
+  From: 4, To: 3, Distance: 32.45, Travel Time: 32.45, Wireless: No, Charge Rate: 0.00
+  From: 4, To: 5, Distance: 12.81, Travel Time: 12.81, Wireless: No, Charge Rate: 0.00
+  From: 4, To: 6, Distance: 10.00, Travel Time: 10.00, Wireless: No, Charge Rate: 0.00
+  From: 4, To: 7, Distance: 41.76, Travel Time: 41.76, Wireless: No, Charge Rate: 0.00
+  From: 4, To: 8, Distance: 14.42, Travel Time: 14.42, Wireless: No, Charge Rate: 0.00
+  From: 4, To: 9, Distance: 37.85, Travel Time: 37.85, Wireless: No, Charge Rate: 0.00
+  From: 4, To: 10, Distance: 41.87, Travel Time: 41.87, Wireless: No, Charge Rate: 0.00
+  From: 4, To: 11, Distance: 34.83, Travel Time: 34.83, Wireless: No, Charge Rate: 0.00
+  From: 4, To: 12, Distance: 27.89, Travel Time: 27.89, Wireless: No, Charge Rate: 0.00
+  From: 4, To: 13, Distance: 39.56, Travel Time: 39.56, Wireless: No, Charge Rate: 0.00
+  From: 4, To: 14, Distance: 8.54, Travel Time: 8.54, Wireless: No, Charge Rate: 0.00
+  From: 4, To: 15, Distance: 17.26, Travel Time: 17.26, Wireless: No, Charge Rate: 0.00
+  From: 4, To: 16, Distance: 25.06, Travel Time: 25.06, Wireless: No, Charge Rate: 0.00
+  From: 5, To: 0, Distance: 37.20, Travel Time: 37.20, Wireless: No, Charge Rate: 0.00
+  From: 5, To: 1, Distance: 37.20, Travel Time: 37.20, Wireless: No, Charge Rate: 0.00
+  From: 5, To: 2, Distance: 28.28, Travel Time: 28.28, Wireless: No, Charge Rate: 0.00
+  From: 5, To: 3, Distance: 31.06, Travel Time: 31.06, Wireless: No, Charge Rate: 0.00
+  From: 5, To: 4, Distance: 12.81, Travel Time: 12.81, Wireless: No, Charge Rate: 0.00
+  From: 5, To: 6, Distance: 22.63, Travel Time: 22.63, Wireless: No, Charge Rate: 0.00
+  From: 5, To: 7, Distance: 52.80, Travel Time: 52.80, Wireless: No, Charge Rate: 0.00
+  From: 5, To: 8, Distance: 20.10, Travel Time: 20.10, Wireless: No, Charge Rate: 0.00
+  From: 5, To: 9, Distance: 45.04, Travel Time: 45.04, Wireless: No, Charge Rate: 0.00
+  From: 5, To: 10, Distance: 54.67, Travel Time: 54.67, Wireless: No, Charge Rate: 0.00
+  From: 5, To: 11, Distance: 47.42, Travel Time: 47.42, Wireless: No, Charge Rate: 0.00
+  From: 5, To: 12, Distance: 39.92, Travel Time: 39.92, Wireless: No, Charge Rate: 0.00
+  From: 5, To: 13, Distance: 51.89, Travel Time: 51.89, Wireless: No, Charge Rate: 0.00
+  From: 5, To: 14, Distance: 5.39, Travel Time: 5.39, Wireless: No, Charge Rate: 0.00
+  From: 5, To: 15, Distance: 27.46, Travel Time: 27.46, Wireless: No, Charge Rate: 0.00
+  From: 5, To: 16, Distance: 37.20, Travel Time: 37.20, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 0, Distance: 15.23, Travel Time: 15.23, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 1, Distance: 15.23, Travel Time: 15.23, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 2, Distance: 23.32, Travel Time: 23.32, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 3, Distance: 34.48, Travel Time: 34.48, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 4, Distance: 10.00, Travel Time: 10.00, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 5, Distance: 22.63, Travel Time: 22.63, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 7, Distance: 32.56, Travel Time: 32.56, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 8, Distance: 14.56, Travel Time: 14.56, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 9, Distance: 32.20, Travel Time: 32.20, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 10, Distance: 32.20, Travel Time: 32.20, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 11, Distance: 24.84, Travel Time: 24.84, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 12, Distance: 21.02, Travel Time: 21.02, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 13, Distance: 31.58, Travel Time: 31.58, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 14, Distance: 17.80, Travel Time: 17.80, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 15, Distance: 15.56, Travel Time: 15.56, Wireless: No, Charge Rate: 0.00
+  From: 6, To: 16, Distance: 15.23, Travel Time: 15.23, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 0, Distance: 18.00, Travel Time: 18.00, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 1, Distance: 18.00, Travel Time: 18.00, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 2, Distance: 32.80, Travel Time: 32.80, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 3, Distance: 44.78, Travel Time: 44.78, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 4, Distance: 41.76, Travel Time: 41.76, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 5, Distance: 52.80, Travel Time: 52.80, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 6, Distance: 32.56, Travel Time: 32.56, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 8, Distance: 34.41, Travel Time: 34.41, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 9, Distance: 20.22, Travel Time: 20.22, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 10, Distance: 23.85, Travel Time: 23.85, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 11, Distance: 16.40, Travel Time: 16.40, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 12, Distance: 36.25, Travel Time: 36.25, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 13, Distance: 36.07, Travel Time: 36.07, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 14, Distance: 47.42, Travel Time: 47.42, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 15, Distance: 43.29, Travel Time: 43.29, Wireless: No, Charge Rate: 0.00
+  From: 7, To: 16, Distance: 18.00, Travel Time: 18.00, Wireless: No, Charge Rate: 0.00
+  From: 8, To: 0, Distance: 22.36, Travel Time: 22.36, Wireless: No, Charge Rate: 0.00
+  From: 8, To: 1, Distance: 22.36, Travel Time: 22.36, Wireless: No, Charge Rate: 0.00
+  From: 8, To: 2, Distance: 10.00, Travel Time: 10.00, Wireless: No, Charge Rate: 0.00
+  From: 8, To: 3, Distance: 19.92, Travel Time: 19.92, Wireless: No, Charge Rate: 0.00
+  From: 8, To: 4, Distance: 14.42, Travel Time: 14.42, Wireless: No, Charge Rate: 0.00
+  From: 8, To: 5, Distance: 20.10, Travel Time: 20.10, Wireless: No, Charge Rate: 0.00
+  From: 8, To: 6, Distance: 14.56, Travel Time: 14.56, Wireless: No, Charge Rate: 0.00
+  From: 8, To: 7, Distance: 34.41, Travel Time: 34.41, Wireless: No, Charge Rate: 0.00
+  From: 8, To: 9, Distance: 25.00, Travel Time: 25.00, Wireless: No, Charge Rate: 0.00
+  From: 8, To: 10, Distance: 42.72, Travel Time: 42.72, Wireless: No, Charge Rate: 0.00
+  From: 8, To: 11, Distance: 33.54, Travel Time: 33.54, Wireless: No, Charge Rate: 0.00
+  From: 8, To: 12, Distance: 35.36, Travel Time: 35.36, Wireless: No, Charge Rate: 0.00
+  From: 8, To: 13, Distance: 45.04, Travel Time: 45.04, Wireless: No, Charge Rate: 0.00
+  From: 8, To: 14, Distance: 15.00, Travel Time: 15.00, Wireless: No, Charge Rate: 0.00
+  From: 8, To: 15, Distance: 29.15, Travel Time: 29.15, Wireless: No, Charge Rate: 0.00
+  From: 8, To: 16, Distance: 22.36, Travel Time: 22.36, Wireless: No, Charge Rate: 0.00
+  From: 9, To: 0, Distance: 25.00, Travel Time: 25.00, Wireless: No, Charge Rate: 0.00
+  From: 9, To: 1, Distance: 25.00, Travel Time: 25.00, Wireless: No, Charge Rate: 0.00
+  From: 9, To: 2, Distance: 18.03, Travel Time: 18.03, Wireless: No, Charge Rate: 0.00
+  From: 9, To: 3, Distance: 26.87, Travel Time: 26.87, Wireless: No, Charge Rate: 0.00
+  From: 9, To: 4, Distance: 37.85, Travel Time: 37.85, Wireless: No, Charge Rate: 0.00
+  From: 9, To: 5, Distance: 45.04, Travel Time: 45.04, Wireless: No, Charge Rate: 0.00
+  From: 9, To: 6, Distance: 32.20, Travel Time: 32.20, Wireless: No, Charge Rate: 0.00
+  From: 9, To: 7, Distance: 20.22, Travel Time: 20.22, Wireless: No, Charge Rate: 0.00
+  From: 9, To: 8, Distance: 25.00, Travel Time: 25.00, Wireless: No, Charge Rate: 0.00
+  From: 9, To: 10, Distance: 41.23, Travel Time: 41.23, Wireless: No, Charge Rate: 0.00
+  From: 9, To: 11, Distance: 31.62, Travel Time: 31.62, Wireless: No, Charge Rate: 0.00
+  From: 9, To: 12, Distance: 46.10, Travel Time: 46.10, Wireless: No, Charge Rate: 0.00
+  From: 9, To: 13, Distance: 50.54, Travel Time: 50.54, Wireless: No, Charge Rate: 0.00
+  From: 9, To: 14, Distance: 40.00, Travel Time: 40.00, Wireless: No, Charge Rate: 0.00
+  From: 9, To: 15, Distance: 47.17, Travel Time: 47.17, Wireless: No, Charge Rate: 0.00
+  From: 9, To: 16, Distance: 25.00, Travel Time: 25.00, Wireless: No, Charge Rate: 0.00
+  From: 10, To: 0, Distance: 20.62, Travel Time: 20.62, Wireless: No, Charge Rate: 0.00
+  From: 10, To: 1, Distance: 20.62, Travel Time: 20.62, Wireless: No, Charge Rate: 0.00
+  From: 10, To: 2, Distance: 46.53, Travel Time: 46.53, Wireless: No, Charge Rate: 0.00
+  From: 10, To: 3, Distance: 59.68, Travel Time: 59.68, Wireless: No, Charge Rate: 0.00
+  From: 10, To: 4, Distance: 41.87, Travel Time: 41.87, Wireless: No, Charge Rate: 0.00
+  From: 10, To: 5, Distance: 54.67, Travel Time: 54.67, Wireless: No, Charge Rate: 0.00
+  From: 10, To: 6, Distance: 32.20, Travel Time: 32.20, Wireless: No, Charge Rate: 0.00
+  From: 10, To: 7, Distance: 23.85, Travel Time: 23.85, Wireless: No, Charge Rate: 0.00
+  From: 10, To: 8, Distance: 42.72, Travel Time: 42.72, Wireless: No, Charge Rate: 0.00
+  From: 10, To: 9, Distance: 41.23, Travel Time: 41.23, Wireless: No, Charge Rate: 0.00
+  From: 10, To: 11, Distance: 10.00, Travel Time: 10.00, Wireless: No, Charge Rate: 0.00
+  From: 10, To: 12, Distance: 20.62, Travel Time: 20.62, Wireless: No, Charge Rate: 0.00
+  From: 10, To: 13, Distance: 13.93, Travel Time: 13.93, Wireless: No, Charge Rate: 0.00
+  From: 10, To: 14, Distance: 50.00, Travel Time: 50.00, Wireless: No, Charge Rate: 0.00
+  From: 10, To: 15, Distance: 33.54, Travel Time: 33.54, Wireless: No, Charge Rate: 0.00
+  From: 10, To: 16, Distance: 20.62, Travel Time: 20.62, Wireless: No, Charge Rate: 0.00
+  From: 11, To: 0, Distance: 11.18, Travel Time: 11.18, Wireless: No, Charge Rate: 0.00
+  From: 11, To: 1, Distance: 11.18, Travel Time: 11.18, Wireless: No, Charge Rate: 0.00
+  From: 11, To: 2, Distance: 36.67, Travel Time: 36.67, Wireless: No, Charge Rate: 0.00
+  From: 11, To: 3, Distance: 49.82, Travel Time: 49.82, Wireless: No, Charge Rate: 0.00
+  From: 11, To: 4, Distance: 34.83, Travel Time: 34.83, Wireless: No, Charge Rate: 0.00
+  From: 11, To: 5, Distance: 47.42, Travel Time: 47.42, Wireless: No, Charge Rate: 0.00
+  From: 11, To: 6, Distance: 24.84, Travel Time: 24.84, Wireless: No, Charge Rate: 0.00
+  From: 11, To: 7, Distance: 16.40, Travel Time: 16.40, Wireless: No, Charge Rate: 0.00
+  From: 11, To: 8, Distance: 33.54, Travel Time: 33.54, Wireless: No, Charge Rate: 0.00
+  From: 11, To: 9, Distance: 31.62, Travel Time: 31.62, Wireless: No, Charge Rate: 0.00
+  From: 11, To: 10, Distance: 10.00, Travel Time: 10.00, Wireless: No, Charge Rate: 0.00
+  From: 11, To: 12, Distance: 20.62, Travel Time: 20.62, Wireless: No, Charge Rate: 0.00
+  From: 11, To: 13, Distance: 19.85, Travel Time: 19.85, Wireless: No, Charge Rate: 0.00
+  From: 11, To: 14, Distance: 42.43, Travel Time: 42.43, Wireless: No, Charge Rate: 0.00
+  From: 11, To: 15, Distance: 30.41, Travel Time: 30.41, Wireless: No, Charge Rate: 0.00
+  From: 11, To: 16, Distance: 11.18, Travel Time: 11.18, Wireless: No, Charge Rate: 0.00
+  From: 12, To: 0, Distance: 21.21, Travel Time: 21.21, Wireless: No, Charge Rate: 0.00
+  From: 12, To: 1, Distance: 21.21, Travel Time: 21.21, Wireless: No, Charge Rate: 0.00
+  From: 12, To: 2, Distance: 43.01, Travel Time: 43.01, Wireless: No, Charge Rate: 0.00
+  From: 12, To: 3, Distance: 55.11, Travel Time: 55.11, Wireless: No, Charge Rate: 0.00
+  From: 12, To: 4, Distance: 27.89, Travel Time: 27.89, Wireless: No, Charge Rate: 0.00
+  From: 12, To: 5, Distance: 39.92, Travel Time: 39.92, Wireless: No, Charge Rate: 0.00
+  From: 12, To: 6, Distance: 21.02, Travel Time: 21.02, Wireless: No, Charge Rate: 0.00
+  From: 12, To: 7, Distance: 36.25, Travel Time: 36.25, Wireless: No, Charge Rate: 0.00
+  From: 12, To: 8, Distance: 35.36, Travel Time: 35.36, Wireless: No, Charge Rate: 0.00
+  From: 12, To: 9, Distance: 46.10, Travel Time: 46.10, Wireless: No, Charge Rate: 0.00
+  From: 12, To: 10, Distance: 20.62, Travel Time: 20.62, Wireless: No, Charge Rate: 0.00
+  From: 12, To: 11, Distance: 20.62, Travel Time: 20.62, Wireless: No, Charge Rate: 0.00
+  From: 12, To: 13, Distance: 12.21, Travel Time: 12.21, Wireless: No, Charge Rate: 0.00
+  From: 12, To: 14, Distance: 36.40, Travel Time: 36.40, Wireless: No, Charge Rate: 0.00
+  From: 12, To: 15, Distance: 14.14, Travel Time: 14.14, Wireless: No, Charge Rate: 0.00
+  From: 12, To: 16, Distance: 21.21, Travel Time: 21.21, Wireless: No, Charge Rate: 0.00
+  From: 13, To: 0, Distance: 26.25, Travel Time: 26.25, Wireless: No, Charge Rate: 0.00
+  From: 13, To: 1, Distance: 26.25, Travel Time: 26.25, Wireless: No, Charge Rate: 0.00
+  From: 13, To: 2, Distance: 51.35, Travel Time: 51.35, Wireless: No, Charge Rate: 0.00
+  From: 13, To: 3, Distance: 64.12, Travel Time: 64.12, Wireless: No, Charge Rate: 0.00
+  From: 13, To: 4, Distance: 39.56, Travel Time: 39.56, Wireless: No, Charge Rate: 0.00
+  From: 13, To: 5, Distance: 51.89, Travel Time: 51.89, Wireless: No, Charge Rate: 0.00
+  From: 13, To: 6, Distance: 31.58, Travel Time: 31.58, Wireless: No, Charge Rate: 0.00
+  From: 13, To: 7, Distance: 36.07, Travel Time: 36.07, Wireless: No, Charge Rate: 0.00
+  From: 13, To: 8, Distance: 45.04, Travel Time: 45.04, Wireless: No, Charge Rate: 0.00
+  From: 13, To: 9, Distance: 50.54, Travel Time: 50.54, Wireless: No, Charge Rate: 0.00
+  From: 13, To: 10, Distance: 13.93, Travel Time: 13.93, Wireless: No, Charge Rate: 0.00
+  From: 13, To: 11, Distance: 19.85, Travel Time: 19.85, Wireless: No, Charge Rate: 0.00
+  From: 13, To: 12, Distance: 12.21, Travel Time: 12.21, Wireless: No, Charge Rate: 0.00
+  From: 13, To: 14, Distance: 48.10, Travel Time: 48.10, Wireless: No, Charge Rate: 0.00
+  From: 13, To: 15, Distance: 26.25, Travel Time: 26.25, Wireless: No, Charge Rate: 0.00
+  From: 13, To: 16, Distance: 26.25, Travel Time: 26.25, Wireless: No, Charge Rate: 0.00
+  From: 14, To: 0, Distance: 32.02, Travel Time: 32.02, Wireless: No, Charge Rate: 0.00
+  From: 14, To: 1, Distance: 32.02, Travel Time: 32.02, Wireless: No, Charge Rate: 0.00
+  From: 14, To: 2, Distance: 23.77, Travel Time: 23.77, Wireless: No, Charge Rate: 0.00
+  From: 14, To: 3, Distance: 28.32, Travel Time: 28.32, Wireless: No, Charge Rate: 0.00
+  From: 14, To: 4, Distance: 8.54, Travel Time: 8.54, Wireless: No, Charge Rate: 0.00
+  From: 14, To: 5, Distance: 5.39, Travel Time: 5.39, Wireless: No, Charge Rate: 0.00
+  From: 14, To: 6, Distance: 17.80, Travel Time: 17.80, Wireless: No, Charge Rate: 0.00
+  From: 14, To: 7, Distance: 47.42, Travel Time: 47.42, Wireless: No, Charge Rate: 0.00
+  From: 14, To: 8, Distance: 15.00, Travel Time: 15.00, Wireless: No, Charge Rate: 0.00
+  From: 14, To: 9, Distance: 40.00, Travel Time: 40.00, Wireless: No, Charge Rate: 0.00
+  From: 14, To: 10, Distance: 50.00, Travel Time: 50.00, Wireless: No, Charge Rate: 0.00
+  From: 14, To: 11, Distance: 42.43, Travel Time: 42.43, Wireless: No, Charge Rate: 0.00
+  From: 14, To: 12, Distance: 36.40, Travel Time: 36.40, Wireless: No, Charge Rate: 0.00
+  From: 14, To: 13, Distance: 48.10, Travel Time: 48.10, Wireless: No, Charge Rate: 0.00
+  From: 14, To: 15, Distance: 25.00, Travel Time: 25.00, Wireless: No, Charge Rate: 0.00
+  From: 14, To: 16, Distance: 32.02, Travel Time: 32.02, Wireless: No, Charge Rate: 0.00
+  From: 15, To: 0, Distance: 25.50, Travel Time: 25.50, Wireless: No, Charge Rate: 0.00
+  From: 15, To: 1, Distance: 25.50, Travel Time: 25.50, Wireless: No, Charge Rate: 0.00
+  From: 15, To: 2, Distance: 38.60, Travel Time: 38.60, Wireless: No, Charge Rate: 0.00
+  From: 15, To: 3, Distance: 48.75, Travel Time: 48.75, Wireless: No, Charge Rate: 0.00
+  From: 15, To: 4, Distance: 17.26, Travel Time: 17.26, Wireless: No, Charge Rate: 0.00
+  From: 15, To: 5, Distance: 27.46, Travel Time: 27.46, Wireless: No, Charge Rate: 0.00
+  From: 15, To: 6, Distance: 15.56, Travel Time: 15.56, Wireless: No, Charge Rate: 0.00
+  From: 15, To: 7, Distance: 43.29, Travel Time: 43.29, Wireless: No, Charge Rate: 0.00
+  From: 15, To: 8, Distance: 29.15, Travel Time: 29.15, Wireless: No, Charge Rate: 0.00
+  From: 15, To: 9, Distance: 47.17, Travel Time: 47.17, Wireless: No, Charge Rate: 0.00
+  From: 15, To: 10, Distance: 33.54, Travel Time: 33.54, Wireless: No, Charge Rate: 0.00
+  From: 15, To: 11, Distance: 30.41, Travel Time: 30.41, Wireless: No, Charge Rate: 0.00
+  From: 15, To: 12, Distance: 14.14, Travel Time: 14.14, Wireless: No, Charge Rate: 0.00
+  From: 15, To: 13, Distance: 26.25, Travel Time: 26.25, Wireless: No, Charge Rate: 0.00
+  From: 15, To: 14, Distance: 25.00, Travel Time: 25.00, Wireless: No, Charge Rate: 0.00
+  From: 15, To: 16, Distance: 25.50, Travel Time: 25.50, Wireless: No, Charge Rate: 0.00
+  From: 16, To: 0, Distance: 0.00, Travel Time: 0.00, Wireless: No, Charge Rate: 0.00
+  From: 16, To: 1, Distance: 0.00, Travel Time: 0.00, Wireless: No, Charge Rate: 0.00
+  From: 16, To: 2, Distance: 26.08, Travel Time: 26.08, Wireless: No, Charge Rate: 0.00
+  From: 16, To: 3, Distance: 39.20, Travel Time: 39.20, Wireless: No, Charge Rate: 0.00
+  From: 16, To: 4, Distance: 25.06, Travel Time: 25.06, Wireless: No, Charge Rate: 0.00
+  From: 16, To: 5, Distance: 37.20, Travel Time: 37.20, Wireless: No, Charge Rate: 0.00
+  From: 16, To: 6, Distance: 15.23, Travel Time: 15.23, Wireless: No, Charge Rate: 0.00
+  From: 16, To: 7, Distance: 18.00, Travel Time: 18.00, Wireless: No, Charge Rate: 0.00
+  From: 16, To: 8, Distance: 22.36, Travel Time: 22.36, Wireless: No, Charge Rate: 0.00
+  From: 16, To: 9, Distance: 25.00, Travel Time: 25.00, Wireless: No, Charge Rate: 0.00
+  From: 16, To: 10, Distance: 20.62, Travel Time: 20.62, Wireless: No, Charge Rate: 0.00
+  From: 16, To: 11, Distance: 11.18, Travel Time: 11.18, Wireless: No, Charge Rate: 0.00
+  From: 16, To: 12, Distance: 21.21, Travel Time: 21.21, Wireless: No, Charge Rate: 0.00
+  From: 16, To: 13, Distance: 26.25, Travel Time: 26.25, Wireless: No, Charge Rate: 0.00
+  From: 16, To: 14, Distance: 32.02, Travel Time: 32.02, Wireless: No, Charge Rate: 0.00
+  From: 16, To: 15, Distance: 25.50, Travel Time: 25.50, Wireless: No, Charge Rate: 0.00
+
+Charging options loaded:
+Charging Options Information:
+  Node ID: 1
+    Option 1.00: Cost = 0.50, Rate = 5.00
+    Option 2.00: Cost = 1.00, Rate = 10.00
+  Node ID: 2
+    Option 1.00: Cost = 0.50, Rate = 5.00
+    Option 2.00: Cost = 1.00, Rate = 10.00
+  Node ID: 3
+    Option 1.00: Cost = 0.50, Rate = 5.00
+    Option 2.00: Cost = 1.00, Rate = 10.00
+  Node ID: 4
+    Option 1.00: Cost = 0.50, Rate = 5.00
+    Option 2.00: Cost = 1.00, Rate = 10.00
+  Node ID: 5
+    Option 1.00: Cost = 0.50, Rate = 5.00
+    Option 2.00: Cost = 1.00, Rate = 10.00
+
+Initial route: 0 7 12 10 9 6 8 11 14 15 13 16
+MILP::optimize: CPLEX failed, status = Infeasible
+MILP::optimize: CPLEX failed, status = Infeasible
+MILP::optimize: Success, cost = 45.98, Time = 0 s
+MILP::optimize: Success, cost = 45.98, Time = 0 s
+MILP::optimize: Success, cost = 46.89, Time = 0 s
+MILP::optimize: Success, cost = 46.89, Time = 0 s
+MILP::optimize: Success, cost = 47.24, Time = 0 s
+MILP::optimize: Success, cost = 47.24, Time = 0 s
+MILP::optimize: Success, cost = 41.48, Time = 0 s
+MILP::optimize: Success, cost = 41.48, Time = 0 s
+MILP::optimize: Success, cost = 40.67, Time = 0 s
+MILP::optimize: Success, cost = 40.67, Time = 0 s
+MILP::optimize: Success, cost = 44.65, Time = 0 s
+MILP::optimize: Success, cost = 44.65, Time = 0 s
+MILP::optimize: Success, cost = 33.20, Time = 0 s
+MILP::optimize: Success, cost = 33.20, Time = 0 s
+MILP::optimize: Success, cost = 39.88, Time = 0 s
+MILP::optimize: Success, cost = 39.88, Time = 0 s
+MILP::optimize: Success, cost = 38.41, Time = 0 s
+MILP::optimize: Success, cost = 38.41, Time = 0 s
+MILP::optimize: Success, cost = 43.54, Time = 0 s
+MILP::optimize: Success, cost = 43.54, Time = 0 s
+Iteration 10:
+Best cost: 33.20
+No-Improvement Counter: 10
+Best route: [0->7->9->3->11->10->12->6->8->14->15->13->16]
+Charging decisions: 1
+Station 3: Option 1, Duration 3.66
+Wireless decisions: 0
+Station IDs: 3
+------------------------------------------------------------------------
+MILP::optimize: Success, cost = 39.01, Time = 0 s
+MILP::optimize: Success, cost = 39.01, Time = 0 s
+MILP::optimize: Success, cost = 35.18, Time = 0 s
+MILP::optimize: Success, cost = 35.18, Time = 0 s
+MILP::optimize: Success, cost = 37.72, Time = 0 s
+MILP::optimize: Success, cost = 37.72, Time = 0 s
+MILP::optimize: Success, cost = 39.95, Time = 0 s
+MILP::optimize: Success, cost = 39.95, Time = 0 s
+MILP::optimize: Success, cost = 33.98, Time = 0 s
+MILP::optimize: Success, cost = 33.98, Time = 0 s
+MILP::optimize: Success, cost = 35.94, Time = 0 s
+MILP::optimize: Success, cost = 35.94, Time = 0 s
+MILP::optimize: Success, cost = 41.98, Time = 0 s
+MILP::optimize: Success, cost = 41.98, Time = 0 s
+MILP::optimize: CPLEX failed, status = Infeasible
+MILP::optimize: CPLEX failed, status = Infeasible
+MILP::optimize: Success, cost = 35.88, Time = 0 s
+MILP::optimize: Success, cost = 35.88, Time = 0 s
+MILP::optimize: Success, cost = 34.10, Time = 0 s
+MILP::optimize: Success, cost = 34.10, Time = 0 s
+Iteration 20:
+Best cost: 33.20
+No-Improvement Counter: 20
+Best route: [0->7->9->3->11->10->12->6->8->14->15->13->16]
+Charging decisions: 1
+Station 3: Option 1, Duration 3.66
+Wireless decisions: 0
+Station IDs: 3
+------------------------------------------------------------------------
+MILP::optimize: CPLEX failed, status = Infeasible
+MILP::optimize: CPLEX failed, status = Infeasible
+MILP::optimize: Success, cost = 32.71, Time = 0 s
+MILP::optimize: Success, cost = 32.71, Time = 0 s
+MILP::optimize: Success, cost = 34.75, Time = 0 s
+MILP::optimize: Success, cost = 34.75, Time = 0 s
+MILP::optimize: Success, cost = 35.09, Time = 0 s
+MILP::optimize: Success, cost = 35.09, Time = 0 s
+MILP::optimize: Success, cost = 39.11, Time = 0 s
+MILP::optimize: Success, cost = 39.11, Time = 0 s
+MILP::optimize: Success, cost = 35.94, Time = 0 s
+MILP::optimize: Success, cost = 35.94, Time = 0 s
+MILP::optimize: Success, cost = 32.71, Time = 0 s
+MILP::optimize: Success, cost = 32.71, Time = 0 s
+MILP::optimize: CPLEX failed, status = Infeasible
+MILP::optimize: CPLEX failed, status = Infeasible
+MILP::optimize: Success, cost = 34.96, Time = 0 s
+MILP::optimize: Success, cost = 34.96, Time = 0 s
+MILP::optimize: Success, cost = 38.74, Time = 0 s
+MILP::optimize: Success, cost = 38.74, Time = 0 s
+Iteration 30:
+Best cost: 32.71
+No-Improvement Counter: 30
+Best route: [0->7->9->4->11->10->12->6->8->14->15->13->16]
+Charging decisions: 1
+Station 4: Option 1, Duration 3.55
+Wireless decisions: 0
+Station IDs: 4
+------------------------------------------------------------------------
+MILP::optimize: Success, cost = 32.71, Time = 0 s
+MILP::optimize: Success, cost = 32.71, Time = 0 s
+MILP::optimize: Success, cost = 30.50, Time = 0 s
+MILP::optimize: Success, cost = 30.50, Time = 0 s
+MILP::optimize: Success, cost = 36.53, Time = 0 s
+MILP::optimize: Success, cost = 36.53, Time = 0 s
+MILP::optimize: Success, cost = 30.45, Time = 0 s
+MILP::optimize: Success, cost = 30.45, Time = 0 s
+MILP::optimize: Success, cost = 28.22, Time = 20 s
+MILP::optimize: Success, cost = 28.22, Time = 20 s
+MILP::optimize: Success, cost = 32.20, Time = 20 s
+MILP::optimize: Success, cost = 32.20, Time = 20 s
+MILP::optimize: Success, cost = 28.22, Time = 20 s
+MILP::optimize: Success, cost = 28.22, Time = 20 s
+MILP::optimize: Success, cost = 30.56, Time = 20 s
+MILP::optimize: Success, cost = 31.69, Time = 20 s
+MILP::optimize: Success, cost = 32.60, Time = 20 s
+MILP::optimize: Success, cost = 32.60, Time = 20 s
+MILP::optimize: Success, cost = 34.46, Time = 20 s
+MILP::optimize: Success, cost = 34.46, Time = 20 s
+Iteration 40:
+Best cost: 28.22
+No-Improvement Counter: 40
+Best route: [0->7->9->1->13->15->14->8->6->12->10->11->16]
+Charging decisions: 1
+Station 1: Option 1, Duration 2.53
+Wireless decisions: 0
+Station IDs: 4 5 2 1 3
+------------------------------------------------------------------------
+MILP::optimize: Success, cost = 28.22, Time = 20 s
+MILP::optimize: Success, cost = 28.22, Time = 20 s
+MILP::optimize: Success, cost = 28.22, Time = 20 s
+MILP::optimize: Success, cost = 28.22, Time = 20 s
+MILP::optimize: Success, cost = 33.11, Time = 20 s
+MILP::optimize: Success, cost = 30.45, Time = 20 s
+MILP::optimize: Success, cost = 31.54, Time = 20 s
+MILP::optimize: Success, cost = 31.54, Time = 20 s
+MILP::optimize: Success, cost = 28.32, Time = 4 s
+MILP::optimize: Success, cost = 28.32, Time = 0 s
+MILP::optimize: Success, cost = 30.45, Time = 0 s
+MILP::optimize: Success, cost = 30.45, Time = 0 s
+MILP::optimize: Success, cost = 31.64, Time = 0 s
+MILP::optimize: Success, cost = 31.64, Time = 0 s
+MILP::optimize: Success, cost = 30.45, Time = 4 s
+MILP::optimize: Success, cost = 30.45, Time = 0 s
+MILP::optimize: Success, cost = 28.22, Time = 15 s
+MILP::optimize: Success, cost = 28.22, Time = 16 s
+MILP::optimize: Success, cost = 29.97, Time = 17 s
+MILP::optimize: Success, cost = 29.97, Time = 1 s
+Iteration 50:
+Best cost: 28.22
+No-Improvement Counter: 50
+Best route: [0->7->9->1->13->15->14->8->6->12->10->11->16]
+Charging decisions: 1
+Station 1: Option 1, Duration 2.53
+Wireless decisions: 0
+Station IDs: 2 3 5 1
+------------------------------------------------------------------------
+
+====== VNS2 Results ======
+Best route found: 0 (Depot) 7 (Customer) 9 (Customer) 1 (Station) 13 (Customer) 15 (Customer) 14 (Customer) 8 (Customer)
+ 6 (Customer) 12 (Customer) 10 (Customer) 11 (Customer) 16 (Depot)
+Total cost: 28.22
+
+Detailed route information:
+Node 0 (Depot):
+  SOC Arrival: 30.00
+  SOC Departure: 30.00
+  Arrival Time: 0.00
+  Departure Time: 0.00
+Node 7 (Customer):
+  SOC Arrival: 27.48
+  SOC Departure: 27.48
+  Arrival Time: 9.00
+  Departure Time: 19.00
+Node 9 (Customer):
+  SOC Arrival: 24.65
+  SOC Departure: 24.65
+  Arrival Time: 29.11
+  Departure Time: 39.11
+Node 1 (Station):
+  SOC Arrival: 21.15
+  SOC Departure: 33.78
+  Arrival Time: 51.61
+  Departure Time: 54.14
+Node 13 (Customer):
+  SOC Arrival: 30.11
+  SOC Departure: 30.11
+  Arrival Time: 67.26
+  Departure Time: 77.26
+Node 15 (Customer):
+  SOC Arrival: 26.43
+  SOC Departure: 26.43
+  Arrival Time: 90.39
+  Departure Time: 100.39
+Node 14 (Customer):
+  SOC Arrival: 22.93
+  SOC Departure: 22.93
+  Arrival Time: 112.89
+  Departure Time: 122.89
+Node 8 (Customer):
+  SOC Arrival: 20.83
+  SOC Departure: 20.83
+  Arrival Time: 130.39
+  Departure Time: 140.39
+Node 6 (Customer):
+  SOC Arrival: 18.79
+  SOC Departure: 18.79
+  Arrival Time: 147.67
+  Departure Time: 157.67
+Node 12 (Customer):
+  SOC Arrival: 15.85
+  SOC Departure: 15.85
+  Arrival Time: 168.18
+  Departure Time: 178.18
+Node 10 (Customer):
+  SOC Arrival: 12.97
+  SOC Departure: 12.97
+  Arrival Time: 188.49
+  Departure Time: 198.49
+Node 11 (Customer):
+  SOC Arrival: 11.57
+  SOC Departure: 11.57
+  Arrival Time: 203.49
+  Departure Time: 213.49
+Node 16 (Depot):
+  SOC Arrival: 10.00
+  SOC Departure: 10.00
+  Arrival Time: 219.08
+  Departure Time: 219.08
+
+Charging decisions:
+  Station ID: 1, Option: 1, Charging Time: 2.53
+
+Process finished with exit code 0
