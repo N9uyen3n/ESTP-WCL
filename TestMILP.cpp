@@ -94,6 +94,42 @@ void testMILP(const std::string& csv_file_dir) {
         } else {
             std::cout << "No feasible route found.\n";
         }
+         Route best_route_1 = milp.optimizeNoWCL(initial_route, graph, charging_options, params);
+            // 5. In kết quả
+            std::cout << "\n====== MILPnoWCL Results ======\n";
+            if (best_route_1.isFeasible()) {
+                std::cout << "Best route found: ";
+                for (int id : best_route_1.getNodeIds()) {
+                    std::cout << id << " (" << Utils::getNodeType(id, nodes) << ") ";
+                }
+                std::cout << "\nTotal cost: " << std::fixed << std::setprecision(2) << best_route_1.getTotalCost() << "\n";
+
+                std::cout << "\nDetailed route information:\n";
+                const auto& soc_arrival =  best_route_1.getSocArrival();
+                const auto& soc_departure =  best_route_1.getSocDeparture();
+                const auto& arrival_time =  best_route_1.getArrivalTime();
+                const auto& departure_time =  best_route_1.getDepartureTime();
+                const auto& charging_decisions =  best_route_1.getChargingDecisions();
+
+                for (size_t i = 0; i <  best_route_1.getNodeIds().size(); ++i) {
+                    int node_id =  best_route_1.getNodeIds()[i];
+                    std::cout << "Node " << node_id << " (" << Utils::getNodeType(node_id, nodes) << "):\n"
+                              << "  SOC Arrival: " << soc_arrival[i] << "\n"
+                              << "  SOC Departure: " << soc_departure[i] << "\n"
+                              << "  Arrival Time: " << arrival_time[i] << "\n"
+                              << "  Departure Time: " << departure_time[i] << "\n";
+                }
+
+                std::cout << "\nCharging decisions:\n";
+                for (const auto& decision : charging_decisions) {
+                    std::cout << "  Station ID: " << decision.getStationId()
+                              << ", Option: " << decision.getOption()
+                              << ", Charging Time: " << decision.getChargingTime() << "\n";
+                }
+
+            } else {
+                std::cout << "No feasible route found.\n";
+            }
 
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
@@ -103,7 +139,8 @@ void testMILP(const std::string& csv_file_dir) {
 int main() {
     // std::string csv_file_dir = "../data/Input/Small_1/Output_t1/dataset_3_rc_201.1_C10_S3_instance1/";
     // std::string csv_file_dir = "../data/Input/Small_1/Output_t1/dataset_2_rc_201.1_C8_S2_instance1/";
-    std::string csv_file_dir = "../data/Input/Small_1/Output_t1/dataset_1_rc_201.1_C5_S2_instance1/";
+    // std::string csv_file_dir = "../data/Input/Small_1/Output_t1/dataset_1_rc_201.1_C5_S2_instance1/";
+    std::string csv_file_dir = "../data/Input/Small_2/dataset_1_rc_201.1_C5_S2_instance1/";
     // std::string csv_file_dir = "../data/Input/";
     testMILP(csv_file_dir);
     return 0;
